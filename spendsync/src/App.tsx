@@ -1,20 +1,19 @@
 import { FC } from 'react';
-//import reactLogo from './assets/react.svg';
-//import viteLogo from '/vite.svg';
 
 import Loader from './components/atoms/Loader';
+import Login from './pages/Login';
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from './firebase';
 
 import './App.css';
 
-//const ComponentSelector: { [id: string]: FC } = {
-//    'loading': Loader,
+const ComponentSelector: { [id: string]: FC } = {
+    'loading': Loader,
 //    'authed': Authed,
-//    'not-authed': Login,
+    'not-authed': Login,
 //    'error': Error
-//};
+};
 
 const App: FC = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -25,12 +24,10 @@ const App: FC = () => {
     if (error) state = 'error';
 
     console.log({ user, loading, state });
-    //const Component = ComponentSelector[state];
-    //return (
-    //    <Component />
-    //);
-
-    return <Loader />;
+    const Component = ComponentSelector[state];
+    return (
+        <Component />
+    );
 }
 
 export default App;
