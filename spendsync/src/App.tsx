@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import Loader from './components/atoms/Loader';
 import Login from './pages/Login';
+import Error from './pages/Error';
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from './firebase';
@@ -12,7 +13,7 @@ const ComponentSelector: { [id: string]: FC } = {
     'loading': Loader,
 //    'authed': Authed,
     'not-authed': Login,
-//    'error': Error
+    'error': Error
 };
 
 const App: FC = () => {

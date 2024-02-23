@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { signInWithGoogle } from '../../firebase';
@@ -38,7 +38,7 @@ const styles = stylex.create({
     }
 });
 
-const Login = () => {
+const Login: FC = () => {
     // On page load -> immideatly request login
     useEffect(() => {
         signInWithGoogle();
