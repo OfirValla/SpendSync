@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import Loader from './components/atoms/Loader';
+import Authed from './pages/Authed';
 import Login from './pages/Login';
 import Error from './pages/Error';
 
@@ -11,7 +12,7 @@ import './App.css';
 
 const ComponentSelector: { [id: string]: FC } = {
     'loading': Loader,
-//    'authed': Authed,
+    'authed': Authed,
     'not-authed': Login,
     'error': Error
 };
