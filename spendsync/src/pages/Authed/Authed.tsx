@@ -1,9 +1,27 @@
 import { FC, useEffect } from 'react';
 
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ref, set } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
+
+import Groups from './Groups';
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Groups />,
+        //loader: rootLoader,
+        //children: [
+        //    {
+        //        path: "groups",
+        //        element: <Team />,
+        //        loader: teamLoader,
+        //    },
+        //],
+    },
+]);
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
@@ -35,7 +53,7 @@ const Authed: FC = () => {
     }, []);
 
     return (
-        <div>{JSON.stringify(user)}</div>
+        <RouterProvider router={router} />
     )
 };
 
