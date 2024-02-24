@@ -9,9 +9,9 @@
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist</PublishAssetsDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\pages\Authed\ViewGroup\" />
+    <Folder Include="public\" />
+    <Folder Include="src\assets\" />
     <Folder Include="src\pages\Authed\AddNewUserToGroup\" />
     <Folder Include="src\pages\Authed\NewActivity\" />
-    <Folder Include="src\pages\Authed\AddNewGroup\" />
   </ItemGroup>
 </Project>

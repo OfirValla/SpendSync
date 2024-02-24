@@ -7,20 +7,40 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../../firebase';
 
 import Groups from './Groups';
+import AddNewGroup from './AddNewGroup';
+import ViewGroup from './ViewGroup';
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Groups />,
-        //loader: rootLoader,
-        //children: [
-        //    {
-        //        path: "groups",
-        //        element: <Team />,
-        //        loader: teamLoader,
-        //    },
-        //],
+        children: [
+            {
+                index: true,
+                element: <Groups />
+            },
+            {
+                path: 'groups/:groupId',
+                children: [
+                    {
+                        index: true,
+                        element: <ViewGroup />
+                    },
+                    {
+                        path: 'new-user',
+                        element: <div>New User</div>
+                    },
+                    {
+                        path: 'new-activity',
+                        element: <div>New Activity</div>
+                    }
+                ]
+            }
+        ],
     },
+    {
+        path: "new-group",
+        element: <AddNewGroup />
+    }
 ]);
 
 const Authed: FC = () => {
