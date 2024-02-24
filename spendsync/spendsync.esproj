@@ -8,4 +8,10 @@
     <!-- Folder where production build objects will be placed -->
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist</PublishAssetsDirectory>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\pages\Authed\ViewGroup\" />
+    <Folder Include="src\pages\Authed\AddNewUserToGroup\" />
+    <Folder Include="src\pages\Authed\NewActivity\" />
+    <Folder Include="src\pages\Authed\AddNewGroup\" />
+  </ItemGroup>
 </Project>
