@@ -1,54 +1,48 @@
-import { FC, useEffect } from 'react';
-import { ref, set, remove, onValue } from "firebase/database";
-
+import { FC, useEffect, useState } from 'react';
+import { ref, onValue, get } from "firebase/database";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../../../firebase';
 
+type GroupInformation = {
+    id: string;
+    name: string;
+    owed: { [key: string]: number; };
+};
+
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
-
-    const handleNewInvites = () => {
-        console.log("Listening to invites");
-
-        return onValue(ref(db, `invites/${user!.email!.replace('.', ',')}`),
-            snapshot => {
+    const [groups, setGroups] = useState<GroupInformation[]>([]);
+    const [renderedGroupIds, setRenderedGroupIds] = useState<string[]>([]);
+    
+    const handleUserGroups = () => {
+        return onValue(ref(db, `users/${user!.uid}/groups`),
+            async (snapshot) => {
                 const data = snapshot.val();
                 if (!data) return;
 
-                const invites = Object.keys(data);
-                for (const groupId of invites) {
-                    console.groupCollapsed('Adding user to group');
-                    console.log(`Group id: ${groupId}`);
+                const newGroups: GroupInformation[] = [];
+                const groupIds = Object.keys(data);
+                for (const groupId of groupIds) {
+                    if (renderedGroupIds.includes(groupId)) continue;
 
-                    // Get the invite and write it to the users groups
-                    console.log('Adding group to users groups');
-                    set(ref(db, `users/${user!.uid}/groups/${groupId}`), true);
-
-                    // Remove the invite from the list of invites
-                    console.log('Removing invite for group');
-                    remove(ref(db, `invites/${user!.email!.replace('.', ',')}/${groupId}`));
-
-                    console.groupEnd();
+                    const [nameData, owedData] = await Promise.all([
+                        get(ref(db, `groups/${groupId}/name`)),
+                        get(ref(db, `groups/${groupId}/owed`))
+                    ]);
+                    newGroups.push({ id: groupId, name: nameData.val(), owed: owedData.val() })
                 }
+                setRenderedGroupIds(prev => [...prev, ...newGroups.map(g => g.id)]);
+                setGroups(prev => [...prev, ...newGroups]);
             },
             error => console.error(error)
         );
     }
-
-    const handleUserGroups = () => {
-        return onValue(ref(db, `users/${user!.uid}/groups`),
-            snapshot => console.log(snapshot.val()),
-            error => console.error(error)
-        );
-    }
-
+    
     useEffect(() => {
-        const unsubscribeNewInvites = handleNewInvites();        
         const unsubscribeUserGroups = handleUserGroups();
         
         return () => {
-            unsubscribeNewInvites();
             unsubscribeUserGroups();
         }
     }, []);
@@ -56,7 +50,8 @@ const Groups: FC = () => {
     return (
         <>
             <div>Groups</div>
-            <>{JSON.stringify(user)}</>
+            <div>{JSON.stringify(user)}</div>
+            <div>{groups.map(group => JSON.stringify(group))}</div>
         </>
     )
 };
