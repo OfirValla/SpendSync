@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { ref, set } from "firebase/database";
+import { ref, update } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
@@ -42,7 +42,7 @@ const Authed: FC = () => {
             photo: user!.photoURL,
         });
         console.groupEnd();
-        set(
+        update(
             ref(db, `users/${user!.uid}`),
             {
                 name: user!.displayName,
