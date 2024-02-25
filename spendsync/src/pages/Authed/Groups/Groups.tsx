@@ -50,8 +50,8 @@ const Groups: FC = () => {
     return (
         <>
             <div>Groups</div>
-            <div>{JSON.stringify(user)}</div>
-            <div>{groups.map(group => JSON.stringify(group))}</div>
+            <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
+            <div>{groups.map(group => <div>{JSON.stringify(group)}</div>)}</div>
         </>
     )
 };
