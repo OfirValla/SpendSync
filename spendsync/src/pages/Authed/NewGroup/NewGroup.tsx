@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { auth, db } from '../../../firebase';
 
-const AddNewGroup: FC = () => {
+const NewGroup: FC = () => {
     const [user, ,] = useAuthState(auth);
 
     const addNewGroup = async () => {
@@ -38,4 +38,4 @@ const AddNewGroup: FC = () => {
     )
 };
 
-export default AddNewGroup;
+export default NewGroup;
