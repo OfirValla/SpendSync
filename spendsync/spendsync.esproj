@@ -12,6 +12,5 @@
     <Folder Include="public\" />
     <Folder Include="src\assets\" />
     <Folder Include="src\pages\Authed\AddNewUserToGroup\" />
-    <Folder Include="src\pages\Authed\NewActivity\" />
   </ItemGroup>
 </Project>

@@ -9,6 +9,7 @@ import { auth, db } from '../../firebase';
 import Groups from './Groups';
 import NewGroup from './NewGroup';
 import ViewGroup from './ViewGroup';
+import NewActivity from './NewActivity';
 
 const router = createBrowserRouter([
     {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: 'new-activity',
-                        element: <div>New Activity</div>
+                        element: <NewActivity />
                     }
                 ]
             }
