@@ -70,11 +70,10 @@ const ViewGroup: FC = () => {
     });
 
     useEffect(() => {
-        //if (activities.length === 0) return;
         if (!firstItem) return;
         console.log(firstItem);
 
-        const onChildAddedUnsubscribe = onChildAdded(query(ref(db, `groups/${groupId}/activity`), startAfter(firstItem)), data => {
+        return onChildAdded(query(ref(db, `groups/${groupId}/activity`), startAfter(firstItem)), data => {
             console.log(data.key, data.val());
 
             const result: ActivityDTO = data.val();
@@ -82,11 +81,6 @@ const ViewGroup: FC = () => {
 
             setActivities(prev => [newActivity, ...prev]);
         });
-
-        return () => {
-            console.log("firstItem unsubscribe " + firstItem);
-            onChildAddedUnsubscribe();
-        };
     }, [firstItem]);
 
     useEffect(() => {
