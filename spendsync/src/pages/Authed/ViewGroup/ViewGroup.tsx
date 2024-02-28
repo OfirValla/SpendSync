@@ -70,10 +70,23 @@ const ViewGroup: FC = () => {
     });
 
     useEffect(() => {
-        if (!firstItem) return;
-        console.log(firstItem);
 
-        return onChildAdded(query(ref(db, `groups/${groupId}/activity`), startAfter(firstItem)), data => {
+        console.log(firstItem, hasNextPage);
+        if ((firstItem === null || firstItem === undefined) && !hasNextPage) {
+            console.log("onChildAdded " + firstItem + " no items");
+
+            return onChildAdded(query(ref(db, `groups/${groupId}/activity`)), (data) => {
+                const result: ActivityDTO = data.val();
+                const newActivity: Activity = { id: data.key, ...result };
+
+                setActivities(prev => [newActivity, ...prev]);
+            });
+        }
+
+        if (firstItem !== null && firstItem !== undefined) {
+            console.log("onChildAdded " + firstItem + " found items");
+
+            return onChildAdded(query(ref(db, `groups/${groupId}/activity`), startAfter(firstItem)), (data) => {
             console.log(data.key, data.val());
 
             const result: ActivityDTO = data.val();
@@ -81,7 +94,9 @@ const ViewGroup: FC = () => {
 
             setActivities(prev => [newActivity, ...prev]);
         });
-    }, [firstItem]);
+        }
+        
+    }, [firstItem, hasNextPage]);
 
     useEffect(() => {
         const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `groups/${groupId}/activity`), (data) => {
