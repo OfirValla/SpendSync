@@ -44,7 +44,7 @@ const styles = stylex.create({
 const Login: FC = () => {
     // On page load -> immideatly request login
     useEffect(() => {
-        //signInWithGoogle();
+        signInWithGoogle();
     }, []);
 
     return (
