@@ -106,13 +106,14 @@ const ViewGroup: FC = () => {
 
             setActivities(prev => {
                 const itemIdx = prev.findIndex(item => item.id === data.key);
+                if (itemIdx === -1) return prev;
 
                 return [
                     ...prev.slice(0, itemIdx),
                     { id: data.key, ...data.val() },
                     ...prev.slice(itemIdx + 1)
                 ];
-            })
+            });
         });
 
         return () => {
