@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
-import { ref, query, get, limitToLast, endBefore, orderByKey, DataSnapshot } from 'firebase/database';
+import { ref, query, get, limitToLast, endBefore, orderByKey, DataSnapshot, onChildAdded, startAfter, startAt, onChildRemoved, onChildChanged } from 'firebase/database';
 
 import { db } from '../../../firebase';
 
@@ -14,13 +14,14 @@ type ActivityDTO = {
     split: { [key: string]: number; };
 };
 
-type Activity = ActivityDTO & { id: string; };
+type Activity = ActivityDTO & { id: string | null; };
 
 const ViewGroup: FC = () => {
     const { groupId } = useParams();
     const [activities, setActivities] = useState<Activity[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+    const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
 
     const fetchData = async () => {
         console.groupCollapsed("Fetching Activities");
@@ -36,7 +37,10 @@ const ViewGroup: FC = () => {
         if (activities.length !== 0)
             result = await get(query(ref(db, `groups/${groupId}/activity`), orderByKey(), endBefore(activities!.at(-1)!.id), limitToLast(10)));
         else
+        {
             result = await get(query(ref(db, `groups/${groupId}/activity`), orderByKey(), limitToLast(10)));
+            setFirstItem(Object.keys(result.val() || {}).at(-1));
+        }
         
         const data: { [key: string]: ActivityDTO; } = result.val();
         if (!data) {
@@ -64,7 +68,59 @@ const ViewGroup: FC = () => {
         // visible, instead of becoming fully visible on the screen.
         rootMargin: '0px 0px 400px 0px',
     });
-    
+
+    useEffect(() => {
+        //if (activities.length === 0) return;
+        if (!firstItem) return;
+        console.log(firstItem);
+
+        const onChildAddedUnsubscribe = onChildAdded(query(ref(db, `groups/${groupId}/activity`), startAfter(firstItem)), data => {
+            console.log(data.key, data.val());
+
+            const result: ActivityDTO = data.val();
+            const newActivity: Activity = { id: data.key, ...result };
+
+            setActivities(prev => [newActivity, ...prev]);
+        });
+
+        return () => {
+            console.log("firstItem unsubscribe " + firstItem);
+            onChildAddedUnsubscribe();
+        };
+    }, [firstItem]);
+
+    useEffect(() => {
+        const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `groups/${groupId}/activity`), (data) => {
+            console.groupCollapsed("Removing Activity");
+            console.log(`Id: ${data.key}`);
+            console.log(`Title: ${data.val().title}`);
+            console.groupEnd();
+            setActivities(prev => prev.filter(activity => activity.id !== data.key));
+        });
+
+        const onChildChangedUnsubscribe = onChildChanged(ref(db, `groups/${groupId}/activity`), (data) => {
+            console.groupCollapsed("Activity Changed");
+            console.log(`Id: ${data.key}`);
+            console.log(`New Data: ${data.val()}`);
+            console.groupEnd();
+
+            setActivities(prev => {
+                const itemIdx = prev.findIndex(item => item.id === data.key);
+
+                return [
+                    ...prev.slice(0, itemIdx),
+                    { id: data.key, ...data.val() },
+                    ...prev.slice(itemIdx + 1)
+                ];
+            })
+        });
+
+        return () => {
+            onChildRemovedUnsubscribe();
+            onChildChangedUnsubscribe();
+        }
+    }, [])
+
     return (
         <>
             <div>View Group {groupId}</div>
