@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 
 import Loader from './components/atoms/Loader';
 import Authed from './pages/Authed';
@@ -10,6 +10,8 @@ import { auth } from './firebase';
 
 import './App.css';
 
+type States = 'loading' | 'authed' | 'not-authed' | 'error';
+
 const ComponentSelector: { [id: string]: FC } = {
     'loading': Loader,
     'authed': Authed,
@@ -19,13 +21,17 @@ const ComponentSelector: { [id: string]: FC } = {
 
 const App: FC = () => {
     const [user, loading, error] = useAuthState(auth);
+    const [state, setState] = useState<States>('loading');
 
-    let state = 'loading';
-    if (user) state = 'authed';
-    if (!user && !loading) state = 'not-authed';
-    if (error) state = 'error';
+    useEffect(() => {
+        let newState: States = 'loading';
+        if (user) newState = 'authed';
+        if (!user && !loading) newState = 'not-authed';
+        if (error) newState = 'error';
 
-    console.log({ user, loading, state });
+        setState(newState);
+    }, [user, loading, error]);
+    
     const Component = ComponentSelector[state];
     return (
         <Component />

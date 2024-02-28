@@ -55,8 +55,6 @@ const Authed: FC = () => {
     // 5. New Activity In Group
 
     const handleNewInvites = () => {
-        console.log("Listening to invites");
-
         return onValue(ref(db, `invites/${user!.email!.replace('.', ',')}`),
             snapshot => {
                 const data = snapshot.val();
@@ -82,10 +80,8 @@ const Authed: FC = () => {
         );
     }
 
-    useEffect(() => {
-        const unsubscribeNewInvites = handleNewInvites();        
-
-        console.groupCollapsed("Updating user information")
+    const updateUserInformation = () => {
+        console.groupCollapsed("Updating user information");
         console.log("Saving user");
         console.log({
             name: user!.displayName,
@@ -101,7 +97,12 @@ const Authed: FC = () => {
                 photo: user!.photoURL,
             }
         );
+    }
 
+    useEffect(() => {
+        const unsubscribeNewInvites = handleNewInvites();        
+        updateUserInformation();
+        
         return () => {
             unsubscribeNewInvites();
         }
