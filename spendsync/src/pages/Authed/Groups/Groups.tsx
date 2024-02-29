@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { ref, onValue, get } from "firebase/database";
+import { ref, onValue, get, onChildAdded, query, onChildRemoved, onChildChanged } from "firebase/database";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../../../firebase';
@@ -40,18 +40,47 @@ const Groups: FC = () => {
     }
     
     useEffect(() => {
-        const unsubscribeUserGroups = handleUserGroups();
+        const onChildAddedUnsubscribe = onChildAdded(query(ref(db, `users/${user!.uid}/groups`)), async (data) => {
+            console.groupCollapsed("Adding Group");
+            console.log(`Id: ${data.key}`);
+
+            const [nameData, owedData] = await Promise.all([
+                get(ref(db, `groups/${data.key}/name`)),
+                get(ref(db, `groups/${data.key}/owed`))
+            ]);
+
+            setGroups(prev => {
+                if (prev.some(e => e.id === data.key))
+                    return prev;
+                const newGroup: GroupInformation = { id: data.key, name: nameData.val(), owed: owedData.val() };
+                return [...prev, newGroup];
+            });
+
+            console.log(`Title: ${nameData.val()}`);
+            console.groupEnd();
+
+        });
+
+        const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
+            console.groupCollapsed("Removing Group");
+            console.log(`Id: ${data.key}`);
+            console.log(`Title: ${data.val().title}`);
+            console.groupEnd();
+
+            setGroups(prev => prev.filter(group => group.id !== data.key));
+        });
         
         return () => {
-            unsubscribeUserGroups();
-        }
+            onChildAddedUnsubscribe();
+            onChildRemovedUnsubscribe();
+        };
     }, []);
 
     return (
         <>
             <div>Groups</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
-            <div>{groups.map(group => <div>{JSON.stringify(group)}</div>)}</div>
+            <div>{groups.map(group => <div key={group.id}>{JSON.stringify(group)}</div>)}</div>
         </>
     )
 };
