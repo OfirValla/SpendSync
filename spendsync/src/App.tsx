@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 
 import Loader from './components/atoms/Loader';
 import Authed from './pages/Authed';
-import Login from './pages/Login';
+import SignIn from './pages/SignIn';
 import Error from './pages/Error';
 
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -15,7 +15,7 @@ type States = 'loading' | 'authed' | 'not-authed' | 'error';
 const ComponentSelector: { [id: string]: FC } = {
     'loading': Loader,
     'authed': Authed,
-    'not-authed': Login,
+    'not-authed': SignIn,
     'error': Error
 };
 

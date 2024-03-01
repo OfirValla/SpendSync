@@ -5,8 +5,6 @@ import { signInWithGoogle } from '../../firebase';
 
 import googleLogo from './Google.svg';
 
-import './Login.css';
-
 const styles = stylex.create({
     container: {
         display: 'flex',
@@ -41,10 +39,10 @@ const styles = stylex.create({
     }
 });
 
-const Login: FC = () => {
+const SignIn: FC = () => {
     // On page load -> immideatly request login
     useEffect(() => {
-        signInWithGoogle();
+        //signInWithGoogle();
     }, []);
 
     return (
@@ -63,4 +61,4 @@ const Login: FC = () => {
     );
 };
 
-export default Login;
+export default SignIn;
