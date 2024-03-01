@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey, endBefore, limitToLast, Query, startAfter, onChildChanged, Unsubscribe } from "firebase/database";
+import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey, endBefore, limitToLast, Query, startAfter, onChildChanged, Unsubscribe, remove } from "firebase/database";
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -76,15 +76,20 @@ const Groups: FC = () => {
         for (const groupId of groupIds) {
             if (groups.some(group => group.id === groupId)) continue;
 
-            // Todo if a group is not existing anymore remove it from the user list ofgroups
+            try {
+                const [nameData, owedData] = await Promise.all([
+                    get(ref(db, `groups/${groupId}/name`)),
+                    get(ref(db, `groups/${groupId}/owed`))
+                ]);
 
-            unsubscribeOnChildChangeEvents.current[groupId] = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
+                unsubscribeOnChildChangeEvents.current[groupId] = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
+                newGroups.push({ id: groupId, name: nameData.val(), owed: owedData.val() });
+            } catch (error: Error) {
+                if (error.message.toLowerCase() !== 'permission denied') return;
 
-            const [nameData, owedData] = await Promise.all([
-                get(ref(db, `groups/${groupId}/name`)),
-                get(ref(db, `groups/${groupId}/owed`))
-            ]);
-            newGroups.push({ id: groupId, name: nameData.val(), owed: owedData.val() });
+                // Remove user connection to the group
+                await remove(ref(db, `users/${user!.uid}/groups/${groupId}`));
+            }
         }
         setGroups(prev => [...prev, ...newGroups]);
 
