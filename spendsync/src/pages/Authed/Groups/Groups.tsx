@@ -1,53 +1,18 @@
-import { FC, useEffect, useRef, useState } from 'react';
-import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey, endBefore, limitToLast, Query, startAfter, onChildChanged, Unsubscribe, remove } from "firebase/database";
+import { FC, useEffect, useState } from 'react';
+import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey, endBefore, limitToLast, Query, startAfter, remove } from "firebase/database";
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../../firebase';
-
-type Group = {
-    id: string | null;
-    name: string;
-    owed: { [key: string]: number; };
-};
-
-
-const updatableGroupKeys = ['name', 'owed'];
+import Group from '../../../components/atoms/Group';
 
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
-    const [groups, setGroups] = useState<Group[]>([]);    
+    const [groups, setGroups] = useState<string[]>([]);    
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
-
-    const unsubscribeOnChildChangeEvents = useRef<{ [key: string]: Unsubscribe; }>({});
-
-    const onChildChangedCallback = (snapshot: DataSnapshot) => {
-        const groupId: string = snapshot.ref.parent!.key!;
-        console.groupCollapsed("Activity Changed");
-        console.log(`Id: ${groupId}`);
-        console.log(`Key: ${snapshot.key}`);
-        console.log(`New Data: ${JSON.stringify(snapshot.val())}`);
-        console.log(`Is Updating: ${updatableGroupKeys.includes(snapshot.key!)}`);
-        console.groupEnd();
-
-        // Check only if name or owed has updated
-        if (!updatableGroupKeys.includes(snapshot.key!)) return;
-
-        setGroups(prev => {
-            const itemIdx = prev.findIndex(item => item.id === groupId);
-            if (itemIdx === -1) return prev;
-
-            const editedGroup = { ...prev[itemIdx], [snapshot.key!]: snapshot.val() };
-            return [
-                ...prev.slice(0, itemIdx),
-                editedGroup,
-                ...prev.slice(itemIdx + 1)
-            ];
-        });
-    }
-
+    
     const fetchData = async () => {
         console.groupCollapsed("Fetching Groups");
 
@@ -74,25 +39,12 @@ const Groups: FC = () => {
             return;
         }
 
-        const newGroups: Group[] = [];
+        const newGroups: string[] = [];
         const groupIds = Object.keys(data).reverse();
         for (const groupId of groupIds) {
-            if (groups.some(group => group.id === groupId)) continue;
+            if (groups.includes(groupId)) continue;
 
-            try {
-                const [nameData, owedData] = await Promise.all([
-                    get(ref(db, `groups/${groupId}/name`)),
-                    get(ref(db, `groups/${groupId}/owed`))
-                ]);
-
-                unsubscribeOnChildChangeEvents.current[groupId] = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
-                newGroups.push({ id: groupId, name: nameData.val(), owed: owedData.val() });
-            } catch (error: Error) {
-                if (error.message.toLowerCase() !== 'permission denied') return;
-
-                // Remove user connection to the group
-                await remove(ref(db, `users/${user!.uid}/groups/${groupId}`));
-            }
+            newGroups.push(groupId!);
         }
         setGroups(prev => [...prev, ...newGroups]);
 
@@ -111,25 +63,10 @@ const Groups: FC = () => {
         // visible, instead of becoming fully visible on the screen.
         rootMargin: '0px 0px 400px 0px',
     });
-
-    const onChildAddedCallback = async (data: DataSnapshot) => {
-        console.groupCollapsed("Group Added");
-        console.log(`Id: ${data.key}`);
-
-        const [nameData, owedData] = await Promise.all([
-            get(ref(db, `groups/${data.key}/name`)),
-            get(ref(db, `groups/${data.key}/owed`))
-        ]);
-        const newGroup: Group = { id: data.key, name: nameData.val(), owed: owedData.val() };
-
-        console.log(`Title: ${newGroup.name}`);
-        console.groupEnd();
-
-        setGroups(prev => [newGroup, ...prev]);
-        unsubscribeOnChildChangeEvents.current[data.key!] = onChildChanged(ref(db, `groups/${data.key}`), onChildChangedCallback);
-    };
-
+    
     useEffect(() => {
+        // Realtime listener for new groups
+
         let groupAddedQuery: Query | null = null;
         if ((firstItem === null || firstItem === undefined) && !hasNextPage)
             groupAddedQuery = query(ref(db, `users/${user!.uid}/groups`));
@@ -141,7 +78,13 @@ const Groups: FC = () => {
 
         return onChildAdded(
             groupAddedQuery,
-            onChildAddedCallback
+            async (data: DataSnapshot) => {
+                console.groupCollapsed("Group Added");
+                console.log(`Id: ${data.key}`);
+                console.groupEnd();
+
+                setGroups(prev => [data.key!, ...prev]);
+            }
         );
     }, [firstItem, hasNextPage]);
 
@@ -150,24 +93,28 @@ const Groups: FC = () => {
             console.groupCollapsed("Removing Group Connection");
             console.log(`Id: ${data.key}`);
             console.groupEnd();
-
-            unsubscribeOnChildChangeEvents.current[data.key!]();
-            delete unsubscribeOnChildChangeEvents.current[data.key!];
-
-            setGroups(prev => prev.filter(group => group.id !== data.key));
+            
+            setGroups(prev => prev.filter(id => id !== data.key));
         });
         
         return () => {
             onChildRemovedUnsubscribe();
         };
     }, []);
-    
+
+    const onNotExists = (error: Error, groupId: string) => {
+        if (error.message.toLowerCase() !== 'permission denied') return;
+
+        // Remove user connection to the group
+        remove(ref(db, `users/${user!.uid}/groups/${groupId}`));
+    };
+
     return (
         <>
             <div>Groups</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
             <div ref={rootRef}>
-                {groups.map(group => <div key={group.id}>{JSON.stringify(group)}</div>)}
+                {groups.map(groupId => <Group key={groupId} groupId={groupId!} onNotExisting={onNotExists} />)}
                 <div ref={sentryRef}></div>
             </div>
         </>
