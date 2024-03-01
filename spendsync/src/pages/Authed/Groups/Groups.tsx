@@ -11,6 +11,9 @@ type Group = {
     owed: { [key: string]: number; };
 };
 
+
+const updatableGroupKeys = ['name', 'owed'];
+
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
     const [groups, setGroups] = useState<Group[]>([]);    
@@ -26,11 +29,11 @@ const Groups: FC = () => {
         console.log(`Id: ${groupId}`);
         console.log(`Key: ${snapshot.key}`);
         console.log(`New Data: ${JSON.stringify(snapshot.val())}`);
-        console.log(`Is Updating: ${['name', 'owed'].includes(snapshot.key!)}`);
+        console.log(`Is Updating: ${updatableGroupKeys.includes(snapshot.key!)}`);
         console.groupEnd();
 
         // Check only if name or owed has updated
-        if (!['name', 'owed'].includes(snapshot.key!)) return;
+        if (!updatableGroupKeys.includes(snapshot.key!)) return;
 
         setGroups(prev => {
             const itemIdx = prev.findIndex(item => item.id === groupId);
