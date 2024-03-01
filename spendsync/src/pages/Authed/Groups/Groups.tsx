@@ -1,5 +1,5 @@
-import { FC, useEffect, useState } from 'react';
-import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey, endBefore, limitToLast, Query, startAfter } from "firebase/database";
+import { FC, useEffect, useRef, useState } from 'react';
+import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey, endBefore, limitToLast, Query, startAfter, onChildChanged, Unsubscribe } from "firebase/database";
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from "react-firebase-hooks/auth";
 
@@ -17,6 +17,33 @@ const Groups: FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
+
+    const unsubscribeOnChildChangeEvents = useRef<{ [key: string]: Unsubscribe; }>({});
+
+    const onChildChangedCallback = (snapshot: DataSnapshot) => {
+        const groupId: string = snapshot.ref.parent!.key!;
+        console.groupCollapsed("Activity Changed");
+        console.log(`Id: ${groupId}`);
+        console.log(`Key: ${snapshot.key}`);
+        console.log(`New Data: ${JSON.stringify(snapshot.val())}`);
+        console.log(`Is Updating: ${['name', 'owed'].includes(snapshot.key!)}`);
+        console.groupEnd();
+
+        // Check only if name or owed has updated
+        if (!['name', 'owed'].includes(snapshot.key!)) return;
+
+        setGroups(prev => {
+            const itemIdx = prev.findIndex(item => item.id === groupId);
+            if (itemIdx === -1) return prev;
+
+            const editedGroup = { ...prev[itemIdx], [snapshot.key!]: snapshot.val() };
+            return [
+                ...prev.slice(0, itemIdx),
+                editedGroup,
+                ...prev.slice(itemIdx + 1)
+            ];
+        });
+    }
 
     const fetchData = async () => {
         console.groupCollapsed("Fetching Groups");
@@ -48,6 +75,10 @@ const Groups: FC = () => {
         const groupIds = Object.keys(data).reverse();
         for (const groupId of groupIds) {
             if (groups.some(group => group.id === groupId)) continue;
+
+            // Todo if a group is not existing anymore remove it from the user list ofgroups
+
+            unsubscribeOnChildChangeEvents.current[groupId] = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
 
             const [nameData, owedData] = await Promise.all([
                 get(ref(db, `groups/${groupId}/name`)),
@@ -87,6 +118,7 @@ const Groups: FC = () => {
         console.groupEnd();
 
         setGroups(prev => [newGroup, ...prev]);
+        unsubscribeOnChildChangeEvents.current[data.key!] = onChildChanged(ref(db, `groups/${data.key}`), onChildChangedCallback);
     };
 
     useEffect(() => {
@@ -107,33 +139,18 @@ const Groups: FC = () => {
 
     useEffect(() => {
         const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
-            console.groupCollapsed("Removing Group");
+            console.groupCollapsed("Removing Group Connection");
             console.log(`Id: ${data.key}`);
             console.groupEnd();
+
+            unsubscribeOnChildChangeEvents.current[data.key!]();
+            delete unsubscribeOnChildChangeEvents.current[data.key!];
+
             setGroups(prev => prev.filter(group => group.id !== data.key));
         });
-
-        //const onChildChangedUnsubscribe = onChildChanged(ref(db, `users/${user!.uid}/groups`), (data) => {
-        //    console.groupCollapsed("Activity Changed");
-        //    console.log(`Id: ${data.key}`);
-        //    console.log(`New Data: ${data.val()}`);
-        //    console.groupEnd();
-
-        //    setActivities(prev => {
-        //        const itemIdx = prev.findIndex(item => item.id === data.key);
-        //        if (itemIdx === -1) return prev;
-
-        //        return [
-        //            ...prev.slice(0, itemIdx),
-        //            { id: data.key, ...data.val() },
-        //            ...prev.slice(itemIdx + 1)
-        //        ];
-        //    });
-        //});
-
+        
         return () => {
             onChildRemovedUnsubscribe();
-            //onChildChangedUnsubscribe();
         };
     }, []);
     
