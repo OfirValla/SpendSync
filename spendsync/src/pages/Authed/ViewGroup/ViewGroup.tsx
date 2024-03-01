@@ -107,7 +107,7 @@ const ViewGroup: FC = () => {
         const onChildChangedUnsubscribe = onChildChanged(ref(db, `groups/${groupId}/activity`), (data) => {
             console.groupCollapsed("Activity Changed");
             console.log(`Id: ${data.key}`);
-            console.log(`New Data: ${data.val()}`);
+            console.log(`New Data: ${JSON.stringify(data.val())}`);
             console.groupEnd();
 
             setActivities(prev => {
