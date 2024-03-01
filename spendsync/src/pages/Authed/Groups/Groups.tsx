@@ -6,7 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../../../firebase';
 
 type Group = {
-    id: string;
+    id: string | null;
     name: string;
     owed: { [key: string]: number; };
 };
