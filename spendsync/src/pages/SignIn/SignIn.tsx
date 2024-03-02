@@ -50,7 +50,6 @@ const SignIn: FC = () => {
         signInWithEmail(emailRef.current!.value, passwordRef.current!.value);
 
     useEffect(() => {
-        //signUpWithEmailAndPassword('darkpc50@gmail.com', 'Pcrc8339')
     }, []);
 
     return (
