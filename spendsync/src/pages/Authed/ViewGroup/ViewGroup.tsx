@@ -87,7 +87,7 @@ const ViewGroup: FC = () => {
             activityAddedQuery,
             onChildAddedCallback
         );
-    }, [firstItem, hasNextPage]);
+    }, [firstItem, hasNextPage, groupId]);
 
     useEffect(() => {
         const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `groups/${groupId}/activity`), (data) => {
@@ -120,7 +120,7 @@ const ViewGroup: FC = () => {
             onChildRemovedUnsubscribe();
             onChildChangedUnsubscribe();
         };
-    }, []);
+    }, [groupId]);
 
     return (
         <div>

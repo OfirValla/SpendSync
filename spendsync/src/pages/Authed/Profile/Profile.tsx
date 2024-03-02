@@ -91,7 +91,7 @@ const Profile: FC = () => {
                 setGroups(prev => [data.key!, ...prev]);
             }
         );
-    }, [firstItem, hasNextPage]);
+    }, [firstItem, hasNextPage, user]);
 
     useEffect(() => {
         return onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
@@ -101,7 +101,7 @@ const Profile: FC = () => {
             
             setGroups(prev => prev.filter(id => id !== data.key));
         });
-    }, []);
+    }, [user]);
 
     const onNotExists = (error: Error, groupId: string) => {
         if (error.message.toLowerCase() !== 'permission denied') return;
