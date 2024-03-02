@@ -4,7 +4,8 @@ import {
     getAuth,
     signInWithEmailAndPassword,
     signInWithPopup,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    GithubAuthProvider
 } from "firebase/auth";
 import { getDatabase } from 'firebase/database';
 
@@ -28,6 +29,9 @@ export const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+
+const githubProvider = new GithubAuthProvider();
+export const signInWithGithub = () => signInWithPopup(auth, githubProvider);
 
 export const signInWithEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 export const signUpWithEmailAndPassword = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
