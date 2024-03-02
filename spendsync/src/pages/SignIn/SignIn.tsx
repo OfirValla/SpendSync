@@ -1,9 +1,10 @@
 import { useEffect, FC, useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { signInWithGoogle, signInWithEmail } from '../../firebase';
+import { signInWithGoogle, signInWithEmail, signUpWithEmailAndPassword } from '../../firebase';
 
 import googleLogo from './Google.svg';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 const styles = stylex.create({
     container: {
@@ -40,17 +41,19 @@ const styles = stylex.create({
 });
 
 const SignIn: FC = () => {
+    useDocumentTitle('SpendSync - Sign In');
+
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
     const emailSignIn = () => {
         console.log(emailRef.current?.value);
         console.log(passwordRef.current?.value);
-        //signInWithEmail(emailRef.current?.value)
+        signInWithEmail(emailRef.current?.value, passwordRef.current?.value);
     }
 
     useEffect(() => {
-        //signInWithGoogle();
+        //signUpWithEmailAndPassword('darkpc50@gmail.com', 'Pcrc8339')
     }, []);
 
     return (

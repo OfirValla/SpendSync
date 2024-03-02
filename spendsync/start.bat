@@ -1,2 +1,2 @@
 @echo off
-yarn dev
+yarn dev --host

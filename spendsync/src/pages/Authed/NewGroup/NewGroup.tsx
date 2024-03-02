@@ -3,6 +3,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { push, ref, update } from "firebase/database";
 
 import { auth, db } from '../../../firebase';
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 type Group = {
     managedBy: string;
@@ -12,6 +13,8 @@ type Group = {
 };
 
 const NewGroup: FC = () => {
+    useDocumentTitle('SpendSync - New Group');
+
     const [user, ,] = useAuthState(auth);
 
     const addNewGroup = async () => {

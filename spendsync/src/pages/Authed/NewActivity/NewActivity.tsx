@@ -4,6 +4,7 @@ import { push, ref } from "firebase/database";
 
 import { auth, db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 type Icons = 'house' | 'groceries' | 'dining-out' | 'household-supplies' | 'transportation' | 'subscriptions' |
     'events' | 'utility-bills' | 'health-wellness' | 'cleaning-services' | 'home-repairs' | 'fuurniture' |
@@ -20,6 +21,8 @@ type Activity = {
 };
 
 const NewActivity: FC = () => {
+    useDocumentTitle('SpendSync - New Activity');
+
     const [user, ,] = useAuthState(auth);
     const { groupId } = useParams();
 

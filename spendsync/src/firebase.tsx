@@ -3,7 +3,8 @@ import {
     GoogleAuthProvider,
     getAuth,
     signInWithEmailAndPassword,
-    signInWithPopup
+    signInWithPopup,
+    createUserWithEmailAndPassword
 } from "firebase/auth";
 import { getDatabase } from 'firebase/database';
 
@@ -29,5 +30,6 @@ googleProvider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 
 export const signInWithEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
+export const signUpWithEmailAndPassword = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
 
 export default app;

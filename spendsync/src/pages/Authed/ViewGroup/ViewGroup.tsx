@@ -5,6 +5,7 @@ import { ref, query, get, limitToLast, endBefore, orderByKey, DataSnapshot, onCh
 
 import { db } from '../../../firebase';
 import Activity from '../../../components/atoms/Activity';
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 type ActivityDTO = {
     title: string;
@@ -18,6 +19,8 @@ type ActivityDTO = {
 type Activity = ActivityDTO & { id: string | null; };
 
 const ViewGroup: FC = () => {
+    useDocumentTitle('SpendSync - View Group');
+
     const { groupId } = useParams();
     const [activities, setActivities] = useState<Activity[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);

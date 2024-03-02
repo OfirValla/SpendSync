@@ -3,10 +3,15 @@ import { ref, get, onChildAdded, query, onChildRemoved, DataSnapshot, orderByKey
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { isMobile } from 'react-device-detect';
+
 import { auth, db } from '../../../firebase';
 import Group from '../../../components/atoms/Group';
+import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 const Profile: FC = () => {
+    useDocumentTitle('SpendSync - Profile');
+
     const [user, ,] = useAuthState(auth);
     const [groups, setGroups] = useState<string[]>([]);    
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -107,6 +112,7 @@ const Profile: FC = () => {
 
     return (
         <>
+            <div>IsMobile: {isMobile.toString()}</div>
             <div>Profile - Section 1 - User information (Image + Email + Name)</div>
             <div>Profile - Section 2 - Groups</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
