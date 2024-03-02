@@ -89,17 +89,13 @@ const Profile: FC = () => {
     }, [firstItem, hasNextPage]);
 
     useEffect(() => {
-        const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
+        return onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
             console.groupCollapsed("Removing Group Connection");
             console.log(`Id: ${data.key}`);
             console.groupEnd();
             
             setGroups(prev => prev.filter(id => id !== data.key));
         });
-        
-        return () => {
-            onChildRemovedUnsubscribe();
-        };
     }, []);
 
     const onNotExists = (error: Error, groupId: string) => {
