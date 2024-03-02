@@ -55,7 +55,7 @@ const ViewGroup: FC = () => {
 
         const newActivities = (Object.keys(data) || []).map(id => { return { id, ...data[id] }; }).reverse();
         setActivities(prev => [...prev, ...newActivities]);
-        debugger;
+
         console.log(`Found ${newActivities.length} new activities`);
         console.groupEnd();
 
