@@ -1,5 +1,6 @@
-import { DataSnapshot, Unsubscribe, get, onChildChanged, ref } from 'firebase/database';
 import { FC, useEffect, useRef, useState } from 'react';
+import { DataSnapshot, Unsubscribe, get, onChildChanged, ref } from 'firebase/database';
+import { NavLink } from 'react-router-dom';
 
 import { db } from '../../../firebase';
 
@@ -51,7 +52,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         }
     }, []);
 
-    return <div><b>{groupInfo?.id}</b> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)}</div>;
+    return <div><NavLink to={`/groups/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)}</div>;
 };
 
 export default Group;
