@@ -6,7 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
 
-import Groups from './Groups';
+import Profile from './Profile';
 import NewGroup from './NewGroup';
 import ViewGroup from './ViewGroup';
 import NewActivity from './NewActivity';
@@ -17,7 +17,7 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Groups />
+                element: <Profile />
             },
             {
                 path: 'groups/:groupId',

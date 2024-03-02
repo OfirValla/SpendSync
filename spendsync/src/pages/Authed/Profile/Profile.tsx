@@ -6,7 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from '../../../firebase';
 import Group from '../../../components/atoms/Group';
 
-const Groups: FC = () => {
+const Profile: FC = () => {
     const [user, ,] = useAuthState(auth);
     const [groups, setGroups] = useState<string[]>([]);    
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -111,7 +111,8 @@ const Groups: FC = () => {
 
     return (
         <>
-            <div>Groups</div>
+            <div>Profile - Section 1 - User information (Image + Email + Name)</div>
+            <div>Profile - Section 2 - Groups</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
             <div ref={rootRef}>
                 {groups.map(groupId => <Group key={groupId} groupId={groupId!} onNotExisting={onNotExists} />)}
@@ -121,4 +122,4 @@ const Groups: FC = () => {
     )
 };
 
-export default Groups;
+export default Profile;

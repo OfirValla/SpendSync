@@ -131,7 +131,9 @@ const ViewGroup: FC = () => {
 
     return (
         <>
-            <div>View Group {groupId}</div>
+            <div>View Group - Section 1 - Group Information {groupId}</div>
+            <div>View Group - Section 2 - Members (Scrollable circles x-axis)</div>
+            <div>View Group - Section 3 - Activities (Scrollable activities y-axis)</div>
             <div ref={rootRef}>
                 {
                     activities.map(activity => {
