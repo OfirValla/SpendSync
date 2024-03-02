@@ -33,7 +33,9 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         // Check only if name or owed has updated
         if (!updatableGroupKeys.includes(snapshot.key!)) return;
 
-        setGroupInfo(prev => { return { ...prev, [snapshot.key!]: snapshot.val() } });
+        setGroupInfo(prev => {
+            return { ...prev!, [snapshot.key!]: snapshot.val() };
+        });
     }
 
     useEffect(() => {
