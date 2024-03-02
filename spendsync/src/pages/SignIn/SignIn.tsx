@@ -3,7 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 
 import { signInWithGoogle, signInWithEmail, signUpWithEmailAndPassword } from '../../firebase';
 
-import googleLogo from './Google.svg';
+import googleLogo from '../../assets/Google.svg';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 const styles = stylex.create({
@@ -50,6 +50,7 @@ const SignIn: FC = () => {
         signInWithEmail(emailRef.current!.value, passwordRef.current!.value);
 
     useEffect(() => {
+
     }, []);
 
     return (
