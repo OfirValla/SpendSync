@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
     GoogleAuthProvider,
     getAuth,
+    signInWithEmailAndPassword,
     signInWithPopup
 } from "firebase/auth";
 import { getDatabase } from 'firebase/database';
@@ -23,8 +24,10 @@ export const db = getDatabase(app);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => signInWithPopup(auth, provider);
+const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
+export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+
+export const signInWithEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 
 export default app;

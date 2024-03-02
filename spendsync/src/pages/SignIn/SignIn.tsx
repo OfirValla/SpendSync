@@ -1,7 +1,7 @@
-import { useEffect, FC } from 'react';
+import { useEffect, FC, useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { signInWithGoogle } from '../../firebase';
+import { signInWithGoogle, signInWithEmail } from '../../firebase';
 
 import googleLogo from './Google.svg';
 
@@ -40,24 +40,35 @@ const styles = stylex.create({
 });
 
 const SignIn: FC = () => {
-    // On page load -> immideatly request login
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
+
+    const emailSignIn = () => {
+        console.log(emailRef.current?.value);
+        console.log(passwordRef.current?.value);
+        //signInWithEmail(emailRef.current?.value)
+    }
+
     useEffect(() => {
         //signInWithGoogle();
     }, []);
 
     return (
-        <div {...stylex.props(styles.container)}>
-            <div
-                {...stylex.props(styles.button)}
-                onClick={signInWithGoogle}
-            >
-                <img
-                    {...stylex.props(styles.icon)}
-                    src={googleLogo}
-                    alt="Google logo" />
-                <span>Sign in with Google</span>
-            </div>
-        </div>
+        <>
+            <div><input type="email" ref={emailRef} /> <input type="password" ref={passwordRef} /><button onClick={emailSignIn}>Sign In</button></div>
+            <div {...stylex.props(styles.container)}>
+                <div
+                    {...stylex.props(styles.button)}
+                    onClick={signInWithGoogle}
+                >
+                    <img
+                        {...stylex.props(styles.icon)}
+                        src={googleLogo}
+                        alt="Google logo" />
+                    <span>Sign in with Google</span>
+                </div>
+                </div>
+        </>
     );
 };
 
