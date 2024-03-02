@@ -1,0 +1,58 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        "groups": {
+          // Only the authenticated user can read its own groups
+          ".read": "$uid === auth.uid"
+        },
+        "email": {
+          // Only authenticated users can read
+          ".read": "auth !== null"
+        },
+        "name": {
+          // Only authenticated users can read
+          ".read": "auth !== null"
+        },
+        "photo": {
+          // Only authenticated users can read
+          ".read": "auth !== null"
+        },
+        
+        // Every authed user can read information
+        // Only the user can write information to his section
+        ".read": false,
+        ".write": "$uid === auth.uid"
+      }
+    },
+    
+    "invites": {
+      "$email": {
+        // Only the authenticated user with the given email can read its own invites
+        ".read": "$email === auth.token.email.replace('.', ',')"
+      },
+      
+      // No one can read invites
+      ".read": false,
+      // Only authenticated users can write new invites
+      ".write": "auth !== null"
+    },
+      
+    "groups": {
+      "$groupId": {
+        // Only members of the group can read/write information
+        ".read": "root.child('groups').child($groupId).child('members').child(auth.uid).exists()",
+        ".write": "root.child('groups').child($groupId).child('members').child(auth.uid).exists()"
+      },
+      
+      // No one can read the groups
+      ".read": false,
+      // Only authenticated users can create new groups
+      ".write": "auth !== null"
+    },
+    
+    // No one can read/write information
+    ".read": false,
+    ".write": false
+  }
+}
