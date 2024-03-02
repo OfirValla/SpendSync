@@ -46,11 +46,8 @@ const SignIn: FC = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    const emailSignIn = () => {
-        console.log(emailRef.current?.value);
-        console.log(passwordRef.current?.value);
-        signInWithEmail(emailRef.current?.value, passwordRef.current?.value);
-    }
+    const emailSignIn = () =>
+        signInWithEmail(emailRef.current!.value, passwordRef.current!.value);
 
     useEffect(() => {
         //signUpWithEmailAndPassword('darkpc50@gmail.com', 'Pcrc8339')
