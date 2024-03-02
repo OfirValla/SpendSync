@@ -3,7 +3,6 @@ import { FC, useEffect, useRef, useState } from 'react';
 
 import { db } from '../../../firebase';
 
-
 interface GroupProps {
     groupId: string;
     onNotExisting: (error: Error, groupId: string) => void;

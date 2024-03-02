@@ -25,7 +25,7 @@ const Groups: FC = () => {
 
         let result: DataSnapshot;
         if (groups.length !== 0)
-            result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByKey(), endBefore(groups!.at(-1)!.id), limitToLast(10)));
+            result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByKey(), endBefore(groups!.at(-1)!), limitToLast(10)));
         else {
             result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByKey(), limitToLast(10)));
             setFirstItem(Object.keys(result.val() || {}).at(-1));

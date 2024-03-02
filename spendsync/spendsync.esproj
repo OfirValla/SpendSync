@@ -11,7 +11,6 @@
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="src\assets\" />
-    <Folder Include="src\components\atoms\Activity\" />
     <Folder Include="src\pages\Authed\AddNewUserToGroup\" />
     <Folder Include="src\pages\SignUp\" />
     <Folder Include="src\pages\ResetPassword\" />

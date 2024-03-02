@@ -4,6 +4,7 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { ref, query, get, limitToLast, endBefore, orderByKey, DataSnapshot, onChildAdded, startAfter, onChildRemoved, onChildChanged, Query } from 'firebase/database';
 
 import { db } from '../../../firebase';
+import Activity from '../../../components/atoms/Activity';
 
 type ActivityDTO = {
     title: string;
@@ -133,8 +134,8 @@ const ViewGroup: FC = () => {
             <div>View Group {groupId}</div>
             <div ref={rootRef}>
                 {
-                    activities.map((activity, index) => {
-                        return <div key={index}>{activity.id} - {activity.title}</div>;
+                    activities.map(activity => {
+                        return <Activity key={activity.id} {...activity} />;
                     })
                 }
 
