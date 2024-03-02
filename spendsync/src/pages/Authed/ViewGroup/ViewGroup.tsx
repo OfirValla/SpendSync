@@ -55,14 +55,14 @@ const ViewGroup: FC = () => {
 
         const newActivities = (Object.keys(data) || []).map(id => { return { id, ...data[id] }; }).reverse();
         setActivities(prev => [...prev, ...newActivities]);
-
+        debugger;
         console.log(`Found ${newActivities.length} new activities`);
         console.groupEnd();
 
         setIsLoading(false);
     };
 
-    const [sentryRef, { rootRef }] = useInfiniteScroll({
+    const [sentryRef] = useInfiniteScroll({
         loading: isLoading,
         hasNextPage,
         onLoadMore: fetchData,
@@ -133,11 +133,11 @@ const ViewGroup: FC = () => {
     }, []);
 
     return (
-        <>
+        <div>
             <div>View Group - Section 1 - Group Information {groupId}</div>
             <div>View Group - Section 2 - Members (Scrollable circles x-axis)</div>
             <div>View Group - Section 3 - Activities (Scrollable activities y-axis)</div>
-            <div ref={rootRef}>
+            <div>
                 {
                     activities.map(activity => {
                         return <Activity key={activity.id} {...activity} />;
@@ -146,7 +146,7 @@ const ViewGroup: FC = () => {
 
                 <div ref={sentryRef}></div>
             </div>
-        </>
+        </div>
     );
 };
 

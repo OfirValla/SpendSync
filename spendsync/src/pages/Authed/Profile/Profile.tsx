@@ -59,7 +59,7 @@ const Profile: FC = () => {
         setIsLoading(false);
     };
 
-    const [sentryRef, { rootRef }] = useInfiniteScroll({
+    const [sentryRef] = useInfiniteScroll({
         loading: isLoading,
         hasNextPage,
         onLoadMore: fetchData,
@@ -116,7 +116,7 @@ const Profile: FC = () => {
             <div>Profile - Section 1 - User information (Image + Email + Name)</div>
             <div>Profile - Section 2 - Groups</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
-            <div ref={rootRef}>
+            <div>
                 {groups.map(groupId => <Group key={groupId} groupId={groupId!} onNotExisting={onNotExists} />)}
                 <div ref={sentryRef}></div>
             </div>
