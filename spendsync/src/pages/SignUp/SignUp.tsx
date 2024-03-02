@@ -46,8 +46,8 @@ const SignUp: FC = () => {
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
-    const emailSignIn = () =>
-        signInWithEmail(emailRef.current!.value, passwordRef.current!.value);
+    const emailSignUp = () =>
+        signUpWithEmailAndPassword(emailRef.current!.value, passwordRef.current!.value);
 
     useEffect(() => {
 
@@ -55,7 +55,7 @@ const SignUp: FC = () => {
 
     return (
         <>
-            <div><input type="email" ref={emailRef} /> <input type="password" ref={passwordRef} /><button onClick={emailSignIn}>Sign In</button></div>
+            <div><input type="email" ref={emailRef} /> <input type="password" ref={passwordRef} /><button onClick={emailSignUp}>Sign In</button></div>
             <div {...stylex.props(styles.container)}>
                 <div
                     {...stylex.props(styles.button)}
