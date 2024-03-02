@@ -3,22 +3,17 @@ import { DataSnapshot, Unsubscribe, get, onChildChanged, ref } from 'firebase/da
 import { NavLink } from 'react-router-dom';
 
 import { db } from '../../../firebase';
+import { GroupPreview } from '../../../types/Group';
 
 interface GroupProps {
     groupId: string;
     onNotExisting: (error: Error, groupId: string) => void;
 }
 
-type Group = {
-    id: string | null;
-    name: string;
-    owed: { [key: string]: number; };
-};
-
 const updatableGroupKeys = ['name', 'owed'];
 
 const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
-    const [groupInfo, setGroupInfo] = useState<Group | null>(null);
+    const [groupInfo, setGroupInfo] = useState<GroupPreview | null>(null);
     const unsubscribeOnChildChangeEvent = useRef<Unsubscribe>(() => { });
 
     const onChildChangedCallback = (snapshot: DataSnapshot) => {

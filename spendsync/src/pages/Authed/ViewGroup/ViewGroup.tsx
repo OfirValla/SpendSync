@@ -6,23 +6,13 @@ import { ref, query, get, limitToLast, endBefore, orderByKey, DataSnapshot, onCh
 import { db } from '../../../firebase';
 import Activity from '../../../components/atoms/Activity';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
-
-type ActivityDTO = {
-    title: string;
-    amount: number;
-    currency: string;
-    createdAt: string;
-    paidBy: string;
-    split: { [key: string]: number; };
-};
-
-type Activity = ActivityDTO & { id: string | null; };
+import { Activity as ActivityType, ActivityDTO } from '../../../types/Activity';
 
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
 
     const { groupId } = useParams();
-    const [activities, setActivities] = useState<Activity[]>([]);
+    const [activities, setActivities] = useState<ActivityType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
@@ -53,7 +43,7 @@ const ViewGroup: FC = () => {
             return;
         }
 
-        const newActivities = (Object.keys(data) || []).map(id => { return { id, ...data[id] }; }).reverse();
+        const newActivities: ActivityType[] = (Object.keys(data) || []).map(id => { return { id, ...data[id] }; }).reverse();
         setActivities(prev => [...prev, ...newActivities]);
 
         console.log(`Found ${newActivities.length} new activities`);
@@ -76,7 +66,7 @@ const ViewGroup: FC = () => {
         console.groupCollapsed("Activity Added");
         console.log(`Id: ${data.key}`);
         const result: ActivityDTO = data.val();
-        const newActivity: Activity = { id: data.key, ...result };
+        const newActivity: ActivityType = { id: data.key, ...result };
         console.log(`Title: ${newActivity.title}`);
         console.groupEnd();
 

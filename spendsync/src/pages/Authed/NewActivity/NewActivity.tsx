@@ -6,19 +6,7 @@ import { auth, db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
-type Icons = 'house' | 'groceries' | 'dining-out' | 'household-supplies' | 'transportation' | 'subscriptions' |
-    'events' | 'utility-bills' | 'health-wellness' | 'cleaning-services' | 'home-repairs' | 'fuurniture' |
-    'pets' | 'vacations' | 'misc' | 'emergency' | 'gifts' | 'electronics' | 'education';
-
-type Activity = {
-    title: string;
-    icon: Icons;
-    amount: number;
-    createdAt: number;
-    currency: string;
-    paidBy: string;
-    split: { [key: string]: number; };
-};
+import { ActivityDTO } from '../../../types/Activity';
 
 const NewActivity: FC = () => {
     useDocumentTitle('SpendSync - New Activity');
@@ -27,7 +15,7 @@ const NewActivity: FC = () => {
     const { groupId } = useParams();
 
     const addNewActivity = async () => {
-        const newActivity: Activity = {
+        const newActivity: ActivityDTO = {
             amount: 100,
             icon: 'house',
             createdAt: new Date().getTime(),

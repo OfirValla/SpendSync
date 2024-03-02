@@ -4,13 +4,7 @@ import { push, ref, update } from "firebase/database";
 
 import { auth, db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
-
-type Group = {
-    managedBy: string;
-    members: { [key: string]: boolean; };
-    name: string;
-    owed: { [key: string]: number; };
-};
+import { Group } from '../../../types/Group';
 
 const NewGroup: FC = () => {
     useDocumentTitle('SpendSync - New Group');
@@ -26,7 +20,8 @@ const NewGroup: FC = () => {
             name: `Test Group`,
             owed: {
                 [user!.uid]: 0
-            }
+            },
+            activity: {}
         }
         const newRef = await push(ref(db, `groups`), newGroup);
         

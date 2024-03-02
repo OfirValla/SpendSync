@@ -1,16 +1,7 @@
 import { FC } from 'react';
+import { Activity as ActivityType } from '../../../types/Activity';
 
-interface ActivityProps {
-    id: string | null;
-    title: string;
-    amount: number;
-    currency: string;
-    createdAt: string;
-    paidBy: string;
-    split: { [key: string]: number; };
-}
-
-const Activity: FC<ActivityProps> = ({ id, title, amount, currency, createdAt, paidBy, split }) => {
+const Activity: FC<ActivityType> = ({ id, title, amount, currency, createdAt, paidBy, split }) => {
     
     return (
         <div>
