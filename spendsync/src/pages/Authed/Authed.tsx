@@ -55,7 +55,7 @@ const Authed: FC = () => {
     // 5. New Activity In Group
 
     const handleNewInvites = () => {
-        return onValue(ref(db, `invites/${user!.email!.replace('.', ',')}`),
+        return onValue(ref(db, `invites/${user!.email!.replaceAll('.', ',')}`),
             snapshot => {
                 const data = snapshot.val();
                 if (!data) return;
