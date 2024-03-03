@@ -7,7 +7,6 @@ interface MemberProps {
 }
 
 const Member: FC<MemberProps> = ({ id }) => {
-
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
