@@ -10,6 +10,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="public\" />
+    <Folder Include="src\components\atoms\Member\" />
+    <Folder Include="src\components\molecules\Members\" />
     <Folder Include="src\pages\Authed\AddNewUserToGroup\" />
     <Folder Include="src\pages\ResetPassword\" />
   </ItemGroup>
