@@ -90,35 +90,12 @@ const Members: FC<MembersProps> = ({ groupId }) => {
     }, [firstItem, hasNextPage, groupId]);
 
     useEffect(() => {
-        const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `groups/${groupId}/members`), (data: DataSnapshot) => {
+        return onChildRemoved(ref(db, `groups/${groupId}/members`), (data: DataSnapshot) => {
             console.groupCollapsed("Removing Member");
             console.log(`Id: ${data.key}`);
             console.groupEnd();
             setMembers(prev => prev.filter(memberId => memberId !== data.key));
         });
-
-        //const onChildChangedUnsubscribe = onChildChanged(ref(db, `groups/${groupId}/members`), (data: DataSnapshot) => {
-        //    console.groupCollapsed("Member Changed");
-        //    console.log(`Id: ${data.key}`);
-        //    console.log(`New Data: ${JSON.stringify(data.val())}`);
-        //    console.groupEnd();
-
-        //    setMembers(prev => {
-        //        const itemIdx = prev.findIndex(item => item.id === data.key);
-        //        if (itemIdx === -1) return prev;
-
-        //        return [
-        //            ...prev.slice(0, itemIdx),
-        //            { id: data.key, ...data.val() },
-        //            ...prev.slice(itemIdx + 1)
-        //        ];
-        //    });
-        //});
-
-        return () => {
-            onChildRemovedUnsubscribe();
-            //onChildChangedUnsubscribe();
-        };
     }, [groupId]);
 
     return (
