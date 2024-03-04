@@ -7,13 +7,13 @@ interface MemberProps {
 }
 
 const Member: FC<MemberProps> = ({ id }) => {
-    const [name, setName] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
+    //const [name, setName] = useState<string>('');
+    //const [email, setEmail] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
 
     useEffect(() => {
-        get(ref(db, `users/${id}/name`)).then((data: DataSnapshot) => { setName(data.val()); });
-        get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
+        //get(ref(db, `users/${id}/name`)).then((data: DataSnapshot) => { setName(data.val()); });
+        //get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
         get(ref(db, `users/${id}/photo`)).then((data: DataSnapshot) => { setPhoto(data.val()); });
     }, [id])
     // Update the ui
