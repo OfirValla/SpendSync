@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { isMobile } from 'react-device-detect';
 
-import { auth, db } from '../../../firebase';
+import { auth, db, signOutUser } from '../../../firebase';
 import Group from '../../../components/atoms/Group';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
@@ -114,6 +114,7 @@ const Profile: FC = () => {
         <>
             <div>IsMobile: {isMobile.toString()}</div>
             <div>Profile - Section 1 - User information (Image + Email + Name)</div>
+            <button onClick={signOutUser}>Sign Out</button>
             <div>Profile - Section 2 - Groups</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
             <div>

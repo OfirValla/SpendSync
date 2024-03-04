@@ -5,9 +5,13 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup,
     createUserWithEmailAndPassword,
-    GithubAuthProvider
+    GithubAuthProvider,
+    signInWithRedirect,
+    signOut
 } from "firebase/auth";
 import { getDatabase } from 'firebase/database';
+
+import { isMobile } from 'react-device-detect';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAvK04e11o3RlHn4yivXguYK4tA9QXqb2A",
@@ -26,14 +30,20 @@ export const db = getDatabase(app);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 
+// If in mobile mode -> Use redirect sign in
+// Else -> Use popup sign in
+const signInMethod = isMobile ? signInWithRedirect : signInWithPopup;
+
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+export const signInWithGoogle = () => signInMethod(auth, googleProvider);
 
 const githubProvider = new GithubAuthProvider();
-export const signInWithGithub = () => signInWithPopup(auth, githubProvider);
+export const signInWithGithub = () => signInMethod(auth, githubProvider);
 
 export const signInWithEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 export const signUpWithEmailAndPassword = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
+
+export const signOutUser = () => signOut(auth);
 
 export default app;
