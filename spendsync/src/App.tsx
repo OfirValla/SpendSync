@@ -1,12 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-
-import Loader from './components/atoms/Loader';
-import Authed from './pages/Authed';
-import SignIn from './pages/SignIn';
-import Error from './pages/Error';
-
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from './firebase';
+
+import Loader from './components/atoms/Loader';
+import NotAuthed from './pages/NotAuthed';
+import Authed from './pages/Authed';
+import Error from './pages/Error';
 
 import './App.css';
 
@@ -15,7 +14,7 @@ type States = 'loading' | 'authed' | 'not-authed' | 'error';
 const ComponentSelector: { [id: string]: FC } = {
     'loading': Loader,
     'authed': Authed,
-    'not-authed': SignIn,
+    'not-authed': NotAuthed,
     'error': Error
 };
 
