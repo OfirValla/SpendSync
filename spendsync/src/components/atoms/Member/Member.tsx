@@ -21,7 +21,6 @@ const Member: FC<MemberProps> = ({ id }) => {
     return (
         <div style={{ display: 'grid', justifyItems: 'center' }}>
             <img src={photo} style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
-            <b>{name || email}</b>
         </div>
     );
 };

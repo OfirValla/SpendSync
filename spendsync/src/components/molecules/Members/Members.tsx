@@ -5,6 +5,8 @@ import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChild
 import { db } from '../../../firebase';
 import Member from '../../atoms/Member';
 
+import './Members.css';
+
 interface MembersProps {
     groupId: string;
 }
@@ -120,7 +122,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
     }, [groupId]);
 
     return (
-        <div style={{ display: 'grid', gridAutoFlow: 'column', gridGap: '20px', justifyContent: 'start' }} >
+        <div className="members" style={{ display: 'grid', gridAutoFlow: 'column', gridGap: '20px', justifyContent: 'start', overflowX: 'auto' }} >
             {
                 members.map(member => {
                     return <Member id={member} />;
