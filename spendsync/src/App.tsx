@@ -22,6 +22,8 @@ const App: FC = () => {
     const [user, loading, error] = useAuthState(auth);
     const [state, setState] = useState<States>('loading');
 
+    console.log(state)
+
     useEffect(() => {
         let newState: States = 'loading';
         if (user) newState = 'authed';

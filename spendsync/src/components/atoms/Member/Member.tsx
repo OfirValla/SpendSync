@@ -2,6 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { DataSnapshot, get, ref } from 'firebase/database';
 import { db } from '../../../firebase';
 
+import userSilhouette from '../../../assets/UserSilhouette.svg';
+
 interface MemberProps {
     id: string;
 }
@@ -16,11 +18,13 @@ const Member: FC<MemberProps> = ({ id }) => {
         //get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
         get(ref(db, `users/${id}/photo`)).then((data: DataSnapshot) => { setPhoto(data.val()); });
     }, [id])
-    // Update the ui
 
     return (
         <div style={{ display: 'grid', justifyItems: 'center' }}>
-            <img src={photo} style={{ borderRadius: '50%', height: '50px', width: '50px' }} />
+            <img src={photo ?? ''} alt='User profile image' onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = userSilhouette;
+            }} style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece' }} />
         </div>
     );
 };

@@ -125,7 +125,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
         <div className="members" style={{ display: 'grid', gridAutoFlow: 'column', gridGap: '20px', justifyContent: 'start', overflowX: 'auto' }} >
             {
                 members.map(member => {
-                    return <Member id={member} />;
+                    return <Member key={member} id={member} />;
                 })
             }
 
