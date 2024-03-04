@@ -13,33 +13,28 @@ import NewActivity from './NewActivity';
 import NavigateToIndex from '../../components/atoms/NavigateToIndex';
 
 const router = createBrowserRouter([
+    
     {
-        path: "/",
+        index: true,
+        element: <Profile />
+    },
+    {
+        path: 'groups/:groupId',
         children: [
             {
                 index: true,
-                element: <Profile />
+                element: <ViewGroup />
             },
             {
-                path: 'groups/:groupId',
-                children: [
-                    {
-                        index: true,
-                        element: <ViewGroup />
-                    },
-                    {
-                        path: 'new-user',
-                        element: <div>New User</div>
-                    },
-                    {
-                        path: 'new-activity',
-                        element: <NewActivity />
-                    }
-                ]
+                path: 'new-user',
+                element: <div>New User</div>
+            },
+            {
+                path: 'new-activity',
+                element: <NewActivity />
             }
-        ],
+        ]
     },
-    
     {
         path: "new-group",
         element: <NewGroup />

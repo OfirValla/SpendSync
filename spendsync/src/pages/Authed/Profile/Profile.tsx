@@ -16,9 +16,9 @@ const Profile: FC = () => {
         <>
             <div>IsMobile: {isMobile.toString()}</div>
             <div>Profile - Section 1 - User information (Image + Email + Name)</div>
+            <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
             <button onClick={signOutUser}>Sign Out</button>
             <div>Profile - Section 2 - Groups</div>
-            <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
             <Groups />
         </>
     )

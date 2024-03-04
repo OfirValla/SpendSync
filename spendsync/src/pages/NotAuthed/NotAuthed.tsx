@@ -8,31 +8,26 @@ import SignUp from './SignUp';
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        index: true,
+        element: <div>INDEX</div>
+    },
+    {
+        path: 'sign-in',
         children: [
             {
                 index: true,
-                element: <div>INDEX</div>
-            },
-            {
-                path: 'sign-in',
-                children: [
-                    {
-                        index: true,
-                        element: <SignIn />
-                    }
-                ]
-            },
-            {
-                path: 'sign-up',
-                children: [
-                    {
-                        index: true,
-                        element: <SignUp />
-                    }
-                ]
+                element: <SignIn />
             }
-        ],
+        ]
+    },
+    {
+        path: 'sign-up',
+        children: [
+            {
+                index: true,
+                element: <SignUp />
+            }
+        ]
     },
 
     {
