@@ -65,9 +65,6 @@ const Members: FC<MembersProps> = ({ groupId }) => {
     const onChildAddedCallback = (data: DataSnapshot) => {
         console.groupCollapsed("Member Added");
         console.log(`Id: ${data.key}`);
-        //const result: ActivityDTO = data.val();
-        //const newActivity: ActivityType = { id: data.key, ...result };
-        //console.log(`Title: ${newActivity.title}`);
         console.groupEnd();
 
         setMembers(prev => [data.key!, ...prev]);
