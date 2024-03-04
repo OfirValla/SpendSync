@@ -11,6 +11,5 @@
   <ItemGroup>
     <Folder Include="public\" />
     <Folder Include="src\pages\Authed\AddNewUserToGroup\" />
-    <Folder Include="src\pages\ResetPassword\" />
   </ItemGroup>
 </Project>

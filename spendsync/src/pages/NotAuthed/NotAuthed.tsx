@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import NavigateToIndex from '../../components/atoms/NavigateToIndex';
+import ResetPassword from './ResetPassword';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
@@ -13,21 +14,15 @@ const router = createBrowserRouter([
     },
     {
         path: 'sign-in',
-        children: [
-            {
-                index: true,
-                element: <SignIn />
-            }
-        ]
+        element: <SignIn />
     },
     {
         path: 'sign-up',
-        children: [
-            {
-                index: true,
-                element: <SignUp />
-            }
-        ]
+        element: <SignUp />
+    },
+    {
+        path: 'reset-password',
+        element: <ResetPassword />
     },
 
     {
