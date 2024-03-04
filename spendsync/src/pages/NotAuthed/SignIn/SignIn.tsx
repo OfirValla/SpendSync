@@ -1,4 +1,4 @@
-import { useEffect, FC, useRef } from 'react';
+import { FC, useRef } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
 import { signInWithGoogle, signInWithEmail, signInWithGithub } from '../../../firebase';
