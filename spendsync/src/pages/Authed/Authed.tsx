@@ -10,6 +10,7 @@ import Profile from './Profile';
 import NewGroup from './NewGroup';
 import ViewGroup from './ViewGroup';
 import NewActivity from './NewActivity';
+import NavigateToIndex from '../../components/atoms/NavigateToIndex';
 
 const router = createBrowserRouter([
     {
@@ -38,21 +39,30 @@ const router = createBrowserRouter([
             }
         ],
     },
+    
     {
         path: "new-group",
         element: <NewGroup />
+    },
+
+    {
+        // Fallback route
+        path: "*",
+        element: <NavigateToIndex />
     }
 ]);
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
-
+    
     // Router
-    // 1. Groups
-    // 2. Add New Group
+    // 1. Profile / Groups
+    // 2. Create New Group
     // 3. View Group
     // 4. Add User To Group
-    // 5. New Activity In Group
+    // 5. Create New Activity In Group
+    // 6. Edit an Activity
+    // 7. Edit a Group ( Change manager, Change name, Remove members  )
 
     const handleNewInvites = () => {
         return onValue(ref(db, `invites/${user!.email!.replaceAll('.', ',')}`),
