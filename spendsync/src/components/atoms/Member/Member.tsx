@@ -9,22 +9,28 @@ interface MemberProps {
 }
 
 const Member: FC<MemberProps> = ({ id }) => {
-    //const [name, setName] = useState<string>('');
-    //const [email, setEmail] = useState<string>('');
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
 
     useEffect(() => {
-        //get(ref(db, `users/${id}/name`)).then((data: DataSnapshot) => { setName(data.val()); });
-        //get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
+        get(ref(db, `users/${id}/name`)).then((data: DataSnapshot) => { setName(data.val()); });
+        get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
         get(ref(db, `users/${id}/photo`)).then((data: DataSnapshot) => { setPhoto(data.val()); });
     }, [id])
 
     return (
         <div style={{ display: 'grid', justifyItems: 'center' }}>
-            <img src={photo ?? ''} alt='User profile image' onError={({ currentTarget }) => {
-                currentTarget.onerror = null; // prevents looping
-                currentTarget.src = userSilhouette;
-            }} style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece' }} />
+            <img
+                src={photo ?? ''}
+                alt='User profile image'
+                title={`${name ?? 'No Username'} - ${email}`}
+                onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = userSilhouette;
+                }}
+                style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece' }}
+            />
         </div>
     );
 };
