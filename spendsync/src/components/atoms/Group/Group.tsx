@@ -46,8 +46,8 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
             
         return () => {
             unsubscribeOnChildChangeEvent.current && unsubscribeOnChildChangeEvent.current();
-        }
-    }, []);
+        };
+    }, [groupId]);
 
     return <div><NavLink to={`/groups/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)}</div>;
 };
