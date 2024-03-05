@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { push, ref, update } from "firebase/database";
 
@@ -10,6 +10,7 @@ const NewGroup: FC = () => {
     useDocumentTitle('SpendSync - New Group');
 
     const [user, ,] = useAuthState(auth);
+    const nameRef = useRef<HTMLInputElement>(null);
 
     const addNewGroup = async () => {
         const newGroup: Group = {
@@ -17,7 +18,7 @@ const NewGroup: FC = () => {
             members: {
                 [user!.uid]: true
             },
-            name: `Test Group`,
+            name: nameRef.current!.value,
             owed: {
                 [user!.uid]: 0
             },
@@ -32,9 +33,19 @@ const NewGroup: FC = () => {
             }
         );
     }
+    
+    useEffect(() => {
+
+    }, []);
 
     return (
-        <button onClick={addNewGroup}>New Group</button>
+        <>
+            <input type="text" ref={nameRef} />
+
+            <div>input to add users by email to the new group</div>
+            
+            <button onClick={addNewGroup}>New Group</button>
+        </>
     )
 };
 
