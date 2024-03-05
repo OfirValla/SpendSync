@@ -24,6 +24,7 @@ const Member: FC<MemberProps> = ({ id }) => {
             <img
                 src={photo ?? ''}
                 alt='User profile image'
+                referrerPolicy='no-referrer'
                 title={`${name ?? 'No Username'} - ${email}`}
                 onError={({ currentTarget }) => {
                     currentTarget.onerror = null; // prevents looping
