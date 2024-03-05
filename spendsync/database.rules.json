@@ -26,6 +26,15 @@
       }
     },
 
+    "availableUsers": {
+      "$email": {
+        ".validate": "newData.val() === auth.uid",
+        ".write": "auth !== null && $email === auth.token.email.replace('.', ',')"
+      },
+      ".read": "auth !== null",
+      ".write": false
+    },
+
     "invites": {
       "$email": {
         // Only the authenticated user with the given email can read its own invites
