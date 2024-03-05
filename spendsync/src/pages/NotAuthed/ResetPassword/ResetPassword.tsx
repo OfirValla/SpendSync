@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
-import { requestResetPassword } from '../../../firebase';
+//import { requestResetPassword } from '../../../firebase';
 
 
 const ResetPassword: FC = () => {

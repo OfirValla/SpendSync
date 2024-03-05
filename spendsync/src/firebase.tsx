@@ -8,8 +8,6 @@ import {
     signInWithRedirect,
     createUserWithEmailAndPassword,
     sendPasswordResetEmail,
-    confirmPasswordReset,
-    verifyPasswordResetCode,
     signOut,
 } from "firebase/auth";
 import { getDatabase } from 'firebase/database';
