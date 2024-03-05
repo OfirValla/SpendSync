@@ -106,12 +106,8 @@ const Authed: FC = () => {
     }
 
     useEffect(() => {
-        const unsubscribeNewInvites = handleNewInvites();        
-        updateUserInformation();
-        
-        return () => {
-            unsubscribeNewInvites();
-        }
+        updateUserInformation();        
+        return handleNewInvites();
     }, []);
 
     return (
