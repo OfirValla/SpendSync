@@ -37,6 +37,8 @@
 
     "invites": {
       "$email": {
+        // Only an authenticated user can receive invites
+        ".validate": "root.child('availableUsers').child($email).exists()",
         // Only the authenticated user with the given email can read its own invites
         ".read": "auth !== null && $email === auth.token.email.replace('.', ',')"
       },
