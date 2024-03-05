@@ -60,7 +60,7 @@ const Authed: FC = () => {
     // 7. Edit a Group ( Change manager, Change name, Remove members  )
 
     const handleNewInvites = () => {
-        return onValue(ref(db, `invites/${user!.email!.replaceAll('.', ',')}`),
+        return onValue(ref(db, `invites/${user!.uid}`),
             snapshot => {
                 const data = snapshot.val();
                 if (!data) return;
@@ -77,7 +77,7 @@ const Authed: FC = () => {
                     console.groupEnd();
                     Promise.all([
                         set(ref(db, `users/${user!.uid}/groups/${groupId}`), true),
-                        remove(ref(db, `invites/${user!.email!.replace('.', ',')}/${groupId}`))
+                        remove(ref(db, `invites/${user!.uid}/${groupId}`))
                     ]);
                 }
             },
