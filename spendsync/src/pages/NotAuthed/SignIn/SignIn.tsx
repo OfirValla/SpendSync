@@ -6,6 +6,7 @@ import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 import googleLogo from '../../../assets/Google.svg';
 import githubLogo from '../../../assets/Github.svg';
+import { text } from '../../../styles/global';
 
 const styles = stylex.create({
     container: {
@@ -65,8 +66,10 @@ const SignIn: FC = () => {
                     <img
                         {...stylex.props(styles.icon)}
                         src={googleLogo}
-                        alt="Google logo" />
-                    <span>Sign in with Google</span>
+                        alt="Google logo"
+                        draggable="false"
+                    />
+                    <span {...stylex.props(text.preventSelect)}>Sign in with Google</span>
                 </div>
             </div>
             <div {...stylex.props(styles.container)}>
@@ -77,8 +80,10 @@ const SignIn: FC = () => {
                     <img
                         {...stylex.props(styles.icon)}
                         src={githubLogo}
-                        alt="Github logo" />
-                    <span>Sign in with Github</span>
+                        alt="Github logo"
+                        draggable="false"
+                    />
+                    <span {...stylex.props(text.preventSelect)}>Sign in with Github</span>
                 </div>
             </div>
         </>
