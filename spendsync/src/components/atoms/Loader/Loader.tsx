@@ -1,32 +1,7 @@
 import { FC } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import './Loader.css';
-
-const styles = stylex.create({
-    container: {
-        display: 'grid',
-        justifyContent: 'center',
-        alignContent: 'center',
-        height: '100vh',
-        width: '100vw',
-        position: 'absolute',
-        top: '0',
-        right: '0'
-    },
-    svg: {
-        width: '20vw',
-        height: '20vw',
-        animation: 'spin 1s linear infinite'
-    },
-    circle: {
-        fill: 'none',
-        stroke: 'url(#linear)',
-        strokeWidth: '3px',
-        strokeLinecap: 'round',
-        animation: 'dash 2.5s ease-in-out infinite'
-    }
-});
+import { styles } from '../../../styles/loader';
 
 const Loader: FC = () => (
     <div {...stylex.props(styles.container)}>
