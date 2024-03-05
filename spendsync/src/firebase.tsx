@@ -1,13 +1,16 @@
 import { initializeApp } from "firebase/app";
 import {
     GoogleAuthProvider,
+    GithubAuthProvider,
     getAuth,
     signInWithEmailAndPassword,
     signInWithPopup,
-    createUserWithEmailAndPassword,
-    GithubAuthProvider,
     signInWithRedirect,
-    signOut
+    createUserWithEmailAndPassword,
+    sendPasswordResetEmail,
+    confirmPasswordReset,
+    verifyPasswordResetCode,
+    signOut,
 } from "firebase/auth";
 import { getDatabase } from 'firebase/database';
 
@@ -41,8 +44,10 @@ export const signInWithGoogle = () => signInMethod(auth, googleProvider);
 const githubProvider = new GithubAuthProvider();
 export const signInWithGithub = () => signInMethod(auth, githubProvider);
 
+// Email Sign up/in
 export const signInWithEmail = (email: string, password: string) => signInWithEmailAndPassword(auth, email, password);
 export const signUpWithEmailAndPassword = (email: string, password: string) => createUserWithEmailAndPassword(auth, email, password);
+export const requestResetPassword = (email: string) => sendPasswordResetEmail(auth, email);1
 
 export const signOutUser = () => signOut(auth);
 
