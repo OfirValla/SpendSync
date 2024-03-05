@@ -20,7 +20,7 @@ const Member: FC<MemberProps> = ({ id }) => {
     }, [id])
 
     return (
-        <div style={{ display: 'grid', justifyItems: 'center' }}>
+        <div style={{ display: 'grid', justifyItems: 'center', border: '2px white solid', borderRadius: '50%' }}>
             <img
                 src={photo ?? ''}
                 alt='User profile image'
