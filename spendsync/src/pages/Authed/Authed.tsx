@@ -72,13 +72,13 @@ const Authed: FC = () => {
 
                     // Get the invite and write it to the users groups
                     console.log('Adding group to users groups');
-                    set(ref(db, `users/${user!.uid}/groups/${groupId}`), true);
-
                     // Remove the invite from the list of invites
                     console.log('Removing invite for group');
-                    remove(ref(db, `invites/${user!.email!.replace('.', ',')}/${groupId}`));
-
                     console.groupEnd();
+                    Promise.all([
+                        set(ref(db, `users/${user!.uid}/groups/${groupId}`), true),
+                        remove(ref(db, `invites/${user!.email!.replace('.', ',')}/${groupId}`))
+                    ]);
                 }
             },
             error => console.error(error)
