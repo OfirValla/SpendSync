@@ -2,10 +2,6 @@
     display: none;
 }
 
-.members > div {
-    transition: all ease-in-out 5s;
-}
-
 .members > div:not(:first-of-type) { 
     margin-left: -10px; 
 }
