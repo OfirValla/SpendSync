@@ -4,13 +4,14 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import NavigateToIndex from '../../components/atoms/NavigateToIndex';
 import ResetPassword from './ResetPassword';
+import Landing from './Landing';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 const router = createBrowserRouter([
     {
         index: true,
-        element: <div>INDEX</div>
+        element: <Landing />
     },
     {
         path: 'sign-in',
