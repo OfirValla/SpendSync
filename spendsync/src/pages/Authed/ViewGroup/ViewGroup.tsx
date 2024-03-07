@@ -17,27 +17,21 @@ const ViewGroup: FC = () => {
     const [owed, setOwed] = useState<{ [key: string]: number; }>({});
 
     const updateName = (data: DataSnapshot) => setName(data.val());
-    const updateManagedBy = (data: DataSnapshot) => setManagedBy(data.val());
+    const updateManagedBy = (data: DataSnapshot) => setManagedBy(data.val()); 
     const updatedOwed = (data: DataSnapshot) => setOwed(data.val());
     
     useEffect(() => {
-        const nameRef = ref(db, `groups/${groupId}/name`);
-        get(nameRef).then(updateName);
-        const onChildChangedNameEvent = onChildChanged(nameRef, updateName);
+        Promise.all([
+            get(ref(db, `groups/${groupId}/name`)).then(updateName),
+            get(ref(db, `groups/${groupId}/managedBy`)).then(updateManagedBy),
+            get(ref(db, `groups/${groupId}/owed`)).then(updatedOwed)
+        ]);
 
-        const managedByRef = ref(db, `groups/${groupId}/managedBy`);
-        get(managedByRef).then(updateManagedBy);
-        const onChildChangedManagedByEvent = onChildChanged(managedByRef, updateManagedBy);
-
-        const owedRef = ref(db, `groups/${groupId}/owed`);
-        get(owedRef).then(updatedOwed);
-        const onChildChangedOwedEvent = onChildChanged(owedRef, updatedOwed);
-
-        return () => {
-            onChildChangedNameEvent();
-            onChildChangedManagedByEvent();
-            onChildChangedOwedEvent();
-        }
+        return onChildChanged(ref(db, `groups/${groupId}`), (snapshot) => {
+            if (snapshot.key === 'name') updateName(snapshot);
+            if (snapshot.key === 'managedBy') updateManagedBy(snapshot);
+            if (snapshot.key === 'owed') updatedOwed(snapshot);
+        });
     }, [groupId]);
 
     return (
