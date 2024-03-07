@@ -29,7 +29,7 @@ const Member: FC<MemberProps> = ({ id }) => {
                 currentTarget.onerror = null; // prevents looping
                 currentTarget.src = userSilhouette;
             }}
-            style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece', border: '2px white solid', borderRadius: '50%' }}
+            style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece', border: '2px white solid' }}
         />
     );
 };
