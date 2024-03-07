@@ -94,15 +94,15 @@ const Authed: FC = () => {
             photo: user!.photoURL,
         });
         console.groupEnd();
-
-        const updates: { [key: string]: object | string } = {};
-        updates[`users/${user!.uid}`] = {
-            name: user!.displayName,
-            email: user!.email,
-            photo: user!.photoURL,
-        };
-        updates[`availableUsers/${user!.email!.replaceAll('.', ',')}`] = user!.uid;
-        update(ref(db), updates);
+        
+        Promise.all([
+            update(ref(db, `users/${user!.uid}`), {
+                name: user!.displayName,
+                email: user!.email,
+                photo: user!.photoURL,
+            }),
+            set(ref(db, `availableUsers/${user!.email!.replaceAll('.', ',')}`), user!.uid)
+        ]);
     }
 
     useEffect(() => {
