@@ -6,6 +6,7 @@ import { db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 import Activities from '../../../components/molecules/Activities';
 import Members from '../../../components/molecules/Members';
+import Member from '../../../components/atoms/Member';
 
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
@@ -41,7 +42,7 @@ const ViewGroup: FC = () => {
 
     return (
         <div>
-            <div>View Group - Section 1 - Group Information {groupId} - {name} - {managedBy} - {JSON.stringify(owed)}</div>
+            <div>View Group - Section 1 - Group Information {groupId} - {name} - <Member id={managedBy} /> - {JSON.stringify(owed)}</div>
             <div>View Group - Section 2 - Members (Scrollable circles x-axis)</div>
             <Members groupId={groupId!} />
             <div>View Group - Section 3 - Activities (Scrollable activities y-axis)</div>

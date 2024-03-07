@@ -2,11 +2,11 @@
     display: none;
 }
 
-.members > div:not(:first-of-type) { 
+.members > img:not(:first-of-type) { 
     margin-left: -10px; 
 }
 
 
-.members > div:hover { 
+.members > img:hover { 
     z-index: 1;
 }

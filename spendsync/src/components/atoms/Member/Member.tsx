@@ -20,19 +20,17 @@ const Member: FC<MemberProps> = ({ id }) => {
     }, [id])
 
     return (
-        <div style={{ display: 'grid', justifyItems: 'center', border: '2px white solid', borderRadius: '50%' }}>
-            <img
-                src={photo ?? ''}
-                alt='User profile image'
-                referrerPolicy='no-referrer'
-                title={`${name ?? 'No Username'} - ${email}`}
-                onError={({ currentTarget }) => {
-                    currentTarget.onerror = null; // prevents looping
-                    currentTarget.src = userSilhouette;
-                }}
-                style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece' }}
-            />
-        </div>
+        <img
+            src={photo ?? ''}
+            alt='User profile image'
+            referrerPolicy='no-referrer'
+            title={`${name ?? 'No Username'} - ${email}`}
+            onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = userSilhouette;
+            }}
+            style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece', border: '2px white solid', borderRadius: '50%' }}
+        />
     );
 };
 
