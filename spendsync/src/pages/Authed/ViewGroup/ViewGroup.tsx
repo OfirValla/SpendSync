@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { ref, get, DataSnapshot, onChildChanged } from 'firebase/database';
 
 import { db } from '../../../firebase';
@@ -45,6 +45,7 @@ const ViewGroup: FC = () => {
             <div>View Group - Section 2 - Members (Scrollable circles x-axis)</div>
             <Members groupId={groupId!} />
             <div>View Group - Section 3 - Activities (Scrollable activities y-axis)</div>
+            <NavLink to='new-activity'>New Activity</NavLink>
             <Activities groupId={groupId!} />
         </div>
     );

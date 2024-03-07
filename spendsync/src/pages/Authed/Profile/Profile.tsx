@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import { NavLink } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
 import { auth, signOutUser } from '../../../firebase';
@@ -19,6 +20,7 @@ const Profile: FC = () => {
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
             <button onClick={signOutUser}>Sign Out</button>
             <div>Profile - Section 2 - Groups</div>
+            <NavLink to="new-group">New Group</NavLink>
             <Groups />
         </>
     )
