@@ -1,4 +1,4 @@
-import { FC } from 'react';
+﻿import { FC, useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { push, ref } from "firebase/database";
 
@@ -11,20 +11,24 @@ import { ActivityDTO } from '../../../types/Activity';
 const NewActivity: FC = () => {
     useDocumentTitle('SpendSync - New Activity');
 
+    const titleRef = useRef<HTMLInputElement>(null);
+    const amountRef = useRef<HTMLInputElement>(null);
+
+
     const [user, ,] = useAuthState(auth);
     const { groupId } = useParams();
 
     const addNewActivity = async () => {
         const newActivity: ActivityDTO = {
-            amount: 100,
-            icon: 'house',
+            amount: parseFloat(amountRef.current?.value ?? '100'),
+            icon: 'furniture',
             createdAt: new Date().getTime(),
-            currency: 'ils',
+            currency: '₪',
             paidBy: user!.uid,
             split: {
                 [user!.uid]: 100
             },
-            title: 'Test'
+            title: titleRef.current?.value ?? 'Test'
         }
 
         await push(
@@ -34,7 +38,13 @@ const NewActivity: FC = () => {
     }
 
     return (
-        <button onClick={addNewActivity}>New Activity</button>
+        <>
+            Title: <input ref={titleRef} type="text" />
+            <br />
+            Amount: <input ref={amountRef} type="number" />
+            <br />
+            <button onClick={addNewActivity}>New Activity</button>
+        </>
     )
 };
 
