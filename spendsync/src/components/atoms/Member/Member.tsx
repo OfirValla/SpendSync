@@ -14,6 +14,8 @@ const Member: FC<MemberProps> = ({ id }) => {
     const [photo, setPhoto] = useState<string>('');
 
     useEffect(() => {
+        if (!id) return; 
+
         get(ref(db, `users/${id}/name`)).then((data: DataSnapshot) => { setName(data.val()); });
         get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
         get(ref(db, `users/${id}/photo`)).then((data: DataSnapshot) => { setPhoto(data.val()); });
