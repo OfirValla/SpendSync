@@ -17,12 +17,12 @@ const Member: FC<MemberProps> = ({ id }) => {
         get(ref(db, `users/${id}/name`)).then((data: DataSnapshot) => { setName(data.val()); });
         get(ref(db, `users/${id}/email`)).then((data: DataSnapshot) => { setEmail(data.val()); });
         get(ref(db, `users/${id}/photo`)).then((data: DataSnapshot) => { setPhoto(data.val()); });
-    }, [id])
+    }, [id]);
 
     return (
         <img
             src={photo ?? ''}
-            alt='User profile image'
+            alt={name ? name : 'User profile image'}
             referrerPolicy='no-referrer'
             title={`${name ?? 'No Username'} - ${email}`}
             onError={({ currentTarget }) => {
