@@ -14,7 +14,6 @@ const NewActivity: FC = () => {
     const titleRef = useRef<HTMLInputElement>(null);
     const amountRef = useRef<HTMLInputElement>(null);
 
-
     const [user, ,] = useAuthState(auth);
     const { groupId } = useParams();
 
@@ -23,7 +22,7 @@ const NewActivity: FC = () => {
             amount: parseFloat(amountRef.current?.value ?? '100'),
             icon: 'furniture',
             createdAt: new Date().getTime(),
-            currency: '₪',
+            currency: 'USD',
             paidBy: user!.uid,
             split: {
                 [user!.uid]: 100

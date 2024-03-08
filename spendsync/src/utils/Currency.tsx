@@ -1,4 +1,11 @@
-﻿export const Currency = {
+﻿import { Currency as CurrencyType } from '../types/Activity';
+
+type CurrencyInfo = {
+    name: string,
+    code: string
+}
+
+export const Currency: { [key in CurrencyType]: CurrencyInfo; } = {
     "ALL": {
         "code": "Lek",
         "name": "Albania Lek"
