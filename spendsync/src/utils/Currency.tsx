@@ -1,445 +1,445 @@
 ﻿import { Currency as CurrencyType } from '../types/Activity';
 
 type CurrencyInfo = {
-    name: string,
-    code: string
+    symbol: string,
+    name: string
 }
 
 export const Currency: { [key in CurrencyType]: CurrencyInfo; } = {
     "ALL": {
-        "code": "Lek",
-        "name": "Albania Lek"
+        symbol: "Lek",
+        name: "Albania Lek"
     },
     "AFN": {
-        "code": "؋",
-        "name": "Afghanistan Afghani"
+        symbol: "؋",
+        name: "Afghanistan Afghani"
     },
     "ARS": {
-        "code": "$",
-        "name": "Argentina Peso"
+        symbol: "$",
+        name: "Argentina Peso"
     },
     "AWG": {
-        "code": "ƒ",
-        "name": "Aruba Guilder"
+        symbol: "ƒ",
+        name: "Aruba Guilder"
     },
     "AUD": {
-        "code": "$",
-        "name": "Australia Dollar"
+        symbol: "$",
+        name: "Australia Dollar"
     },
     "AZN": {
-        "code": "₼",
-        "name": "Azerbaijan Manat"
+        symbol: "₼",
+        name: "Azerbaijan Manat"
     },
     "BSD": {
-        "code": "$",
-        "name": "Bahamas Dollar"
+        symbol: "$",
+        name: "Bahamas Dollar"
     },
     "BBD": {
-        "code": "$",
-        "name": "Barbados Dollar"
+        symbol: "$",
+        name: "Barbados Dollar"
     },
     "BYN": {
-        "code": "Br",
-        "name": "Belarus Ruble"
+        symbol: "Br",
+        name: "Belarus Ruble"
     },
     "BZD": {
-        "code": "BZ$",
-        "name": "Belize Dollar"
+        symbol: "BZ$",
+        name: "Belize Dollar"
     },
     "BMD": {
-        "code": "$",
-        "name": "Bermuda Dollar"
+        symbol: "$",
+        name: "Bermuda Dollar"
     },
     "BOB": {
-        "code": "$b",
-        "name": "Bolivia Bolíviano"
+        symbol: "$b",
+        name: "Bolivia Bolíviano"
     },
     "BAM": {
-        "code": "KM",
-        "name": "Bosnia and Herzegovina Convertible Mark"
+        symbol: "KM",
+        name: "Bosnia and Herzegovina Convertible Mark"
     },
     "BWP": {
-        "code": "P",
-        "name": "Botswana Pula"
+        symbol: "P",
+        name: "Botswana Pula"
     },
     "BGN": {
-        "code": "лв",
-        "name": "Bulgaria Lev"
+        symbol: "лв",
+        name: "Bulgaria Lev"
     },
     "BRL": {
-        "code": "R$",
-        "name": "Brazil Real"
+        symbol: "R$",
+        name: "Brazil Real"
     },
     "BND": {
-        "code": "$",
-        "name": "Brunei Darussalam Dollar"
+        symbol: "$",
+        name: "Brunei Darussalam Dollar"
     },
     "KHR": {
-        "code": "៛",
-        "name": "Cambodia Riel"
+        symbol: "៛",
+        name: "Cambodia Riel"
     },
     "CAD": {
-        "code": "$",
-        "name": "Canada Dollar"
+        symbol: "$",
+        name: "Canada Dollar"
     },
     "KYD": {
-        "code": "$",
-        "name": "Cayman Islands Dollar"
+        symbol: "$",
+        name: "Cayman Islands Dollar"
     },
     "CLP": {
-        "code": "$",
-        "name": "Chile Peso"
+        symbol: "$",
+        name: "Chile Peso"
     },
     "CNY": {
-        "code": "¥",
-        "name": "China Yuan Renminbi"
+        symbol: "¥",
+        name: "China Yuan Renminbi"
     },
     "COP": {
-        "code": "$",
-        "name": "Colombia Peso"
+        symbol: "$",
+        name: "Colombia Peso"
     },
     "CRC": {
-        "code": "₡",
-        "name": "Costa Rica Colon"
+        symbol: "₡",
+        name: "Costa Rica Colon"
     },
     "HRK": {
-        "code": "kn",
-        "name": "Croatia Kuna"
+        symbol: "kn",
+        name: "Croatia Kuna"
     },
     "CUP": {
-        "code": "₱",
-        "name": "Cuba Peso"
+        symbol: "₱",
+        name: "Cuba Peso"
     },
     "CZK": {
-        "code": "Kč",
-        "name": "Czech Republic Koruna"
+        symbol: "Kč",
+        name: "Czech Republic Koruna"
     },
     "DKK": {
-        "code": "kr",
-        "name": "Denmark Krone"
+        symbol: "kr",
+        name: "Denmark Krone"
     },
     "DOP": {
-        "code": "RD$",
-        "name": "Dominican Republic Peso"
+        symbol: "RD$",
+        name: "Dominican Republic Peso"
     },
     "XCD": {
-        "code": "$",
-        "name": "East Caribbean Dollar"
+        symbol: "$",
+        name: "East Caribbean Dollar"
     },
     "EGP": {
-        "code": "£",
-        "name": "Egypt Pound"
+        symbol: "£",
+        name: "Egypt Pound"
     },
     "SVC": {
-        "code": "$",
-        "name": "El Salvador Colon"
+        symbol: "$",
+        name: "El Salvador Colon"
     },
     "EUR": {
-        "code": "€",
-        "name": "Euro Member Countries"
+        symbol: "€",
+        name: "Euro Member Countries"
     },
     "FKP": {
-        "code": "£",
-        "name": "Falkland Islands (Malvinas) Pound"
+        symbol: "£",
+        name: "Falkland Islands (Malvinas) Pound"
     },
     "FJD": {
-        "code": "$",
-        "name": "Fiji Dollar"
+        symbol: "$",
+        name: "Fiji Dollar"
     },
     "GHS": {
-        "code": "¢",
-        "name": "Ghana Cedi"
+        symbol: "¢",
+        name: "Ghana Cedi"
     },
     "GIP": {
-        "code": "£",
-        "name": "Gibraltar Pound"
+        symbol: "£",
+        name: "Gibraltar Pound"
     },
     "GTQ": {
-        "code": "Q",
-        "name": "Guatemala Quetzal"
+        symbol: "Q",
+        name: "Guatemala Quetzal"
     },
     "GGP": {
-        "code": "£",
-        "name": "Guernsey Pound"
+        symbol: "£",
+        name: "Guernsey Pound"
     },
     "GYD": {
-        "code": "$",
-        "name": "Guyana Dollar"
+        symbol: "$",
+        name: "Guyana Dollar"
     },
     "HNL": {
-        "code": "L",
-        "name": "Honduras Lempira"
+        symbol: "L",
+        name: "Honduras Lempira"
     },
     "HKD": {
-        "code": "$",
-        "name": "Hong Kong Dollar"
+        symbol: "$",
+        name: "Hong Kong Dollar"
     },
     "HUF": {
-        "code": "Ft",
-        "name": "Hungary Forint"
+        symbol: "Ft",
+        name: "Hungary Forint"
     },
     "ISK": {
-        "code": "kr",
-        "name": "Iceland Krona"
+        symbol: "kr",
+        name: "Iceland Krona"
     },
     "INR": {
-        "code": "",
-        "name": "India Rupee"
+        symbol: "",
+        name: "India Rupee"
     },
     "IDR": {
-        "code": "Rp",
-        "name": "Indonesia Rupiah"
+        symbol: "Rp",
+        name: "Indonesia Rupiah"
     },
     "IRR": {
-        "code": "﷼",
-        "name": "Iran Rial"
+        symbol: "﷼",
+        name: "Iran Rial"
     },
     "IMP": {
-        "code": "£",
-        "name": "Isle of Man Pound"
+        symbol: "£",
+        name: "Isle of Man Pound"
     },
     "ILS": {
-        "code": "₪",
-        "name": "Israel Shekel"
+        symbol: "₪",
+        name: "Israel Shekel"
     },
     "JMD": {
-        "code": "J$",
-        "name": "Jamaica Dollar"
+        symbol: "J$",
+        name: "Jamaica Dollar"
     },
     "JPY": {
-        "code": "¥",
-        "name": "Japan Yen"
+        symbol: "¥",
+        name: "Japan Yen"
     },
     "JEP": {
-        "code": "£",
-        "name": "Jersey Pound"
+        symbol: "£",
+        name: "Jersey Pound"
     },
     "KZT": {
-        "code": "лв",
-        "name": "Kazakhstan Tenge"
+        symbol: "лв",
+        name: "Kazakhstan Tenge"
     },
     "KPW": {
-        "code": "₩",
-        "name": "Korea (North) Won"
+        symbol: "₩",
+        name: "Korea (North) Won"
     },
     "KRW": {
-        "code": "₩",
-        "name": "Korea (South) Won"
+        symbol: "₩",
+        name: "Korea (South) Won"
     },
     "KGS": {
-        "code": "лв",
-        "name": "Kyrgyzstan Som"
+        symbol: "лв",
+        name: "Kyrgyzstan Som"
     },
     "LAK": {
-        "code": "₭",
-        "name": "Laos Kip"
+        symbol: "₭",
+        name: "Laos Kip"
     },
     "LBP": {
-        "code": "£",
-        "name": "Lebanon Pound"
+        symbol: "£",
+        name: "Lebanon Pound"
     },
     "LRD": {
-        "code": "$",
-        "name": "Liberia Dollar"
+        symbol: "$",
+        name: "Liberia Dollar"
     },
     "MKD": {
-        "code": "ден",
-        "name": "Macedonia Denar"
+        symbol: "ден",
+        name: "Macedonia Denar"
     },
     "MYR": {
-        "code": "RM",
-        "name": "Malaysia Ringgit"
+        symbol: "RM",
+        name: "Malaysia Ringgit"
     },
     "MUR": {
-        "code": "₨",
-        "name": "Mauritius Rupee"
+        symbol: "₨",
+        name: "Mauritius Rupee"
     },
     "MXN": {
-        "code": "$",
-        "name": "Mexico Peso"
+        symbol: "$",
+        name: "Mexico Peso"
     },
     "MNT": {
-        "code": "₮",
-        "name": "Mongolia Tughrik"
+        symbol: "₮",
+        name: "Mongolia Tughrik"
     },
     "MZN": {
-        "code": "MT",
-        "name": "Mozambique Metical"
+        symbol: "MT",
+        name: "Mozambique Metical"
     },
     "NAD": {
-        "code": "$",
-        "name": "Namibia Dollar"
+        symbol: "$",
+        name: "Namibia Dollar"
     },
     "NPR": {
-        "code": "₨",
-        "name": "Nepal Rupee"
+        symbol: "₨",
+        name: "Nepal Rupee"
     },
     "ANG": {
-        "code": "ƒ",
-        "name": "Netherlands Antilles Guilder"
+        symbol: "ƒ",
+        name: "Netherlands Antilles Guilder"
     },
     "NZD": {
-        "code": "$",
-        "name": "New Zealand Dollar"
+        symbol: "$",
+        name: "New Zealand Dollar"
     },
     "NIO": {
-        "code": "C$",
-        "name": "Nicaragua Cordoba"
+        symbol: "C$",
+        name: "Nicaragua Cordoba"
     },
     "NGN": {
-        "code": "₦",
-        "name": "Nigeria Naira"
+        symbol: "₦",
+        name: "Nigeria Naira"
     },
     "NOK": {
-        "code": "kr",
-        "name": "Norway Krone"
+        symbol: "kr",
+        name: "Norway Krone"
     },
     "OMR": {
-        "code": "﷼",
-        "name": "Oman Rial"
+        symbol: "﷼",
+        name: "Oman Rial"
     },
     "PKR": {
-        "code": "₨",
-        "name": "Pakistan Rupee"
+        symbol: "₨",
+        name: "Pakistan Rupee"
     },
     "PAB": {
-        "code": "B/.",
-        "name": "Panama Balboa"
+        symbol: "B/.",
+        name: "Panama Balboa"
     },
     "PYG": {
-        "code": "Gs",
-        "name": "Paraguay Guarani"
+        symbol: "Gs",
+        name: "Paraguay Guarani"
     },
     "PEN": {
-        "code": "S/.",
-        "name": "Peru Sol"
+        symbol: "S/.",
+        name: "Peru Sol"
     },
     "PHP": {
-        "code": "₱",
-        "name": "Philippines Peso"
+        symbol: "₱",
+        name: "Philippines Peso"
     },
     "PLN": {
-        "code": "zł",
-        "name": "Poland Zloty"
+        symbol: "zł",
+        name: "Poland Zloty"
     },
     "QAR": {
-        "code": "﷼",
-        "name": "Qatar Riyal"
+        symbol: "﷼",
+        name: "Qatar Riyal"
     },
     "RON": {
-        "code": "lei",
-        "name": "Romania Leu"
+        symbol: "lei",
+        name: "Romania Leu"
     },
     "RUB": {
-        "code": "₽",
-        "name": "Russia Ruble"
+        symbol: "₽",
+        name: "Russia Ruble"
     },
     "SHP": {
-        "code": "£",
-        "name": "Saint Helena Pound"
+        symbol: "£",
+        name: "Saint Helena Pound"
     },
     "SAR": {
-        "code": "﷼",
-        "name": "Saudi Arabia Riyal"
+        symbol: "﷼",
+        name: "Saudi Arabia Riyal"
     },
     "RSD": {
-        "code": "Дин.",
-        "name": "Serbia Dinar"
+        symbol: "Дин.",
+        name: "Serbia Dinar"
     },
     "SCR": {
-        "code": "₨",
-        "name": "Seychelles Rupee"
+        symbol: "₨",
+        name: "Seychelles Rupee"
     },
     "SGD": {
-        "code": "$",
-        "name": "Singapore Dollar"
+        symbol: "$",
+        name: "Singapore Dollar"
     },
     "SBD": {
-        "code": "$",
-        "name": "Solomon Islands Dollar"
+        symbol: "$",
+        name: "Solomon Islands Dollar"
     },
     "SOS": {
-        "code": "S",
-        "name": "Somalia Shilling"
+        symbol: "S",
+        name: "Somalia Shilling"
     },
     "ZAR": {
-        "code": "R",
-        "name": "South Africa Rand"
+        symbol: "R",
+        name: "South Africa Rand"
     },
     "LKR": {
-        "code": "₨",
-        "name": "Sri Lanka Rupee"
+        symbol: "₨",
+        name: "Sri Lanka Rupee"
     },
     "SEK": {
-        "code": "kr",
-        "name": "Sweden Krona"
+        symbol: "kr",
+        name: "Sweden Krona"
     },
     "CHF": {
-        "code": "CHF",
-        "name": "Switzerland Franc"
+        symbol: "CHF",
+        name: "Switzerland Franc"
     },
     "SRD": {
-        "code": "$",
-        "name": "Suriname Dollar"
+        symbol: "$",
+        name: "Suriname Dollar"
     },
     "SYP": {
-        "code": "£",
-        "name": "Syria Pound"
+        symbol: "£",
+        name: "Syria Pound"
     },
     "TWD": {
-        "code": "NT$",
-        "name": "Taiwan New Dollar"
+        symbol: "NT$",
+        name: "Taiwan New Dollar"
     },
     "THB": {
-        "code": "฿",
-        "name": "Thailand Baht"
+        symbol: "฿",
+        name: "Thailand Baht"
     },
     "TTD": {
-        "code": "TT$",
-        "name": "Trinidad and Tobago Dollar"
+        symbol: "TT$",
+        name: "Trinidad and Tobago Dollar"
     },
     "TRY": {
-        "code": "",
-        "name": "Turkey Lira"
+        symbol: "",
+        name: "Turkey Lira"
     },
     "TVD": {
-        "code": "$",
-        "name": "Tuvalu Dollar"
+        symbol: "$",
+        name: "Tuvalu Dollar"
     },
     "UAH": {
-        "code": "₴",
-        "name": "Ukraine Hryvnia"
+        symbol: "₴",
+        name: "Ukraine Hryvnia"
     },
     "GBP": {
-        "code": "£",
-        "name": "United Kingdom Pound"
+        symbol: "£",
+        name: "United Kingdom Pound"
     },
     "USD": {
-        "code": "$",
-        "name": "United States Dollar"
+        symbol: "$",
+        name: "United States Dollar"
     },
     "UYU": {
-        "code": "$U",
-        "name": "Uruguay Peso"
+        symbol: "$U",
+        name: "Uruguay Peso"
     },
     "UZS": {
-        "code": "лв",
-        "name": "Uzbekistan Som"
+        symbol: "лв",
+        name: "Uzbekistan Som"
     },
     "VEF": {
-        "code": "Bs",
-        "name": "Venezuela Bolívar"
+        symbol: "Bs",
+        name: "Venezuela Bolívar"
     },
     "VND": {
-        "code": "₫",
-        "name": "Viet Nam Dong"
+        symbol: "₫",
+        name: "Viet Nam Dong"
     },
     "YER": {
-        "code": "﷼",
-        "name": "Yemen Rial"
+        symbol: "﷼",
+        name: "Yemen Rial"
     },
     "ZWD": {
-        "code": "Z$",
-        "name": "Zimbabwe Dollar"
+        symbol: "Z$",
+        name: "Zimbabwe Dollar"
     }
 };
