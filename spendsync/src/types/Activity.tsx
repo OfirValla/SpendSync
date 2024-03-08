@@ -1,6 +1,5 @@
-﻿export type Icons = 'house' | 'groceries' | 'dining-out' | 'household-supplies' | 'transportation' | 'subscriptions' |
-    'events' | 'utility-bills' | 'health-wellness' | 'cleaning-services' | 'home-repairs' | 'furniture' |
-    'pets' | 'vacations' | 'misc' | 'emergency' | 'gifts' | 'electronics' | 'education';
+﻿export type Icons = 'house' | 'groceries' | 'dining-out' | 'household-supplies' | 'transportation' | 'subscriptions' | 'events' | 'utility-bills' | 'health-wellness' |
+                    'cleaning-services' | 'home-repairs' | 'furniture' | 'pets' | 'vacations' | 'misc' | 'emergency' | 'gifts' | 'electronics' | 'education';
 
 export type Currency =
     'ALL' | 'AFN' | 'ARS' | 'AWG' | 'AUD' | 'AZN' | 'BSD' | 'BBD' | 'BYN' | 'BZD' | 'BMD' |

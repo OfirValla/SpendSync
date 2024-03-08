@@ -11,7 +11,6 @@ import NewGroup from './NewGroup';
 import ViewGroup from './ViewGroup';
 import NewActivity from './NewActivity';
 import NavigateToIndex from '../../components/atoms/NavigateToIndex';
-import { Currency } from '../../types/Activity';
 
 const router = createBrowserRouter([
     
