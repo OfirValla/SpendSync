@@ -15,13 +15,13 @@ import { getDatabase } from 'firebase/database';
 import { isMobile } from 'react-device-detect';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAvK04e11o3RlHn4yivXguYK4tA9QXqb2A",
-    authDomain: "spendsync-3f298.firebaseapp.com",
-    databaseURL: "https://spendsync-3f298-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "spendsync-3f298",
-    storageBucket: "spendsync-3f298.appspot.com",
-    messagingSenderId: "1019232164976",
-    appId: "1:1019232164976:web:16e45266ebed7187a8e8b5"
+    apiKey: import.meta.env.VITE_APP_API_KEY,
+    authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_DATABASE_URL,
+    projectId: import.meta.env.VITE_APP_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_APP_ID
 };
 
 // Initialize Firebase
