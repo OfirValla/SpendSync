@@ -38,7 +38,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
             get(ref(db, `groups/${groupId}/name`)),
             get(ref(db, `groups/${groupId}/owed`))
         ]).then(([nameData, owedData]) => {
-            const group = { id: groupId, name: nameData.val(), owed: owedData.val() };
+            const group = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {} };
             setGroupInfo(group);
 
             unsubscribeOnChildChangeEvent.current = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
