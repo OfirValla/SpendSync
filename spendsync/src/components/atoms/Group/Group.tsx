@@ -49,7 +49,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         };
     }, [groupId]);
 
-    return <div><NavLink to={`/groups/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)}</div>;
+    return <div><NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)}</div>;
 };
 
 export default Group;

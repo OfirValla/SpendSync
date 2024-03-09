@@ -88,6 +88,11 @@ const Activities: FC<ActivitiesProps> = ({ groupId }) => {
     }, [firstItem, hasNextPage, groupId]);
 
     useEffect(() => {
+        setActivities([]);
+        setIsLoading(false);
+        setHasNextPage(true);
+        setFirstItem(null);
+
         const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `groups/${groupId}/activity`), (data: DataSnapshot) => {
             console.groupCollapsed("Removing Activity");
             console.log(`Id: ${data.key}`);

@@ -19,6 +19,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
 
     const fetchData = async () => {
         console.groupCollapsed("Fetching Members");
+        console.log(`Group Id: ${groupId}`);
 
         if (isLoading) {
             console.log("Already loading");
@@ -69,7 +70,14 @@ const Members: FC<MembersProps> = ({ groupId }) => {
 
         setMembers(prev => [data.key!, ...prev]);
     }
-    
+
+    useEffect(() => {
+        setMembers([]);
+        setIsLoading(false);
+        setHasNextPage(true);
+        setFirstItem(null);
+    }, [groupId]);
+
     useEffect(() => {
         let activityAddedQuery: Query | null = null;
         if ((firstItem === null || firstItem === undefined) && !hasNextPage)
