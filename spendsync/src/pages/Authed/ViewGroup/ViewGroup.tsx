@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, Outlet, useParams } from 'react-router-dom';
 import { ref, get, DataSnapshot, onChildChanged } from 'firebase/database';
+import { isMobile } from 'react-device-detect';
 
 import { db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
@@ -42,6 +43,8 @@ const ViewGroup: FC = () => {
             <div>View Group - Section 3 - Activities (Scrollable activities y-axis)</div>
             <NavLink to='new-activity'>New Activity</NavLink>
             <Activities groupId={groupId!} />
+
+            {!isMobile ? <Outlet /> : <></>}
         </div>
     );
 };

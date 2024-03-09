@@ -11,41 +11,76 @@ import NewGroup from './NewGroup';
 import ViewGroup from './ViewGroup';
 import NewActivity from './NewActivity';
 import NavigateToIndex from '../../components/atoms/NavigateToIndex';
+import { isMobile } from 'react-device-detect';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(isMobile
+    ? [
+        {
+            index: true,
+            element: <Profile />
+        },
+        {
+            path: 'view/:groupId',
+            children: [
+                {
+                    index: true,
+                    element: <ViewGroup />
+                },
+                {
+                    path: 'new-user',
+                    element: <div>New User</div>
+                },
+                {
+                    path: 'new-activity',
+                    element: <NewActivity />
+                }
+            ]
+        },
+        {
+            path: "new-group",
+            element: <NewGroup />
+        },
+
+        {
+            // Fallback route
+            path: "*",
+            element: <NavigateToIndex />
+        }
+    ]
+    : [
+        {
+            path: '/',
+            element: <Profile />,
+            children: [
+                {
+                    path: 'view/:groupId',
+                    element: <ViewGroup />,
+                    children: [
+                        {
+                            path: 'new-user',
+                            element: <div>New User</div>
+                        },
+                        {
+                            path: 'new-activity',
+                            element: <NewActivity />
+                        }
+                    ]
+                },
+            ]
+        },
     
-    {
-        index: true,
-        element: <Profile />
-    },
-    {
-        path: 'groups/:groupId',
-        children: [
-            {
-                index: true,
-                element: <ViewGroup />
-            },
-            {
-                path: 'new-user',
-                element: <div>New User</div>
-            },
-            {
-                path: 'new-activity',
-                element: <NewActivity />
-            }
-        ]
-    },
-    {
-        path: "new-group",
-        element: <NewGroup />
-    },
+        {
+            path: "new-group",
+            element: <NewGroup />
+        },
 
-    {
-        // Fallback route
-        path: "*",
-        element: <NavigateToIndex />
-    }
-]);
+        {
+            // Fallback route
+            path: "*",
+            element: <NavigateToIndex />
+        }
+    ]
+);
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
