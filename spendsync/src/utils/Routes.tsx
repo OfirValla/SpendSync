@@ -64,12 +64,11 @@ export const authedRouter = createBrowserRouter(isMobile
                         }
                     ]
                 },
+                {
+                    path: "new-group",
+                    element: <NewGroup />
+                },
             ]
-        },
-
-        {
-            path: "new-group",
-            element: <NewGroup />
         },
 
         {
