@@ -19,9 +19,7 @@ const NewGroup: FC = () => {
                 [user!.uid]: true
             },
             name: nameRef.current!.value,
-            owed: {
-                [user!.uid]: 0
-            },
+            owed: {},
             activity: {}
         }
         const newRef = await push(ref(db, `groups`), newGroup);

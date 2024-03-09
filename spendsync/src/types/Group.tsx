@@ -1,4 +1,4 @@
-import { ActivityDTO } from './Activity';
+import { ActivityDTO, Currency } from './Activity';
 
 export type GroupPreview = {
     id: string | null;
@@ -6,10 +6,12 @@ export type GroupPreview = {
     owed: { [key: string]: number; };
 };
 
+type OwedInformation = { [key in Currency]: number; };
+
 export type Group = {
     activity: { [key: string]: ActivityDTO; }
     managedBy: string;
     members: { [key: string]: boolean; };
     name: string;
-    owed: { [key: string]: number; };
+    owed: { [key: string]: OwedInformation; };
 };
