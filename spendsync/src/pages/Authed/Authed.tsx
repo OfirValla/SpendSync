@@ -1,86 +1,11 @@
 import { FC, useEffect } from 'react';
 
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { ref, update, set, remove, onValue } from "firebase/database";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
-
-import Profile from './Profile';
-import NewGroup from './NewGroup';
-import ViewGroup from './ViewGroup';
-import NewActivity from './NewActivity';
-import NavigateToIndex from '../../components/atoms/NavigateToIndex';
-import { isMobile } from 'react-device-detect';
-
-const router = createBrowserRouter(isMobile
-    ? [
-        {
-            index: true,
-            element: <Profile />
-        },
-        {
-            path: 'view/:groupId',
-            children: [
-                {
-                    index: true,
-                    element: <ViewGroup />
-                },
-                {
-                    path: 'new-user',
-                    element: <div>New User</div>
-                },
-                {
-                    path: 'new-activity',
-                    element: <NewActivity />
-                }
-            ]
-        },
-        {
-            path: "new-group",
-            element: <NewGroup />
-        },
-
-        {
-            // Fallback route
-            path: "*",
-            element: <NavigateToIndex />
-        }
-    ]
-    : [
-        {
-            path: '/',
-            element: <Profile />,
-            children: [
-                {
-                    path: 'view/:groupId',
-                    element: <ViewGroup />,
-                    children: [
-                        {
-                            path: 'new-user',
-                            element: <div>New User</div>
-                        },
-                        {
-                            path: 'new-activity',
-                            element: <NewActivity />
-                        }
-                    ]
-                },
-            ]
-        },
-    
-        {
-            path: "new-group",
-            element: <NewGroup />
-        },
-
-        {
-            // Fallback route
-            path: "*",
-            element: <NavigateToIndex />
-        }
-    ]
-);
+import { authedRouter } from '../../utils/Routes';
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
@@ -146,7 +71,7 @@ const Authed: FC = () => {
     }, []);
 
     return (
-        <RouterProvider router={router} />
+        <RouterProvider router={authedRouter} />
     )
 };
 
