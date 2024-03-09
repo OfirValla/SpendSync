@@ -14,7 +14,7 @@ const Profile: FC = () => {
     const [user, ,] = useAuthState(auth);
     
     return (
-        <>
+        <div>
             <div>IsMobile: {isMobile.toString()}</div>
             <div>Profile - Section 1 - User information (Image + Email + Name)</div>
             <div>{JSON.stringify({ uid: user!.uid, email: user!.email, displayName: user!.displayName, photoUrl: user!.photoURL })}</div>
@@ -22,7 +22,7 @@ const Profile: FC = () => {
             <div>Profile - Section 2 - Groups</div>
             <NavLink to="new-group">New Group</NavLink>
             <Groups />
-        </>
+        </div>
     )
 };
 

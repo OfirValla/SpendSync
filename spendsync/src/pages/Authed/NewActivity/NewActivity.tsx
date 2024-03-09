@@ -37,13 +37,13 @@ const NewActivity: FC = () => {
     }
 
     return (
-        <>
+        <div>
             Title: <input ref={titleRef} type="text" />
             <br />
             Amount: <input ref={amountRef} type="number" />
             <br />
             <button onClick={addNewActivity}>New Activity</button>
-        </>
+        </div>
     )
 };
 
