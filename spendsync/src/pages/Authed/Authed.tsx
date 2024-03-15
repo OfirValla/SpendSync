@@ -1,4 +1,6 @@
 import { FC, useEffect } from 'react';
+import stylex from '@stylexjs/stylex';
+import { isMobile } from 'react-device-detect';
 
 import { RouterProvider } from 'react-router-dom';
 import { ref, update, set, remove, onValue } from "firebase/database";
@@ -6,6 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
 import { authedRouter } from '../../utils/Routes';
+import { authed } from '../../styles/global';
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
@@ -71,7 +74,7 @@ const Authed: FC = () => {
     }, []);
 
     return (
-        <div style={{ display: 'grid', gridAutoFlow: 'column', gridTemplateColumns: '25vw 25vw 1fr' }}>
+        <div {...stylex.props(isMobile ? authed.mobile : authed.desktop)}>
             <RouterProvider router={authedRouter} />
         </div>
     )

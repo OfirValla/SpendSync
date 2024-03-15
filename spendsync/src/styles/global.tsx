@@ -7,3 +7,15 @@ export const text = stylex.create({
         userSelect: 'none' /* Standard syntax */
     },
 });
+
+export const authed = stylex.create({
+    desktop: {
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gridTemplateColumns: '25vw 25vw 1fr',
+        gridTemplateAreas: '"profile group-info activities" "groups members activities"'
+    },
+    mobile: {
+
+    }
+});
