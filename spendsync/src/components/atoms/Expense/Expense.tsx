@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { Activity as ActivityType } from '../../../types/Activity';
+import { Expense as ExpenseType } from '../../../types/Activity';
 import { Currency } from '../../../utils/Currency';
 
-const Activity: FC<ActivityType> = ({ id, title, amount, currency, createdAt, paidBy, split }) => {
+const Expense: FC<ExpenseType> = ({ id, title, amount, currency, createdAt, paidBy, split }) => {
     return (
         <div>
             <b>{id}</b> - {title} - {amount}{Currency[currency].symbol} - {createdAt} - {paidBy} - {JSON.stringify(split)}
@@ -10,4 +10,4 @@ const Activity: FC<ActivityType> = ({ id, title, amount, currency, createdAt, pa
     );
 };
 
-export default Activity;
+export default Expense;

@@ -6,7 +6,7 @@ import { auth, db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
-import { ActivityDTO } from '../../../types/Activity';
+import { ExpenseDTO } from '../../../types/Activity';
 
 const NewActivity: FC = () => {
     useDocumentTitle('SpendSync - New Activity');
@@ -18,7 +18,7 @@ const NewActivity: FC = () => {
     const { groupId } = useParams();
 
     const addNewActivity = async () => {
-        const newActivity: ActivityDTO = {
+        const newActivity: ExpenseDTO = {
             amount: parseFloat(amountRef.current?.value ?? '100'),
             icon: 'furniture',
             createdAt: new Date().getTime(),

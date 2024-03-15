@@ -5,7 +5,7 @@ import { isMobile } from 'react-device-detect';
 
 import { db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
-import Activities from '../../../components/molecules/Activities';
+import Expenses from '../../../components/molecules/Expenses';
 import Members from '../../../components/molecules/Members';
 import Member from '../../../components/atoms/Member';
 
@@ -44,7 +44,7 @@ const ViewGroup: FC = () => {
                 </div>
                 <Members groupId={groupId!} />
             </div>
-            <Activities groupId={groupId!} />
+            <Expenses groupId={groupId!} />
 
             {!isMobile ? <Outlet /> : <></>}
         </>

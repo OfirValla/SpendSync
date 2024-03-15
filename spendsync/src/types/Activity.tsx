@@ -13,7 +13,7 @@ export type Currency =
     'SOS' | 'ZAR' | 'LKR' | 'SEK' | 'CHF' | 'SRD' | 'SYP' | 'TWD' | 'THB' | 'TTD' | 'TRY' |
     'TVD' | 'UAH' | 'GBP' | 'USD' | 'UYU' | 'UZS' | 'VEF' | 'VND' | 'YER' | 'ZWD';
 
-export type ActivityDTO = {
+export type ExpenseDTO = {
     title: string;
     icon: Icons;
     amount: number;
@@ -23,6 +23,6 @@ export type ActivityDTO = {
     split: { [key: string]: number; };
 };
 
-export type Activity = ActivityDTO & {
+export type Expense = ExpenseDTO & {
     id: string | null;   
 };
