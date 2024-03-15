@@ -39,7 +39,8 @@ const ViewGroup: FC = () => {
         <>
             <div className="group-info" style={{ gridArea: 'group-info' }}>
                 <div>Group Information {groupId} - {name} - <Member id={managedBy} /> - {JSON.stringify(owed)}</div>
-                <NavLink to='new-activity'>New Expense</NavLink>
+                <NavLink to='new-activity'>New Expense</NavLink><br />
+                <NavLink to='new-user'>New User</NavLink>
             </div>
             <Members groupId={groupId!} />
             <Expenses groupId={groupId!} />

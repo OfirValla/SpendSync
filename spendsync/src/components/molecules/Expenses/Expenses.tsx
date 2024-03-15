@@ -126,14 +126,16 @@ const Expenses: FC<ExpensesProps> = ({ groupId }) => {
     }, [groupId]);
 
     return (
-        <div className="expenses" style={{ gridArea: 'expenses', overflow: 'auto' }}>
-            {
-                expenses.map(expense => {
-                    return <Expense key={expense.id} {...expense} />;
-                })
-            }
+        <div className="expenses" style={{ gridArea: 'expenses', overflowY: 'auto', height: '100vh' }}>
+            <div>
+                {
+                    expenses.map(expense => {
+                        return <Expense key={expense.id} {...expense} />;
+                    })
+                }
 
-            <div ref={sentryRef}></div>
+                <div ref={sentryRef}></div>
+            </div>
         </div>
     );
 };

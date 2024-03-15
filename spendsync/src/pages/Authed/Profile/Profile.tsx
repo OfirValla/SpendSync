@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
@@ -11,12 +11,7 @@ const Profile: FC = () => {
     
     return (
         <>
-            <div style={{ display: 'grid', gridAutoFlow: 'row', gridTemplateRows: 'max-content 1fr', overflow: 'hidden', gridArea: 'profile' }}>
-                <div>IsMobile: {isMobile.toString()}</div>
-                <ProfileInfo />
-                <div>Profile - Section 2 - Groups</div>
-                <NavLink to="new-group">New Group</NavLink>
-            </div>
+            <ProfileInfo />
             <Groups />
 
             {!isMobile ? <Outlet /> : <></>}

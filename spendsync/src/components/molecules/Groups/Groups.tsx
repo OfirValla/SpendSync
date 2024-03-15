@@ -108,7 +108,7 @@ const Groups: FC = () => {
     };
 
     return (
-        <div className="groups" style={{ gridArea: 'groups' }}>
+        <div className="groups" style={{ gridArea: 'groups', overflowY: 'auto', height: 'calc(100vh - 150px)' }}>
             {
                 groups.map(groupId =>
                     <Group key={groupId} groupId={groupId!} onNotExisting={onNotExists} />
