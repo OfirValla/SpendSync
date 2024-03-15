@@ -18,7 +18,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
 
     const onChildChangedCallback = (snapshot: DataSnapshot) => {
         const groupId: string = snapshot.ref.parent!.key!;
-        console.groupCollapsed("Activity Changed");
+        console.groupCollapsed("Expense Changed");
         console.log(`Id: ${groupId}`);
         console.log(`Key: ${snapshot.key}`);
         console.log(`New Data: ${JSON.stringify(snapshot.val())}`);

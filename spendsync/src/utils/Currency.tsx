@@ -1,4 +1,4 @@
-﻿import { Currency as CurrencyType } from '../types/Activity';
+﻿import { Currency as CurrencyType } from '../types/Expense';
 
 type CurrencyInfo = {
     symbol: string,

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Expense as ExpenseType } from '../../../types/Activity';
+import { Expense as ExpenseType } from '../../../types/Expense';
 import { Currency } from '../../../utils/Currency';
 
 const Expense: FC<ExpenseType> = ({ id, title, amount, currency, createdAt, paidBy, split }) => {

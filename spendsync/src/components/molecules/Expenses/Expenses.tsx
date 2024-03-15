@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Expense as ActivityType, ExpenseDTO } from '../../../types/Activity';
+import { Expense as ExpenseType, ExpenseDTO } from '../../../types/Expense';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildChanged, onChildRemoved, orderByKey, query, ref, startAfter } from 'firebase/database';
 import { db } from '../../../firebase';
@@ -10,7 +10,7 @@ interface ExpensesProps {
 }
 
 const Expenses: FC<ExpensesProps> = ({ groupId }) => {
-    const [expenses, setExpenses] = useState<ActivityType[]>([]);
+    const [expenses, setExpenses] = useState<ExpenseType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
@@ -41,7 +41,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId }) => {
             return;
         }
 
-        const newExpenses: ActivityType[] = (Object.keys(data) || []).map(id => { return { id, ...data[id] }; }).reverse();
+        const newExpenses: ExpenseType[] = (Object.keys(data) || []).map(id => { return { id, ...data[id] }; }).reverse();
         setExpenses(prev => [...prev, ...newExpenses]);
 
         console.log(`Found ${newExpenses.length} new expenses`);
@@ -64,7 +64,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId }) => {
         console.groupCollapsed("Expense Added");
         console.log(`Id: ${data.key}`);
         const result: ExpenseDTO = data.val();
-        const newExpense: ActivityType = { id: data.key, ...result };
+        const newExpense: ExpenseType = { id: data.key, ...result };
         console.log(`Title: ${newExpense.title}`);
         console.groupEnd();
 
@@ -126,7 +126,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId }) => {
     }, [groupId]);
 
     return (
-        <div className="expenses">
+        <div className="expenses" style={{ gridArea: 'expenses', overflow: 'auto' }}>
             {
                 expenses.map(expense => {
                     return <Expense key={expense.id} {...expense} />;

@@ -1,4 +1,4 @@
-import { ExpenseDTO, Currency } from './Activity';
+import { ExpenseDTO, Currency } from './Expense';
 
 export type GroupPreview = {
     id: string | null;

@@ -18,8 +18,8 @@ const Authed: FC = () => {
     // 2. Create New Group
     // 3. View Group
     // 4. Add User To Group
-    // 5. Create New Activity In Group
-    // 6. Edit an Activity
+    // 5. Create New Expense In Group
+    // 6. Edit an Expense
     // 7. Edit a Group ( Change manager, Change name, Remove members  )
 
     const handleNewInvites = () => {

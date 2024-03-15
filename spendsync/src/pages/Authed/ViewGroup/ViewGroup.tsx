@@ -40,7 +40,7 @@ const ViewGroup: FC = () => {
             <div className="group-data" style={{ display: 'grid', gridAutoFlow: 'row', gridTemplateRows: 'max-content 1fr', overflow: 'hidden' }}>
                 <div className="group-info">
                     <div>Group Information {groupId} - {name} - <Member id={managedBy} /> - {JSON.stringify(owed)}</div>
-                    <NavLink to='new-activity'>New Activity</NavLink>
+                <NavLink to='new-activity'>New Expense</NavLink>
                 </div>
                 <Members groupId={groupId!} />
             </div>

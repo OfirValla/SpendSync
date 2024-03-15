@@ -6,7 +6,7 @@ import { auth, db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
-import { ExpenseDTO } from '../../../types/Activity';
+import { ExpenseDTO } from '../../../types/Expense';
 
 const NewActivity: FC = () => {
     useDocumentTitle('SpendSync - New Activity');
