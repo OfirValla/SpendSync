@@ -11,15 +11,14 @@ const Profile: FC = () => {
     
     return (
         <>
-            <div className="account-data">
-                <div className="profile" style={{ display: 'grid', gridAutoFlow: 'row', gridTemplateRows: 'max-content 1fr', overflow: 'hidden' }}>
-                    <div>IsMobile: {isMobile.toString()}</div>
-                    <ProfileInfo />
-                    <div>Profile - Section 2 - Groups</div>
-                    <NavLink to="new-group">New Group</NavLink>
-                </div>
-                <Groups />
+            <div style={{ display: 'grid', gridAutoFlow: 'row', gridTemplateRows: 'max-content 1fr', overflow: 'hidden', gridArea: 'profile' }}>
+                <div>IsMobile: {isMobile.toString()}</div>
+                <ProfileInfo />
+                <div>Profile - Section 2 - Groups</div>
+                <NavLink to="new-group">New Group</NavLink>
             </div>
+            <Groups />
+
             {!isMobile ? <Outlet /> : <></>}
         </>
     )
