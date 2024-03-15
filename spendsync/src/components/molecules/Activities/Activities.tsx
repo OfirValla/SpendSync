@@ -126,7 +126,7 @@ const Activities: FC<ActivitiesProps> = ({ groupId }) => {
     }, [groupId]);
 
     return (
-        <div>
+        <div className="activities">
             {
                 activities.map(activity => {
                     return <Activity key={activity.id} {...activity} />;

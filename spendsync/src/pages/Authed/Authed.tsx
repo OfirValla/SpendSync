@@ -71,7 +71,9 @@ const Authed: FC = () => {
     }, []);
 
     return (
-        <RouterProvider router={authedRouter} />
+        <div style={{ display: 'grid', gridAutoFlow: 'column', gridTemplateColumns: '25vw 25vw 1fr' }}>
+            <RouterProvider router={authedRouter} />
+        </div>
     )
 };
 

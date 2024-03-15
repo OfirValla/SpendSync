@@ -2,8 +2,6 @@ import { FC, useEffect, useState } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildRemoved, orderByKey, query, ref, remove, startAfter } from 'firebase/database';
-import { Outlet } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
 
 import { auth, db } from '../../../firebase';
 
@@ -110,15 +108,13 @@ const Groups: FC = () => {
     };
 
     return (
-        <div>
+        <div className="groups">
             {
                 groups.map(groupId =>
                     <Group key={groupId} groupId={groupId!} onNotExisting={onNotExists} />
                 )
             }
             <div ref={sentryRef}></div>
-
-            {!isMobile ? <Outlet /> : <></>}
         </div>
     );
 };

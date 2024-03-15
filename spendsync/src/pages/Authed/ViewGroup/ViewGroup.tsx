@@ -36,16 +36,18 @@ const ViewGroup: FC = () => {
     }, [groupId]);
 
     return (
-        <div>
-            <div>View Group - Section 1 - Group Information {groupId} - {name} - <Member id={managedBy} /> - {JSON.stringify(owed)}</div>
-            <div>View Group - Section 2 - Members (Scrollable circles x-axis)</div>
-            <Members groupId={groupId!} />
-            <div>View Group - Section 3 - Activities (Scrollable activities y-axis)</div>
-            <NavLink to='new-activity'>New Activity</NavLink>
+        <>
+            <div className="group-data" style={{ display: 'grid', gridAutoFlow: 'row', gridTemplateRows: 'max-content 1fr', overflow: 'hidden' }}>
+                <div className="group-info">
+                    <div>Group Information {groupId} - {name} - <Member id={managedBy} /> - {JSON.stringify(owed)}</div>
+                    <NavLink to='new-activity'>New Activity</NavLink>
+                </div>
+                <Members groupId={groupId!} />
+            </div>
             <Activities groupId={groupId!} />
 
             {!isMobile ? <Outlet /> : <></>}
-        </div>
+        </>
     );
 };
 
