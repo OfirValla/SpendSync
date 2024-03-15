@@ -3,7 +3,7 @@ import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildRemoved, orderByKey, query, ref, startAfter } from 'firebase/database';
 
 import { db } from '../../../firebase';
-import Member from '../../atoms/Member';
+import Avatar from '../../atoms/Avatar';
 
 import './Members.css';
 
@@ -107,7 +107,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
         <div className="members" style={{ display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto', gridArea: 'members' }} >
             {
                 members.map(member => {
-                    return <Member key={member} id={member} />;
+                    return <Avatar key={member} id={member} />;
                 })
             }
 

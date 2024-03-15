@@ -7,7 +7,7 @@ import { db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 import Expenses from '../../../components/molecules/Expenses';
 import Members from '../../../components/molecules/Members';
-import Member from '../../../components/atoms/Member';
+import Avatar from '../../../components/atoms/Avatar';
 
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
@@ -38,7 +38,7 @@ const ViewGroup: FC = () => {
     return (
         <>
             <div className="group-info" style={{ gridArea: 'group-info' }}>
-                <div>Group Information {groupId} - {name} - <Member id={managedBy} /> - {JSON.stringify(owed)}</div>
+                <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
                 <NavLink to='new-activity'>New Expense</NavLink><br />
                 <NavLink to='new-user'>New User</NavLink>
             </div>
