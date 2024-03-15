@@ -1,11 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { DataSnapshot, get, ref } from 'firebase/database';
-import { db } from '../../../firebase';
+import stylex from '@stylexjs/stylex';
 
+import { db } from '../../../firebase';
 import userSilhouette from '../../../assets/UserSilhouette.svg';
 
+import { styles } from '../../../styles/member';
+
 interface MemberProps {
-    id: string;
+    id: string | null | undefined;
 }
 
 const Member: FC<MemberProps> = ({ id }) => {
@@ -31,7 +34,7 @@ const Member: FC<MemberProps> = ({ id }) => {
                 currentTarget.onerror = null; // prevents looping
                 currentTarget.src = userSilhouette;
             }}
-            style={{ borderRadius: '50%', height: '50px', width: '50px', backgroundColor: '#cecece', border: '2px white solid' }}
+            {...stylex.props(styles.image)}
         />
     );
 };
