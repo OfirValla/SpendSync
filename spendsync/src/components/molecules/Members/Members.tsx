@@ -79,17 +79,17 @@ const Members: FC<MembersProps> = ({ groupId }) => {
     }, [groupId]);
 
     useEffect(() => {
-        let activityAddedQuery: Query | null = null;
+        let memberAddedQuery: Query | null = null;
         if ((firstItem === null || firstItem === undefined) && !hasNextPage)
-            activityAddedQuery = query(ref(db, `groups/${groupId}/members`));
+            memberAddedQuery = query(ref(db, `groups/${groupId}/members`));
 
         if (firstItem !== null && firstItem !== undefined)
-            activityAddedQuery = query(ref(db, `groups/${groupId}/members`), orderByKey(), startAfter(firstItem));
+            memberAddedQuery = query(ref(db, `groups/${groupId}/members`), orderByKey(), startAfter(firstItem));
 
-        if (!activityAddedQuery) return;
+        if (!memberAddedQuery) return;
 
         return onChildAdded(
-            activityAddedQuery,
+            memberAddedQuery,
             onChildAddedCallback
         );
     }, [firstItem, hasNextPage, groupId]);
