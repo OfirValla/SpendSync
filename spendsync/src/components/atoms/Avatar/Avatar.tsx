@@ -7,11 +7,11 @@ import userSilhouette from '../../../assets/UserSilhouette.svg';
 
 import { styles } from '../../../styles/member';
 
-interface MemberProps {
+interface AvatarProps {
     id: string | null | undefined;
 }
 
-const Member: FC<MemberProps> = ({ id }) => {
+const Avatar: FC<AvatarProps> = ({ id }) => {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
@@ -39,4 +39,4 @@ const Member: FC<MemberProps> = ({ id }) => {
     );
 };
 
-export default Member;
+export default Avatar;
