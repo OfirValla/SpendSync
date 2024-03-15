@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { NavLink, Outlet, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutlet, useParams } from 'react-router-dom';
 import { ref, get, DataSnapshot, onChildChanged } from 'firebase/database';
 import { isMobile } from 'react-device-detect';
 
@@ -8,6 +8,7 @@ import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 import Expenses from '../../../components/molecules/Expenses';
 import Members from '../../../components/molecules/Members';
 import Avatar from '../../../components/atoms/Avatar';
+import Drawer from '../../../components/atoms/Drawer';
 
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
@@ -17,6 +18,9 @@ const ViewGroup: FC = () => {
     const [managedBy, setManagedBy] = useState<string>('');
     const [owed, setOwed] = useState<{ [key: string]: number; }>({});
 
+    const outletComponent = useOutlet();
+    const navigate = useNavigate();
+    
     const updateName = (data: DataSnapshot) => setName(data.val());
     const updateManagedBy = (data: DataSnapshot) => setManagedBy(data.val()); 
     const updatedOwed = (data: DataSnapshot) => setOwed(data.val());
@@ -45,7 +49,7 @@ const ViewGroup: FC = () => {
             <Members groupId={groupId!} />
             <Expenses groupId={groupId!} />
 
-            {!isMobile ? <Outlet /> : <></>}
+            {!isMobile ? <Drawer open={!!outletComponent} onClose={() => { navigate(-1); }}>{outletComponent}</Drawer> : <></>}
         </>
     );
 };
