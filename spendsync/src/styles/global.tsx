@@ -2,8 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 export const text = stylex.create({
     preventSelect: {
-        '-webkit-user-select': 'none', /* Safari */
-        '-ms-user-select': 'none', /* IE 10 and IE 11 */
+        WebkitUserSelect: 'none', /* Safari */
+        MsUserSelect: 'none', /* IE 10 and IE 11 */
         userSelect: 'none' /* Standard syntax */
     },
 });
@@ -22,26 +22,34 @@ export const authed = stylex.create({
     }
 });
 
-export const overlay = stylex.create({
-    base: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        opacity: 0,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        transition: 'opacity 225ms cubic- bezier(0.4, 0, 0.2, 1)'
-    },
-    open: {
-        opacity: 1,
-        zIndex: 0,
-        visibility: 'visible'
-    },
-    close: {
-        opacity: 0,
-        zIndex: -1,
-        visibility: 'hidden',
-        transition: '225ms cubic - bezier(0.4, 0, 0.2, 1) 0ms'
+//::-webkit-scrollbar {
+//    width: 20px;
+//}
+
+//::-webkit-scrollbar-thumb {
+//    background-color: #d6dee1;
+//    border-radius: 20px;
+//    border: 6px solid transparent;
+//    background-clip: content-box;
+//}
+
+//    ::-webkit-scrollbar-thumb:hover {
+//        background-color: #a8bbbf;
+//    }
+
+export const scrollbar = stylex.create({
+    root: {
+        '::-webkit-scrollbar': {
+            width: '20px'
+        },
+        '::-webkit-scrollbar-thumb': {
+            backgroundColor: '#d6dee1',
+            borderRadius: '20px',
+            border: '6px solid transparent',
+            backgroundClip: 'content-box',
+            ':hover': {
+                backgroundColor: '#a8bbbf'
+            }
+        }
     }
-});
+})

@@ -8,7 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
 import { authedRouter } from '../../utils/Routes';
-import { authed } from '../../styles/global';
+import { authed, scrollbar } from '../../styles/global';
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
@@ -74,7 +74,7 @@ const Authed: FC = () => {
     }, []);
 
     return (
-        <div {...stylex.props(isMobile ? authed.mobile : authed.desktop)}>
+        <div {...stylex.props(isMobile ? authed.mobile : authed.desktop, scrollbar.root)}>
             <RouterProvider router={authedRouter} />
         </div>
     )

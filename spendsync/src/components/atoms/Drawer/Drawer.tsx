@@ -1,13 +1,12 @@
-import { FC, ReactChild, ReactFragment, ReactPortal } from 'react';
+import { FC, ReactPortal } from 'react';
 import stylex from '@stylexjs/stylex';
 
-import { overlay } from '../../../styles/global';
-import { drawer } from '../../../styles/drawer';
+import { overlay, drawer } from '../../../styles/drawer';
 
 interface DrawerProps {
     open: boolean;
     onClose: () => void;
-    children: ReactChild | ReactFragment | ReactPortal | boolean | null | undefined;
+    children: ReactPortal | boolean | null | undefined;
 }
 
 const Drawer: FC<DrawerProps> = ({ open, onClose, children }) => {
