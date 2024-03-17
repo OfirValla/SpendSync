@@ -1,16 +1,18 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildRemoved, orderByKey, query, ref, remove, startAfter } from 'firebase/database';
+import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildChanged, onChildRemoved, orderByChild, orderByKey, query, ref, remove, startAfter } from 'firebase/database';
 
 import { auth, db } from '../../../firebase';
 
 import Group from '../../atoms/Group';
+import { GroupBase } from '../../../types/Group';
 
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
 
-    const [groups, setGroups] = useState<string[]>([]);
+    const renderedGroups = useRef<string[]>([]);
+    const [groups, setGroups] = useState<GroupBase[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
@@ -27,13 +29,15 @@ const Groups: FC = () => {
 
         let result: DataSnapshot;
         if (groups.length !== 0)
-            result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByKey(), endBefore(groups!.at(-1)!), limitToLast(10)));
+            result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByChild('lastUpdate'), endBefore(groups!.at(-1)!.lastUpdate), limitToLast(10)));
         else {
-            result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByKey(), limitToLast(10)));
-            setFirstItem(Object.keys(result.val() || {}).at(-1));
-        }
+            result = await get(query(ref(db, `users/${user!.uid}/groups`), orderByChild('lastUpdate'), limitToLast(10)));
 
-        const data: { [key: string]: boolean; } = result.val();
+            const lastKey = await get(query(ref(db, `users/${user!.uid}/groups`), orderByKey(), limitToLast(1)));
+            setFirstItem(Object.keys(lastKey.val() || {}).at(-1));
+        }
+        
+        const data: { [key: string]: GroupBase; } = result.val();
         if (!data) {
             console.log("No more groups");
             setHasNextPage(false);
@@ -41,14 +45,15 @@ const Groups: FC = () => {
             return;
         }
 
-        const newGroups: string[] = [];
-        const groupIds = Object.keys(data).reverse();
+        const newGroups: GroupBase[] = [];
+        const groupIds = Object.keys(data);
         for (const groupId of groupIds) {
-            if (groups.includes(groupId)) continue;
+            if (groups.some(g => g.id === groupId)) continue;
 
-            newGroups.push(groupId!);
+            newGroups.push({ ...data[groupId], id: groupId });
         }
-        setGroups(prev => [...prev, ...newGroups]);
+        setGroups(prev => [...prev, ...newGroups.sort((a, b) => (b.lastUpdate - a.lastUpdate))]);
+        renderedGroups.current.push(...groupIds);
 
         console.log(`Found ${newGroups.length} new groups`);
         console.groupEnd();
@@ -68,7 +73,6 @@ const Groups: FC = () => {
 
     useEffect(() => {
         // Realtime listener for new groups
-
         let groupAddedQuery: Query | null = null;
         if ((firstItem === null || firstItem === undefined) && !hasNextPage)
             groupAddedQuery = query(ref(db, `users/${user!.uid}/groups`));
@@ -83,21 +87,54 @@ const Groups: FC = () => {
             async (data: DataSnapshot) => {
                 console.groupCollapsed("Group Added");
                 console.log(`Id: ${data.key}`);
+                console.log(`Data: ${JSON.stringify(data.val())}`);
                 console.groupEnd();
 
-                setGroups(prev => [data.key!, ...prev]);
+                setGroups(prev => [{ ...data.val(), id: data.key! }, ...prev]);
             }
         );
     }, [firstItem, hasNextPage, user]);
 
     useEffect(() => {
-        return onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
+        const onChildRemovedUnsubscribe = onChildRemoved(ref(db, `users/${user!.uid}/groups`), (data) => {
             console.groupCollapsed("Removing Group Connection");
             console.log(`Id: ${data.key}`);
             console.groupEnd();
 
-            setGroups(prev => prev.filter(id => id !== data.key));
+            setGroups(prev => prev.filter(group => group.id !== data.key));
+            //const newRenderedGroups = renderedGroups.current.filter(id => id !== data.key);
+            renderedGroups.current = renderedGroups.current.filter(id => id !== data.key);
         });
+
+        const onChildChangedUnsubscribe = onChildChanged(ref(db, `users/${user!.uid}/groups`), (data) => {
+            console.groupCollapsed("Changing Groups Order");
+            console.log(`Id: ${data.key}`);
+            console.log(`Data: ${JSON.stringify(data.val())}`);
+            console.groupEnd();
+
+            // If not shown already -> add it to the groups list
+            if (!renderedGroups.current.some(id => id === data.key)) {
+                setGroups(prev => [{ id: data.key, ...data.val() }, ...prev]);
+                renderedGroups.current.push(data.key!);
+                return;
+            }
+
+            setGroups(prev => {
+                const itemIdx = prev.findIndex(item => item.id === data.key);
+                
+                return [
+                    ...prev.slice(0, itemIdx),
+                    { id: data.key, ...data.val() },
+                    ...prev.slice(itemIdx + 1)
+                ];
+            })
+            setGroups(prev => prev.sort((a, b) => (b.lastUpdate - a.lastUpdate)));
+        });
+
+        return () => { 
+            onChildChangedUnsubscribe();
+            onChildRemovedUnsubscribe();
+        }
     }, [user]);
 
     const onNotExists = (error: Error, groupId: string) => {
@@ -107,11 +144,12 @@ const Groups: FC = () => {
         remove(ref(db, `users/${user!.uid}/groups/${groupId}`));
     };
 
+    // Disable scrollable when in mobile mode
     return (
         <div className="groups" style={{ gridArea: 'groups', overflowY: 'auto', height: 'calc(100vh - 150px)' }}>
             {
-                groups.map(groupId =>
-                    <Group key={groupId} groupId={groupId!} onNotExisting={onNotExists} />
+                groups.map(group =>
+                    <Group key={group.id} groupId={group!.id!} onNotExisting={onNotExists} />
                 )
             }
             <div ref={sentryRef}></div>

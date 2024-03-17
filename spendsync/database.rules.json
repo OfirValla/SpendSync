@@ -4,7 +4,8 @@
       "$uid": {
         "groups": {
           // Only the authenticated user can read its own groups
-          ".read": "$uid === auth.uid"
+          ".read": "$uid === auth.uid",
+          ".indexOn": "lastUpdate"
         },
         "email": {
           // Only authenticated users can read

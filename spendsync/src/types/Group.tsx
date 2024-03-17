@@ -1,7 +1,11 @@
 import { ExpenseDTO, Currency } from './Expense';
 
-export type GroupPreview = {
+export type GroupBase = {
     id: string | null;
+    lastUpdate: number;
+}
+
+export type GroupPreview = GroupBase & {
     name: string;
     owed: { [key: string]: number; };
 };
