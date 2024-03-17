@@ -15,13 +15,13 @@ export const useResizeOnDragProfile = (min: number = 350) => {
         node!.style.width = e.x + "px";
 
         const gridTemplate = getComputedStyle(node!.parentElement!).gridTemplateColumns.split(' ');
-        gridTemplate[0] = `${e.x + 4}px`;
+        gridTemplate[0] = `${e.x}px`;
         gridTemplate[2] = '1fr';
         node!.parentElement!.style.gridTemplateColumns = gridTemplate.join(' ');
     }
 
     const mouseDown = (e: MouseEvent) => {
-        if (e.x >= parseInt(getComputedStyle(node!, '').width) - (BORDER_SIZE * 2)) {
+        if (e.x >= parseInt(getComputedStyle(node!, '').width) - BORDER_SIZE) {
             document.addEventListener("mousemove", resize, false);
             document.body.style.userSelect = 'none';
         }
@@ -60,13 +60,13 @@ export const useResizeOnDragGroup = (min: number = 350) => {
         node!.style.width = e.x - node!.getBoundingClientRect().left + "px";
 
         const gridTemplate = getComputedStyle(node!.parentElement!).gridTemplateColumns.split(' ');
-        gridTemplate[1] = `${e.x - node!.getBoundingClientRect().left + 4}px`;
+        gridTemplate[1] = `${e.x - node!.getBoundingClientRect().left}px`;
         gridTemplate[2] = '1fr';
         node!.parentElement!.style.gridTemplateColumns = gridTemplate.join(' ');
     };
 
     const mouseDown = (e: MouseEvent) => {
-        if (e.x >= node!.getBoundingClientRect().left + node!.getBoundingClientRect().width - (BORDER_SIZE * 2)) {
+        if (e.x >= node!.getBoundingClientRect().left + node!.getBoundingClientRect().width - BORDER_SIZE) {
             document.addEventListener("mousemove", resize, false);
             document.body.style.userSelect = 'none';
         }
