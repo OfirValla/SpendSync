@@ -12,7 +12,7 @@ export const authed = stylex.create({
     desktop: {
         display: 'grid',
         gridAutoFlow: 'column',
-        gridTemplateColumns: '25vw 25vw 1fr',
+        gridTemplateColumns: '20vw 20vw 1fr',
         gridTemplateAreas: '"profile group-info expenses"',
         overflow: 'hidden'
     },
