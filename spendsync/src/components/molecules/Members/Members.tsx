@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { CSSProperties, FC, useEffect, useState } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildRemoved, orderByKey, query, ref, startAfter } from 'firebase/database';
 
@@ -6,6 +6,8 @@ import { db } from '../../../firebase';
 import Avatar from '../../atoms/Avatar';
 
 import './Members.css';
+import { isMobile } from 'react-device-detect';
+import Member from '../../atoms/Member';
 
 interface MembersProps {
     groupId: string;
@@ -103,11 +105,19 @@ const Members: FC<MembersProps> = ({ groupId }) => {
         });
     }, [groupId]);
 
+    // If in mobile mode show members using Avatar component
+    // If in desktop mode show members using Member component
+
+    const Component = isMobile ? Avatar : Member;
+
+    const styles: CSSProperties = isMobile ? { display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto' }
+                                           : { display: 'flex', flexDirection: 'column', overflowY: 'auto', height: 'calc(100vh - 160px)' }
+
     return (
-        <div className="members" style={{ display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto', gridArea: 'members' }} >
+        <div className="members" style={{ ...styles ,gridArea: 'members', backgroundColor: 'brown' }} >
             {
                 members.map(member => {
-                    return <Avatar key={member} id={member} />;
+                    return <Component key={member} id={member} />
                 })
             }
 
