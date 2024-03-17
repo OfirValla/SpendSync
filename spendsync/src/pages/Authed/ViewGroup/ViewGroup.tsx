@@ -7,6 +7,7 @@ import { isMobile } from 'react-device-detect';
 
 import { db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
+import { useResizeOnDragGroup } from '../../../hooks/useResizeOnDrag';
 import Expenses from '../../../components/molecules/Expenses';
 import Members from '../../../components/molecules/Members';
 import Avatar from '../../../components/atoms/Avatar';
@@ -14,6 +15,7 @@ import Drawer from '../../../components/atoms/Drawer';
 
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
+    const [resizeRef] = useResizeOnDragGroup();
 
     const { groupId } = useParams();
     const [name, setName] = useState<string>('');
@@ -43,7 +45,7 @@ const ViewGroup: FC = () => {
 
     return (
         <>
-            <div style={{ gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} >
+            <div className="resizable" style={{ gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden', borderRight: '4px solid white' }} ref={resizeRef}>
                 <div className="group-info" style={{ backgroundColor: 'blueviolet' }}>
                     <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
                     <NavLink to='new-activity'>New Expense</NavLink><span>  </span>
