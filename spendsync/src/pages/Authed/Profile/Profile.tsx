@@ -11,9 +11,10 @@ const Profile: FC = () => {
     
     return (
         <>
-            <ProfileInfo />
-            <Groups />
-
+            <div style={{ gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row' }} >
+                <ProfileInfo />
+                <Groups />
+            </div>
             {!isMobile ? <Outlet /> : <></>}
         </>
     )

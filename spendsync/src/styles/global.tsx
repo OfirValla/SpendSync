@@ -13,8 +13,7 @@ export const authed = stylex.create({
         display: 'grid',
         gridAutoFlow: 'column',
         gridTemplateColumns: '25vw 25vw 1fr',
-        gridTemplateRows: 'min-content 1fr',
-        gridTemplateAreas: '"profile group-info expenses" "groups members expenses"',
+        gridTemplateAreas: '"profile group-info expenses"',
         overflow: 'hidden'
     },
     mobile: {

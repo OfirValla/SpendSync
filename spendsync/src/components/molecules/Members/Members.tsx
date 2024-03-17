@@ -114,7 +114,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
                                            : { display: 'flex', flexDirection: 'column', overflowY: 'auto', height: 'calc(100vh - 160px)' }
 
     return (
-        <div className="members" style={{ ...styles ,gridArea: 'members', backgroundColor: 'brown' }} >
+        <div className="members" style={{ ...styles, backgroundColor: 'brown' }} >
             {
                 members.map(member => {
                     return <Component key={member} id={member} />

@@ -148,7 +148,7 @@ const Groups: FC = () => {
     // Disable scrollable when in mobile mode
     const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: 'calc(100vh - 160px)', }
     return (
-        <div className="groups" style={{ gridArea: 'groups', backgroundColor: 'teal', ...styles }}>
+        <div className="groups" style={{ backgroundColor: 'teal', ...styles }}>
             {
                 groups.map(group =>
                     <Group key={group.id} groupId={group!.id!} onNotExisting={onNotExists} />

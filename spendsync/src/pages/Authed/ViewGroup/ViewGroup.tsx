@@ -43,12 +43,14 @@ const ViewGroup: FC = () => {
 
     return (
         <>
-            <div className="group-info" style={{ gridArea: 'group-info', backgroundColor: 'blueviolet' }}>
-                <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
-                <NavLink to='new-activity'>New Expense</NavLink><span>  </span>
-                <NavLink to='new-user'>New User</NavLink>
+            <div style={{ gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} >
+                <div className="group-info" style={{ backgroundColor: 'blueviolet' }}>
+                    <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
+                    <NavLink to='new-activity'>New Expense</NavLink><span>  </span>
+                    <NavLink to='new-user'>New User</NavLink>
+                </div>
+                <Members groupId={groupId!} />
             </div>
-            <Members groupId={groupId!} />
             <Expenses groupId={groupId!} />
 
             {!isMobile ? <Drawer open={!!outletComponent} onClose={() => { navigate(-1); }}>{outletComponent}</Drawer> : <></>}
