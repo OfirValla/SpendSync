@@ -1,9 +1,10 @@
-import { FC, useEffect, useState } from 'react';
+import { CSSProperties, FC, useEffect, useState } from 'react';
 import { Expense as ExpenseType, ExpenseDTO } from '../../../types/Expense';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildChanged, onChildRemoved, orderByKey, query, ref, startAfter } from 'firebase/database';
 import { db } from '../../../firebase';
 import Expense from '../../atoms/Expense';
+import { isMobile } from 'react-device-detect';
 
 interface ExpensesProps {
     groupId: string;
@@ -125,8 +126,10 @@ const Expenses: FC<ExpensesProps> = ({ groupId }) => {
         };
     }, [groupId]);
 
+    const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: '100vh' }
+
     return (
-        <div className="expenses" style={{ gridArea: 'expenses', overflowY: 'auto', height: '100vh' }}>
+        <div className="expenses" style={{ gridArea: 'expenses', ...styles }}>
             <div>
                 {
                     expenses.map(expense => {

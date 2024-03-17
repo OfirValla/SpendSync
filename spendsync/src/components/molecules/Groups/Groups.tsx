@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildChanged, onChildRemoved, orderByChild, orderByKey, query, ref, remove, startAfter } from 'firebase/database';
@@ -7,6 +7,7 @@ import { auth, db } from '../../../firebase';
 
 import Group from '../../atoms/Group';
 import { GroupBase } from '../../../types/Group';
+import { isMobile } from 'react-device-detect';
 
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
@@ -145,8 +146,9 @@ const Groups: FC = () => {
     };
 
     // Disable scrollable when in mobile mode
+    const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: 'calc(100vh - 160px)', }
     return (
-        <div className="groups" style={{ gridArea: 'groups', overflowY: 'auto', height: 'calc(100vh - 160px)', backgroundColor: 'teal' }}>
+        <div className="groups" style={{ gridArea: 'groups', backgroundColor: 'teal', ...styles }}>
             {
                 groups.map(group =>
                     <Group key={group.id} groupId={group!.id!} onNotExisting={onNotExists} />
