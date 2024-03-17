@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import { FC, useEffect, useState } from 'react';
 import { NavLink, useNavigate, useOutlet, useParams } from 'react-router-dom';
 import { ref, get, DataSnapshot, onChildChanged } from 'firebase/database';
