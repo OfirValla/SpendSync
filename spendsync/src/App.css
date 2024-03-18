@@ -2,13 +2,18 @@
     overflow: hidden;
 }
 
+.resizable {
+    position: relative;
+}
+
 .resizable::after {
-    content: '';
-    background-color: #ccc;
-    position: absolute;
-    left: 0;
+    content: " ";
+    height: 100vh;
     width: 4px;
-    height: 100%;
+    background: white;
+    display: block;
+    position: absolute;
+    right: 0;
     cursor: ew-resize;
 }
 
