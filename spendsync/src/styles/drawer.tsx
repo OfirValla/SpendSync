@@ -39,7 +39,7 @@ export const drawer = stylex.create({
         flexDirection: 'column',
 
         backgroundColor: '#ffffff',
-        width: '300px',
+        width: '30vw',
         flexShrink: 0,
 
         transition: 'box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
