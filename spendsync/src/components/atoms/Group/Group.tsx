@@ -10,7 +10,7 @@ interface GroupProps {
     onNotExisting: (error: Error, groupId: string) => void;
 }
 
-const updatableGroupKeys = ['name', 'owed'];
+const updatableGroupKeys = ['name', 'owed', 'members'];
 
 const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     const [groupInfo, setGroupInfo] = useState<GroupPreview | null>(null);
@@ -36,9 +36,10 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     useEffect(() => {
         Promise.all([
             get(ref(db, `groups/${groupId}/name`)),
-            get(ref(db, `groups/${groupId}/owed`))
-        ]).then(([nameData, owedData]) => {
-            const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1 };
+            get(ref(db, `groups/${groupId}/owed`)),
+            get(ref(db, `groups/${groupId}/members`)),
+        ]).then(([nameData, owedData, membersData]) => {
+            const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, members: Object.keys(membersData.val()) };
             setGroupInfo(group);
 
             unsubscribeOnChildChangeEvent.current = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
@@ -49,7 +50,11 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         };
     }, [groupId]);
 
-    return <div><NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)}</div>;
+    return (
+        <div>
+            <NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)} - {JSON.stringify(groupInfo?.members)}
+        </div>
+    );
 };
 
 export default Group;

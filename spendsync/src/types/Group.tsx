@@ -8,6 +8,7 @@ export type GroupBase = {
 export type GroupPreview = GroupBase & {
     name: string;
     owed: { [key: string]: number; };
+    members: string[];
 };
 
 type OwedInformation = { [key in Currency]: number; };
