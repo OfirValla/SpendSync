@@ -51,4 +51,4 @@ export const scrollbar = stylex.create({
             }
         }
     }
-})
+});

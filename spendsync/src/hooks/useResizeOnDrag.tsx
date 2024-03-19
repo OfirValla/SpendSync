@@ -24,12 +24,14 @@ export const useResizeOnDragProfile = (min: number = 350) => {
         if (e.x >= parseInt(getComputedStyle(node!, '').width) - BORDER_SIZE) {
             document.addEventListener("mousemove", resize, false);
             document.body.style.userSelect = 'none';
+            document.body.style.cursor = 'ew-resize';
         }
     }
 
     const mouseUp = () => {
         document.removeEventListener("mousemove", resize, false);
         document.body.style.userSelect = 'unset';
+        document.body.style.cursor = 'unset';
     }
     
     useEffect(() => {
@@ -69,12 +71,14 @@ export const useResizeOnDragGroup = (min: number = 350) => {
         if (e.x >= node!.getBoundingClientRect().left + node!.getBoundingClientRect().width - BORDER_SIZE) {
             document.addEventListener("mousemove", resize, false);
             document.body.style.userSelect = 'none';
+            document.body.style.cursor = 'ew-resize';
         }
     };
 
     const mouseUp = () => {
         document.removeEventListener("mousemove", resize, false);
         document.body.style.userSelect = 'unset';
+        document.body.style.cursor = 'unset';
     };
 
     useEffect(() => {
