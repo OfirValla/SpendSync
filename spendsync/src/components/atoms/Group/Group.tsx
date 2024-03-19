@@ -1,8 +1,9 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { DataSnapshot, Unsubscribe, get, limitToFirst, onChildChanged, query, ref } from 'firebase/database';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { NavLink } from 'react-router-dom';
 
-import { db } from '../../../firebase';
+import { auth, db } from '../../../firebase';
 import { GroupPreview } from '../../../types/Group';
 
 interface GroupProps {
@@ -15,6 +16,7 @@ const updatableGroupKeys = ['name', 'owed', 'members'];
 const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     const [groupInfo, setGroupInfo] = useState<GroupPreview | null>(null);
     const unsubscribeOnChildChangeEvent = useRef<Unsubscribe>(() => { });
+    const [user, ,] = useAuthState(auth);
 
     const onChildChangedCallback = (snapshot: DataSnapshot) => {
         const groupId: string = snapshot.ref.parent!.key!;
@@ -28,6 +30,13 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         // Check only if name or owed has updated
         if (!updatableGroupKeys.includes(snapshot.key!)) return;
 
+        if (snapshot.key! === 'owed') {
+            setGroupInfo(prev => {
+                return { ...prev!, owed: snapshot.val()[user!.uid] };
+            });
+            return;
+        }
+
         setGroupInfo(prev => {
             return { ...prev!, [snapshot.key!]: snapshot.val() };
         });
@@ -36,7 +45,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     useEffect(() => {
         Promise.all([
             get(ref(db, `groups/${groupId}/name`)),
-            get(ref(db, `groups/${groupId}/owed`)),
+            get(ref(db, `groups/${groupId}/owed/${user!.uid}`)),
             get(query(ref(db, `groups/${groupId}/members`), limitToFirst(5))),
         ]).then(([nameData, owedData, membersData]) => {
             const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, members: Object.keys(membersData.val()) };
