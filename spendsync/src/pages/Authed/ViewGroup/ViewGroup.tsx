@@ -4,8 +4,10 @@ import { FC, useEffect, useState } from 'react';
 import { NavLink, useNavigate, useOutlet, useParams } from 'react-router-dom';
 import { ref, get, DataSnapshot, onChildChanged } from 'firebase/database';
 import { isMobile } from 'react-device-detect';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
-import { db } from '../../../firebase';
+
+import { auth, db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 import { useResizeOnDragGroup } from '../../../hooks/useResizeOnDrag';
 import Expenses from '../../../components/molecules/Expenses';
@@ -18,6 +20,8 @@ const ViewGroup: FC = () => {
     const [resizeRef] = useResizeOnDragGroup();
 
     const { groupId } = useParams();
+    const [user, ,] = useAuthState(auth);
+
     const [name, setName] = useState<string>('');
     const [managedBy, setManagedBy] = useState<string>('');
     const [owed, setOwed] = useState<{ [key: string]: number; }>({});
@@ -27,7 +31,7 @@ const ViewGroup: FC = () => {
     
     const updateName = (data: DataSnapshot) => setName(data.val());
     const updateManagedBy = (data: DataSnapshot) => setManagedBy(data.val()); 
-    const updatedOwed = (data: DataSnapshot) => setOwed(data.val());
+    const updatedOwed = (data: DataSnapshot) => setOwed(data.val()[user!.uid]);
     
     useEffect(() => {
         Promise.all([
@@ -36,11 +40,19 @@ const ViewGroup: FC = () => {
             get(ref(db, `groups/${groupId}/owed`)).then(updatedOwed)
         ]);
 
-        return onChildChanged(ref(db, `groups/${groupId}`), (snapshot) => {
+        const onChildChangedUnsubscribe = onChildChanged(ref(db, `groups/${groupId}`), (snapshot) => {
             if (snapshot.key === 'name') updateName(snapshot);
             if (snapshot.key === 'managedBy') updateManagedBy(snapshot);
             if (snapshot.key === 'owed') updatedOwed(snapshot);
         });
+
+        return () => {
+            setName('');
+            setManagedBy('');
+            setOwed({});
+
+            onChildChangedUnsubscribe();
+        }
     }, [groupId]);
 
     return (
