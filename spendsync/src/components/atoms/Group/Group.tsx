@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { DataSnapshot, Unsubscribe, get, onChildChanged, ref } from 'firebase/database';
+import { DataSnapshot, Unsubscribe, get, limitToFirst, onChildChanged, query, ref } from 'firebase/database';
 import { NavLink } from 'react-router-dom';
 
 import { db } from '../../../firebase';
@@ -37,7 +37,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         Promise.all([
             get(ref(db, `groups/${groupId}/name`)),
             get(ref(db, `groups/${groupId}/owed`)),
-            get(ref(db, `groups/${groupId}/members`)),
+            get(query(ref(db, `groups/${groupId}/members`), limitToFirst(5))),
         ]).then(([nameData, owedData, membersData]) => {
             const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, members: Object.keys(membersData.val()) };
             setGroupInfo(group);
