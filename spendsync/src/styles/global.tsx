@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
-export const text = stylex.create({
+export const global = stylex.create({
     preventSelect: {
         WebkitUserSelect: 'none', /* Safari */
         MsUserSelect: 'none', /* IE 10 and IE 11 */

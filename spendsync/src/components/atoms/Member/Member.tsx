@@ -6,6 +6,7 @@ import { db } from '../../../firebase';
 import userSilhouette from '../../../assets/UserSilhouette.svg';
 
 import { styles } from '../../../styles/member';
+import { global } from '../../../styles/global';
 
 interface MemberProps {
     id: string | null | undefined;
@@ -35,7 +36,8 @@ const Member: FC<MemberProps> = ({ id }) => {
                     currentTarget.onerror = null; // prevents looping
                     currentTarget.src = userSilhouette;
                 }}
-                {...stylex.props(styles.image)}
+                {...stylex.props(styles.image, global.preventSelect)}
+                draggable='false'
                 style={{ gridArea: 'member-image' }}
             />
             <span>{name ?? email}</span>

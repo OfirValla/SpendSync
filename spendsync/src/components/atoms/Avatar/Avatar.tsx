@@ -6,6 +6,7 @@ import { db } from '../../../firebase';
 import userSilhouette from '../../../assets/UserSilhouette.svg';
 
 import { styles } from '../../../styles/member';
+import { global } from '../../../styles/global';
 
 interface AvatarProps {
     id: string | null | undefined;
@@ -34,7 +35,8 @@ const Avatar: FC<AvatarProps> = ({ id }) => {
                 currentTarget.onerror = null; // prevents looping
                 currentTarget.src = userSilhouette;
             }}
-            {...stylex.props(styles.image)}
+            draggable='false'
+            {...stylex.props(styles.image, global.preventSelect)}
         />
     );
 };
