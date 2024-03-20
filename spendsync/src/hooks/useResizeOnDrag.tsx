@@ -12,7 +12,7 @@ export const useResizeOnDragProfile = (min: number = 350) => {
     const resize = (e: MouseEvent) => {
         if (e.x < min) return;
         
-        node!.style.width = e.x + "px";
+        node!.style.width = `${e.x}px`;
 
         const gridTemplate = getComputedStyle(node!.parentElement!).gridTemplateColumns.split(' ');
         gridTemplate[0] = `${e.x}px`;
@@ -59,7 +59,7 @@ export const useResizeOnDragGroup = (min: number = 350) => {
 
     const resize = (e: MouseEvent) => {
         if (e.x - node!.getBoundingClientRect().left < min) return;
-        node!.style.width = e.x - node!.getBoundingClientRect().left + "px";
+        node!.style.width = `${e.x - node!.getBoundingClientRect().left}px`;
 
         const gridTemplate = getComputedStyle(node!.parentElement!).gridTemplateColumns.split(' ');
         gridTemplate[1] = `${e.x - node!.getBoundingClientRect().left}px`;
