@@ -36,15 +36,11 @@ const NewExpense: FC = () => {
             newExpense
         );
 
-        // use runTransaction method to update the members owed values
-        // https://modularfirebase.web.app/reference/database.runtransaction
         await runTransaction(ref(db, `groups/${groupId}/owed`), (currentData: Owed) => {
             const output: Owed = currentData;
 
             const currentUsers = Object.keys(currentData);
             for (const [userId, additionalOwed] of Object.entries(newExpense.split)) {
-                console.log(userId, additionalOwed, currentUsers.includes(userId));
-
                 // The current user from the split does not exists in the owed section of the group yet
                 if (!currentUsers.includes(userId)) {
                     output[userId] = { [newExpense.currency]: additionalOwed };
