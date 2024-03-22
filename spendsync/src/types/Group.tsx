@@ -11,12 +11,14 @@ export type GroupPreview = GroupBase & {
     members: string[];
 };
 
-type OwedInformation = { [key in Currency]: number; };
+export type OwedInformation = { [key in Currency]?: number; };
+
+export type Owed = { [key: string]: OwedInformation; };
 
 export type Group = {
     activity: { [key: string]: ExpenseDTO; }
     managedBy: string;
     members: { [key: string]: boolean; };
     name: string;
-    owed: { [key: string]: OwedInformation; };
+    owed: Owed;
 };

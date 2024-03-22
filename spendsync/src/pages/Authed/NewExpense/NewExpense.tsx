@@ -1,12 +1,13 @@
 ﻿import { FC, useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { push, ref } from "firebase/database";
+import { push, ref, runTransaction } from "firebase/database";
 
 import { auth, db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 import { ExpenseDTO } from '../../../types/Expense';
+import { Owed } from '../../../types/Group';
 
 const NewExpense: FC = () => {
     useDocumentTitle('SpendSync - New Expense');
@@ -25,7 +26,7 @@ const NewExpense: FC = () => {
             currency: 'USD',
             paidBy: user!.uid,
             split: {
-                [user!.uid]: 100
+                [user!.uid]: -1000
             },
             title: titleRef.current?.value ?? 'Test'
         }
@@ -34,6 +35,39 @@ const NewExpense: FC = () => {
             ref(db, `groups/${groupId}/activity`),
             newExpense
         );
+
+        // use runTransaction method to update the members owed values
+        // https://modularfirebase.web.app/reference/database.runtransaction
+        await runTransaction(ref(db, `groups/${groupId}/owed`), (currentData: Owed) => {
+            const output: Owed = currentData;
+
+            const currentUsers = Object.keys(currentData);
+            for (const [userId, additionalOwed] of Object.entries(newExpense.split)) {
+                console.log(userId, additionalOwed, currentUsers.includes(userId));
+
+                // The current user from the split does not exists in the owed section of the group yet
+                if (!currentUsers.includes(userId)) {
+                    output[userId] = { [newExpense.currency]: additionalOwed };
+                    continue;
+                }
+
+                // The current user from the split exists in the owed section of the group
+
+                // Check if the currency exists for the user
+                const currentCurrencies = Object.keys(currentData[userId]);
+
+                // The currency does not exist on the existing user -> Add it
+                if (!currentCurrencies.includes(newExpense.currency)) {
+                    output[userId][newExpense.currency] = additionalOwed;
+                    continue;
+                }
+
+                // Add or Substract the value for the currency 
+                output[userId][newExpense.currency]! += additionalOwed;
+            }
+
+            return output;
+        })
     }
 
     return (
