@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import Profile from '../pages/Authed/Profile';
 import ViewGroup from '../pages/Authed/ViewGroup';
-import NewActivity from '../pages/Authed/NewActivity';
+import NewExpense from '../pages/Authed/NewExpense';
 import NewGroup from '../pages/Authed/NewGroup';
 import NavigateToIndex from '../components/atoms/NavigateToIndex';
 import Landing from '../pages/NotAuthed/Landing';
@@ -29,8 +29,8 @@ export const authedRouter = createBrowserRouter(isMobile
                     element: <div>New User</div>
                 },
                 {
-                    path: 'new-activity',
-                    element: <NewActivity />
+                    path: 'new-expense',
+                    element: <NewExpense />
                 }
             ]
         },
@@ -59,8 +59,8 @@ export const authedRouter = createBrowserRouter(isMobile
                             element: <div>New User</div>
                         },
                         {
-                            path: 'new-activity',
-                            element: <NewActivity />
+                            path: 'new-expense',
+                            element: <NewExpense />
                         }
                     ]
                 },

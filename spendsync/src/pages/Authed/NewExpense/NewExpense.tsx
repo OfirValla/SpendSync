@@ -8,8 +8,8 @@ import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 import { ExpenseDTO } from '../../../types/Expense';
 
-const NewActivity: FC = () => {
-    useDocumentTitle('SpendSync - New Activity');
+const NewExpense: FC = () => {
+    useDocumentTitle('SpendSync - New Expense');
 
     const titleRef = useRef<HTMLInputElement>(null);
     const amountRef = useRef<HTMLInputElement>(null);
@@ -17,8 +17,8 @@ const NewActivity: FC = () => {
     const [user, ,] = useAuthState(auth);
     const { groupId } = useParams();
 
-    const addNewActivity = async () => {
-        const newActivity: ExpenseDTO = {
+    const addNewExpense = async () => {
+        const newExpense: ExpenseDTO = {
             amount: parseFloat(amountRef.current?.value ?? '100'),
             icon: 'furniture',
             createdAt: new Date().getTime(),
@@ -32,7 +32,7 @@ const NewActivity: FC = () => {
 
         await push(
             ref(db, `groups/${groupId}/activity`),
-            newActivity
+            newExpense
         );
     }
 
@@ -42,9 +42,9 @@ const NewActivity: FC = () => {
             <br />
             Amount: <input ref={amountRef} type="number" />
             <br />
-            <button onClick={addNewActivity}>New Activity</button>
+            <button onClick={addNewExpense}>New Expense</button>
         </div>
     )
 };
 
-export default NewActivity;
+export default NewExpense;

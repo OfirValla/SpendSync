@@ -60,7 +60,7 @@ const ViewGroup: FC = () => {
             <div className="resizable" style={{ gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} ref={resizeRef}>
                 <div className="group-info" style={{ backgroundColor: 'blueviolet' }}>
                     <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
-                    <NavLink to='new-activity'>New Expense</NavLink><span>  </span>
+                    <NavLink to='new-expense'>New Expense</NavLink><span>  </span>
                     <NavLink to='new-user'>New User</NavLink>
                 </div>
                 <Members groupId={groupId!} />
