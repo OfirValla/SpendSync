@@ -1,6 +1,6 @@
 ﻿import { FC, useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { push, ref, runTransaction } from "firebase/database";
+import { TransactionResult, get, push, ref, runTransaction } from "firebase/database";
 
 import { auth, db } from '../../../firebase';
 import { useParams } from 'react-router-dom';
@@ -31,15 +31,17 @@ const NewExpense: FC = () => {
             title: titleRef.current?.value ?? 'Test'
         }
 
+        // Push the new expense
         await push(
             ref(db, `groups/${groupId}/activity`),
             newExpense
         );
 
+        // Update the owed values for each of the split users
         await runTransaction(ref(db, `groups/${groupId}/owed`), (currentData: Owed) => {
-            const output: Owed = currentData;
+            const output: Owed = currentData || {};
 
-            const currentUsers = Object.keys(currentData);
+            const currentUsers = Object.keys(currentData || {});
             for (const [userId, additionalOwed] of Object.entries(newExpense.split)) {
                 // The current user from the split does not exists in the owed section of the group yet
                 if (!currentUsers.includes(userId)) {
@@ -63,7 +65,15 @@ const NewExpense: FC = () => {
             }
 
             return output;
-        })
+        });
+
+        // Update the lastUpdate value of each member of the group
+        const members = Object.keys((await get(ref(db, `groups/${groupId}/members`))).val());
+        const transactions: Promise<TransactionResult>[] = members.map(memberId => runTransaction(ref(db, `users/${memberId}/groups/${groupId}/lastUpdate`), currentData => {
+            const currentLastUpdate = currentData || 0;
+            return currentLastUpdate < newExpense.createdAt ? newExpense.createdAt : currentLastUpdate;
+        }));
+        await Promise.all(transactions);
     }
 
     return (
