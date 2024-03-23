@@ -2,7 +2,7 @@
 // @ts-nocheck
 import { FC, useEffect, useState } from 'react';
 import { NavLink, useNavigate, useOutlet, useParams } from 'react-router-dom';
-import { ref, get, DataSnapshot, onChildChanged } from 'firebase/database';
+import { ref, get, set, DataSnapshot, onChildChanged } from 'firebase/database';
 import { isMobile } from 'react-device-detect';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -37,7 +37,8 @@ const ViewGroup: FC = () => {
         Promise.all([
             get(ref(db, `groups/${groupId}/name`)).then(updateName),
             get(ref(db, `groups/${groupId}/managedBy`)).then(updateManagedBy),
-            get(ref(db, `groups/${groupId}/owed`)).then(updatedOwed)
+            get(ref(db, `groups/${groupId}/owed`)).then(updatedOwed),
+            set(ref(db, `users/${user!.uid}/groups/${groupId}/hasUpdate`), false)
         ]);
 
         const onChildChangedUnsubscribe = onChildChanged(ref(db, `groups/${groupId}`), (snapshot) => {
