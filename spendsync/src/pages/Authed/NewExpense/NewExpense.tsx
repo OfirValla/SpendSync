@@ -70,13 +70,13 @@ const NewExpense: FC = () => {
         // Update the lastUpdate value of each member of the group
         const members = Object.keys((await get(ref(db, `groups/${groupId}/members`))).val());
         const transactions: Promise<TransactionResult>[] = members.map(memberId => runTransaction(ref(db, `users/${memberId}/groups/${groupId}`), (currentData: GroupBase) => {
-            const currentLastUpdate = currentData.lastUpdate || 0;
+            const currentLastUpdate = (currentData || {}).lastUpdate || 0;
             const newData: GroupBase = {
                 lastUpdate: currentLastUpdate,
                 hasUpdate: true
             };
 
-            newData.lastUpdate = currentLastUpdate < newExpense.createdAt ? newExpense.createdAt : currentLastUpdate
+            newData.lastUpdate = currentLastUpdate < newExpense.createdAt ? newExpense.createdAt : currentLastUpdate;
             return newData;
         }));
         await Promise.all(transactions);

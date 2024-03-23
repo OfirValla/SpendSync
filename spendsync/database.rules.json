@@ -4,6 +4,11 @@
       "$uid": {
         "groups": {
           // Only the authenticated user can read its own groups
+          "$groupId": {
+            ".read": "root.child('groups').child($groupId).child('members').child(auth.uid).exists()",
+            ".write": "root.child('groups').child($groupId).child('members').child(auth.uid).exists()"
+          },
+
           ".read": "$uid === auth.uid",
           ".indexOn": "lastUpdate"
         },
