@@ -16,6 +16,7 @@ const updatableGroupKeys = ['name', 'owed', 'members'];
 const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     const [groupInfo, setGroupInfo] = useState<GroupPreview | null>(null);
     const unsubscribeOnChildChangeEvent = useRef<Unsubscribe>(() => { });
+    const unsubscribeOnHasUpdateChangedEvent = useRef<Unsubscribe>(() => { });
     const [user, ,] = useAuthState(auth);
 
     const onChildChangedCallback = (snapshot: DataSnapshot) => {
@@ -42,26 +43,37 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         });
     }
 
+    const onHasUpdateChangedCallback = (snapshot: DataSnapshot) => {
+        if (snapshot.key !== 'hasUpdate') return;
+
+        setGroupInfo(prev => {
+            return { ...prev!, hasUpdate: snapshot.val() };
+        });
+    }
+
     useEffect(() => {
         Promise.all([
             get(ref(db, `groups/${groupId}/name`)),
             get(ref(db, `groups/${groupId}/owed/${user!.uid}`)),
+            get(ref(db, `users/${user!.uid}/groups/${groupId}/hasUpdate`)),
             get(query(ref(db, `groups/${groupId}/members`), limitToFirst(5))),
-        ]).then(([nameData, owedData, membersData]) => {
-            const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, members: Object.keys(membersData.val()) };
+        ]).then(([nameData, owedData, hasUpdateData, membersData]) => {
+            const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, members: Object.keys(membersData.val()), hasUpdate: hasUpdateData.val() };
             setGroupInfo(group);
 
             unsubscribeOnChildChangeEvent.current = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);
+            unsubscribeOnHasUpdateChangedEvent.current = onChildChanged(ref(db, `users/${user!.uid}/groups/${groupId}`), onHasUpdateChangedCallback);
         }).catch((error: Error) => onNotExisting(error, groupId));
             
         return () => {
             unsubscribeOnChildChangeEvent.current && unsubscribeOnChildChangeEvent.current();
+            unsubscribeOnHasUpdateChangedEvent.current && unsubscribeOnHasUpdateChangedEvent.current();
         };
     }, [groupId]);
 
     return (
         <div>
-            <NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {JSON.stringify(groupInfo?.owed)} - {JSON.stringify(groupInfo?.members)}
+            <NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {groupInfo?.hasUpdate.toString()} - {JSON.stringify(groupInfo?.owed)} - {JSON.stringify(groupInfo?.members)}
         </div>
     );
 };
