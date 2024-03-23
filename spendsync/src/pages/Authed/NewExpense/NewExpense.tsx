@@ -31,12 +31,6 @@ const NewExpense: FC = () => {
             title: titleRef.current?.value ?? 'Test'
         }
 
-        // Push the new expense
-        await push(
-            ref(db, `groups/${groupId}/activity`),
-            newExpense
-        );
-
         // Update the owed values for each of the split users
         await runTransaction(ref(db, `groups/${groupId}/owed`), (currentData: Owed) => {
             const output: Owed = currentData || {};
@@ -80,6 +74,12 @@ const NewExpense: FC = () => {
             return newData;
         }));
         await Promise.all(transactions);
+
+        // Push the new expense
+        await push(
+            ref(db, `groups/${groupId}/activity`),
+            newExpense
+        );
     }
 
     return (
