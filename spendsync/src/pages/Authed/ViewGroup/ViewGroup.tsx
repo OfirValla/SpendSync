@@ -15,6 +15,8 @@ import Members from '../../../components/molecules/Members';
 import Avatar from '../../../components/atoms/Avatar';
 import Drawer from '../../../components/atoms/Drawer';
 
+import Expense from '../../../types/Expense';
+
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
     const [resizeRef] = useResizeOnDragGroup();
@@ -56,6 +58,11 @@ const ViewGroup: FC = () => {
         }
     }, [groupId]);
 
+    const onNewExpense = async (expense: Expense) => {
+        console.log(`New Expense: ${expense.id}`);
+        await set(ref(db, `users/${user!.uid}/groups/${groupId}/hasUpdate`), false);
+    }
+
     return (
         <>
             <div className="resizable" style={{ gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} ref={resizeRef}>
@@ -66,7 +73,7 @@ const ViewGroup: FC = () => {
                 </div>
                 <Members groupId={groupId!} />
             </div>
-            <Expenses groupId={groupId!} />
+            <Expenses groupId={groupId!} onNewExpense={onNewExpense} />
 
             {!isMobile ? <Drawer open={!!outletComponent} onClose={() => { navigate(-1); }}>{outletComponent}</Drawer> : <></>}
         </>

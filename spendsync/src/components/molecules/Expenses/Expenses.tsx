@@ -8,9 +8,10 @@ import { isMobile } from 'react-device-detect';
 
 interface ExpensesProps {
     groupId: string;
+    onNewExpense: (expense: ExpenseType) => void
 }
 
-const Expenses: FC<ExpensesProps> = ({ groupId }) => {
+const Expenses: FC<ExpensesProps> = ({ groupId, onNewExpense }) => {
     const [expenses, setExpenses] = useState<ExpenseType[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -66,6 +67,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId }) => {
         console.log(`Id: ${data.key}`);
         const result: ExpenseDTO = data.val();
         const newExpense: ExpenseType = { id: data.key, ...result };
+        onNewExpense(newExpense);
         console.log(`Title: ${newExpense.title}`);
         console.groupEnd();
 
