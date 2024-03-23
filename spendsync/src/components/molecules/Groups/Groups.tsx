@@ -6,14 +6,14 @@ import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChild
 import { auth, db } from '../../../firebase';
 
 import Group from '../../atoms/Group';
-import { GroupBase } from '../../../types/Group';
+import { GroupInitialData } from '../../../types/Group';
 import { isMobile } from 'react-device-detect';
 
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
 
     const renderedGroups = useRef<string[]>([]);
-    const [groups, setGroups] = useState<GroupBase[]>([]);
+    const [groups, setGroups] = useState<GroupInitialData[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
     const [firstItem, setFirstItem] = useState<string | null | undefined>(null);
@@ -38,7 +38,7 @@ const Groups: FC = () => {
             setFirstItem(Object.keys(lastKey.val() || {}).at(-1));
         }
         
-        const data: { [key: string]: GroupBase; } = result.val();
+        const data: { [key: string]: GroupInitialData; } = result.val();
         if (!data) {
             console.log("No more groups");
             setHasNextPage(false);
@@ -46,7 +46,7 @@ const Groups: FC = () => {
             return;
         }
 
-        const newGroups: GroupBase[] = [];
+        const newGroups: GroupInitialData[] = [];
         const groupIds = Object.keys(data);
         for (const groupId of groupIds) {
             if (groups.some(g => g.id === groupId)) continue;
@@ -55,7 +55,7 @@ const Groups: FC = () => {
         }
         setGroups(prev => [...prev, ...newGroups.sort((a, b) => (b.lastUpdate - a.lastUpdate))]);
         renderedGroups.current.push(...groupIds);
-
+        
         console.log(`Found ${newGroups.length} new groups`);
         console.groupEnd();
 
