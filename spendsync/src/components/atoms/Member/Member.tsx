@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { DataSnapshot, get, ref } from 'firebase/database';
 import stylex from '@stylexjs/stylex';
 
@@ -12,7 +12,7 @@ interface MemberProps {
     id: string | null | undefined;
 }
 
-const Member: FC<MemberProps> = ({ id }) => {
+const Member: FC<MemberProps> = memo(({ id }) => {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
@@ -44,6 +44,6 @@ const Member: FC<MemberProps> = ({ id }) => {
             <span>{name && email}</span>
         </div>
     );
-};
+});
 
 export default Member;

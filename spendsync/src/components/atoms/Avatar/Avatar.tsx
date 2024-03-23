@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, memo, useEffect, useState } from 'react';
 import { DataSnapshot, get, ref } from 'firebase/database';
 import stylex from '@stylexjs/stylex';
 
@@ -12,7 +12,7 @@ interface AvatarProps {
     id: string | null | undefined;
 }
 
-const Avatar: FC<AvatarProps> = ({ id }) => {
+const Avatar: FC<AvatarProps> = memo(({ id }) => {
     const [name, setName] = useState<string>('');
     const [email, setEmail] = useState<string>('');
     const [photo, setPhoto] = useState<string>('');
@@ -39,6 +39,6 @@ const Avatar: FC<AvatarProps> = ({ id }) => {
             {...stylex.props(styles.image, global.preventSelect)}
         />
     );
-};
+});
 
 export default Avatar;
