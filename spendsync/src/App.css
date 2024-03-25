@@ -2,6 +2,10 @@
     overflow: hidden;
 }
 
+.resizable > * {
+    padding-left: 5px;
+}
+
 .resizable {
     position: relative;
 }
