@@ -6,16 +6,17 @@
     position: relative;
 }
 
-.resizable::after {
-    content: " ";
-    height: 100vh;
-    width: 4px;
-    background: #131313;
-    display: block;
-    position: absolute;
-    right: 0;
-    cursor: ew-resize;
-}
+    .resizable::after {
+        content: " ";
+        height: 100vh;
+        width: 4px;
+        background: white;
+        display: block;
+        position: absolute;
+        left: 0;
+        cursor: ew-resize;
+        z-index: 10;
+    }
 
     .resizable:hover::after {
         background: #555;

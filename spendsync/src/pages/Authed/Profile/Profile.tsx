@@ -13,7 +13,7 @@ const Profile: FC = () => {
 
     return (
         <>
-            <div className="resizable" style={{ gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row' }} ref={resizeRef}>
+            <div className="resizable" style={{ gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row', right: 0 }} ref={resizeRef}>
                 <ProfileInfo />
                 <Groups />
             </div>

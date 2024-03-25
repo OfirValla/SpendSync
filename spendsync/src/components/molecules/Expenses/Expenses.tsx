@@ -6,6 +6,9 @@ import { db } from '../../../firebase';
 import Expense from '../../atoms/Expense';
 import { isMobile } from 'react-device-detect';
 
+// Fix bug where event onChildAdded is thrown when navigating between multiple groups
+// Propably due to state not resetting or the need to call the unsubscribe method on group switched
+
 interface ExpensesProps {
     groupId: string;
     onNewExpense: (expense: ExpenseType) => void
@@ -128,7 +131,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId, onNewExpense }) => {
         };
     }, [groupId]);
 
-    const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: '100vh' }
+    const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: '100vh', direction: 'rtl' }
 
     return (
         <div className="expenses" style={{ gridArea: 'expenses', ...styles }}>
