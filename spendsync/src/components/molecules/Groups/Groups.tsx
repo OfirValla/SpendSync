@@ -146,7 +146,7 @@ const Groups: FC = () => {
     };
 
     // Disable scrollable when in mobile mode
-    const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: 'calc(100vh - 160px)', }
+    const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: 'calc(100vh - 160px)', overflow: 'hidden' }
     return (
         <div className="groups" style={{ backgroundColor: 'teal', ...styles }}>
             {
