@@ -6,7 +6,7 @@ import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 
 import googleLogo from '../../../assets/Google.svg';
 import githubLogo from '../../../assets/Github.svg';
-import { global } from '../../../styles/global';
+import { global } from '../../../styles/global.stylex';
 
 const styles = stylex.create({
     container: {

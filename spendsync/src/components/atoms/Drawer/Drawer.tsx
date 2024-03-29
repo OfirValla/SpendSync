@@ -1,7 +1,7 @@
 import { FC, ReactPortal } from 'react';
 import stylex from '@stylexjs/stylex';
 
-import { overlay, drawer } from '../../../styles/drawer';
+import { overlay, drawer } from '../../../styles/drawer.stylex';
 
 interface DrawerProps {
     open: boolean;

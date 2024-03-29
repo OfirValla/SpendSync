@@ -5,8 +5,8 @@ import stylex from '@stylexjs/stylex';
 import { db } from '../../../firebase';
 import userSilhouette from '../../../assets/UserSilhouette.svg';
 
-import { styles } from '../../../styles/member';
-import { global } from '../../../styles/global';
+import { styles } from '../../../styles/member.stylex';
+import { global } from '../../../styles/global.stylex';
 
 interface AvatarProps {
     id: string | null | undefined;

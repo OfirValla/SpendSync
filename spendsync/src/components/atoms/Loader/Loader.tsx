@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import * as stylex from '@stylexjs/stylex';
 
-import { styles } from '../../../styles/loader';
+import { styles } from '../../../styles/loader.stylex';
 
 const Loader: FC = () => (
     <div {...stylex.props(styles.container)}>
