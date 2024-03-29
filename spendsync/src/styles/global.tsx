@@ -6,6 +6,22 @@ export const global = stylex.create({
         MsUserSelect: 'none', /* IE 10 and IE 11 */
         userSelect: 'none' /* Standard syntax */
     },
+
+    scrollbar: {
+        '::-webkit-scrollbar': {
+            width: '20px'
+        },
+
+        '::-webkit-scrollbar-thumb': {
+            backgroundColor: '#d6dee1',
+            borderRadius: '20px',
+            border: '6px solid transparent',
+            backgroundClip: 'content-box',
+            ':hover': {
+                backgroundColor: '#a8bbbf'
+            }
+        },
+    }
 });
 
 export const authed = stylex.create({
@@ -20,37 +36,5 @@ export const authed = stylex.create({
     },
     mobile: {
 
-    }
-});
-
-//::-webkit-scrollbar {
-//    width: 20px;
-//}
-
-//::-webkit-scrollbar-thumb {
-//    background-color: #d6dee1;
-//    border-radius: 20px;
-//    border: 6px solid transparent;
-//    background-clip: content-box;
-//}
-
-//    ::-webkit-scrollbar-thumb:hover {
-//        background-color: #a8bbbf;
-//    }
-
-export const scrollbar = stylex.create({
-    root: {
-        '::-webkit-scrollbar': {
-            width: '20px'
-        },
-        '::-webkit-scrollbar-thumb': {
-            backgroundColor: '#d6dee1',
-            borderRadius: '20px',
-            border: '6px solid transparent',
-            backgroundClip: 'content-box',
-            ':hover': {
-                backgroundColor: '#a8bbbf'
-            }
-        }
     }
 });
