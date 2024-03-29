@@ -6,6 +6,7 @@ import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
 import Groups from '../../../components/molecules/Groups';
 import ProfileInfo from '../../../components/molecules/Profile';
 import { useResizeOnDragProfile } from '../../../hooks/useResizeOnDrag';
+import { colors } from '../../../styles/variables.stylex';
 
 const Profile: FC = () => {
     useDocumentTitle('SpendSync - Profile');
@@ -13,7 +14,7 @@ const Profile: FC = () => {
 
     return (
         <>
-            <div className="resizable" style={{ gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row', right: 0 }} ref={resizeRef}>
+            <div className="resizable" style={{ backgroundColor: colors.mainBackground, color: colors.primaryText, gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row', right: 0 }} ref={resizeRef}>
                 <ProfileInfo />
                 <Groups />
             </div>

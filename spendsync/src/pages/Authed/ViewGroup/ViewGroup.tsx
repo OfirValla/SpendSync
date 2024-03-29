@@ -15,6 +15,7 @@ import Members from '../../../components/molecules/Members';
 import Avatar from '../../../components/atoms/Avatar';
 import Drawer from '../../../components/atoms/Drawer';
 
+import { colors } from '../../../styles/variables.stylex';
 import Expense from '../../../types/Expense';
 
 const ViewGroup: FC = () => {
@@ -65,8 +66,8 @@ const ViewGroup: FC = () => {
 
     return (
         <>
-            <div className="resizable" style={{ gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} ref={resizeRef}>
-                <div className="group-info" style={{ backgroundColor: 'blueviolet' }}>
+            <div className="resizable" style={{ backgroundColor: colors.mainBackground, color: colors.primaryText, gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} ref={resizeRef}>
+                <div className="group-info">
                     <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
                     <NavLink to='new-expense'>New Expense</NavLink><span>  </span>
                     <NavLink to='new-user'>New User</NavLink>

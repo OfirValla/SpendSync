@@ -5,6 +5,7 @@ import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChild
 import { db } from '../../../firebase';
 import Expense from '../../atoms/Expense';
 import { isMobile } from 'react-device-detect';
+import { colors } from '../../../styles/variables.stylex';
 
 // Fix bug where event onChildAdded is thrown when navigating between multiple groups
 // Propably due to state not resetting or the need to call the unsubscribe method on group switched
@@ -134,7 +135,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId, onNewExpense }) => {
     const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: '100vh', direction: 'rtl' }
 
     return (
-        <div className="expenses" style={{ gridArea: 'expenses', ...styles }}>
+        <div className="expenses" style={{ gridArea: 'expenses', ...styles, backgroundColor: colors.mainBackground, color:colors.primaryText }}>
             <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: '10px', justifyContent: 'center' }}>
                 {
                     expenses.map(expense => {

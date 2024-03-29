@@ -10,7 +10,7 @@ const Profile: FC = () => {
     const [user, ,] = useAuthState(auth);
 
     return (
-        <div className="profile" style={{ height: '160px', backgroundColor: 'blue' }}>
+        <div className="profile" style={{ height: '160px' }}>
             <div>IsMobile: {isMobile.toString()}</div>
             <Avatar id={user?.uid} />
             <b>{user?.displayName ?? user?.email}</b>
