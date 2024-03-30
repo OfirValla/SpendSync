@@ -4,6 +4,8 @@ import stylex from '@stylexjs/stylex';
 import { isMobile } from 'react-device-detect';
 
 const BORDER_SIZE = 4;
+const MIN_WIDTH = 350;
+const MAX_WIDTH = 800;
 
 const useSharedLogic = (isMouseDown: (e: MouseEvent, rect: DOMRect) => boolean, resizeLogic: (e: MouseEvent, node: HTMLDivElement) => void) => {
     const [node, setNode] = useState<HTMLDivElement | null>(null);
@@ -68,7 +70,7 @@ const useSharedLogic = (isMouseDown: (e: MouseEvent, rect: DOMRect) => boolean, 
     }
 }
 
-export const useResizeOnDragProfile = (min: number = 350) => {
+export const useResizeOnDragProfile = () => {
     const resize = (e: MouseEvent, node: HTMLDivElement) => {
         const minExpensesSize = window.innerWidth / 4;
 
@@ -84,8 +86,9 @@ export const useResizeOnDragProfile = (min: number = 350) => {
         }
 
         if (groupInfoSize + node!.getBoundingClientRect().width + BORDER_SIZE >= window.innerWidth) return;
-        if (newWidth < min) return;
-        
+        if (newWidth < MIN_WIDTH) return;
+        if (newWidth >= MAX_WIDTH) return;
+
         node!.style.width = `${newWidth}px`;
 
         gridTemplate[1] = `${newWidth}px`;
@@ -100,7 +103,7 @@ export const useResizeOnDragProfile = (min: number = 350) => {
     return [ref];
 };
 
-export const useResizeOnDragGroup = (min: number = 350) => {
+export const useResizeOnDragGroup = () => {
     const resize = (e: MouseEvent, node: HTMLDivElement) => {
         const minExpensesSize = window.innerWidth / 4;
         const newWidth = node!.getBoundingClientRect().right - e.x;
@@ -112,7 +115,9 @@ export const useResizeOnDragGroup = (min: number = 350) => {
         }
 
         if (e.x > window.innerWidth || e.x < 0) return;
-        if (newWidth < min) return;
+        if (newWidth < MIN_WIDTH) return;
+        if (newWidth >= MAX_WIDTH) return;
+
         node!.style.width = `${newWidth}px`;
 
         const gridTemplate = getComputedStyle(node!.parentElement!).gridTemplateColumns.split(' ');
