@@ -13,4 +13,7 @@ export const colors = stylex.defineVars({
     secondaryBackground: { default: 'wheat', [DARK]: 'gray' },
 
     lineColor: { default: 'gray', [DARK]: 'lightgray' },
+
+    mainBorder: { default: 'white', [DARK]: '#222222' },
+    resizeHover: { default: 'wheat', [DARK]: '#414141' }
 });

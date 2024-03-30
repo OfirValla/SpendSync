@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
+import { colors } from './variables.stylex';
 
 export const global = stylex.create({
     preventSelect: {
@@ -49,15 +50,17 @@ export const resize = stylex.create({
 
     desktop: {
         height: '100vh',
-        width: '4px',
-        background: 'white',
+        width: 1,
+        background: colors.mainBorder,
         display: 'block',
         position: 'absolute',
         left: 0,
         cursor: 'ew-resize',
         zIndex: 10,
+        transition: 'width .1s ease-in-out',
         ':hover': {
-            background: 'blue'
+            background: colors.resizeHover,
+            width: 4
         }
     },
     mobile: {
