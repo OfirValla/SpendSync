@@ -37,13 +37,13 @@ const NewGroup: FC = () => {
     }, []);
 
     return (
-        <div>
+        <>
             <input type="text" ref={nameRef} />
 
             <div>input to add users by email to the new group</div>
             
             <button onClick={addNewGroup}>New Group</button>
-        </div>
+        </>
     )
 };
 

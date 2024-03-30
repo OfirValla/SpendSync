@@ -88,7 +88,7 @@ export const useResizeOnDragProfile = (min: number = 350) => {
         
         node!.style.width = `${newWidth}px`;
 
-        gridTemplate[2] = `${newWidth}px`;
+        gridTemplate[1] = `${newWidth}px`;
         gridTemplate[0] = '1fr';
         node!.parentElement!.style.gridTemplateColumns = gridTemplate.join(' ');
     }

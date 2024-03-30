@@ -5,12 +5,14 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { auth, signOutUser } from '../../../firebase';
 import Avatar from '../../atoms/Avatar';
+import stylex from '@stylexjs/stylex';
+import { profileInfo } from '../../../styles/profile.stylex';
 
 const Profile: FC = () => {
     const [user, ,] = useAuthState(auth);
 
     return (
-        <div className="profile" style={{ height: '160px' }}>
+        <div className="profile" {...stylex.props(profileInfo.base)} >
             <div>IsMobile: {isMobile.toString()}</div>
             <Avatar id={user?.uid} />
             <b>{user?.displayName ?? user?.email}</b>

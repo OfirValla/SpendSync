@@ -17,3 +17,7 @@ export const colors = stylex.defineVars({
     mainBorder: { default: 'white', [DARK]: '#222222' },
     resizeHover: { default: 'wheat', [DARK]: '#414141' }
 });
+
+export const sizes = stylex.defineVars({
+    borderWidth: '2px'
+});

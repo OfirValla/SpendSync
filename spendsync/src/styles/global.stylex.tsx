@@ -1,5 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
-import { colors } from './variables.stylex';
+import { colors, sizes } from './variables.stylex';
 
 export const global = stylex.create({
     preventSelect: {
@@ -29,13 +29,26 @@ export const authed = stylex.create({
     desktop: {
         display: 'grid',
         gridAutoFlow: 'column',
-        gridTemplateColumns: '1fr 20vw 20vw',
-        gridTemplateAreas: '"expenses group-info profile"',
+        gridTemplateColumns: '1fr 20vw',
+        gridTemplateAreas: '"other profile"',
         overflow: 'hidden',
         position: 'absolute',
         width: '100vw'
     },
+
+    desktopGroup: {
+        gridArea: 'other',
+        display: 'grid',
+        gridAutoFlow: 'column',
+        gridTemplateColumns: '1fr 20vw',
+        gridTemplateAreas: '"expenses group-info"',
+    },
+
     mobile: {
+
+    },
+
+    mobileGroup: {
 
     }
 });
@@ -50,7 +63,7 @@ export const resize = stylex.create({
 
     desktop: {
         height: '100vh',
-        width: 2,
+        width: sizes.borderWidth,
         background: colors.mainBorder,
         display: 'block',
         position: 'absolute',

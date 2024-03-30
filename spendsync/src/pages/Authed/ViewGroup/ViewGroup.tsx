@@ -5,7 +5,7 @@ import { NavLink, useNavigate, useOutlet, useParams } from 'react-router-dom';
 import { ref, get, set, DataSnapshot, onChildChanged } from 'firebase/database';
 import { isMobile } from 'react-device-detect';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import stylex from '@stylexjs/stylex';
 
 import { auth, db } from '../../../firebase';
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
@@ -17,6 +17,7 @@ import Drawer from '../../../components/atoms/Drawer';
 
 import { colors } from '../../../styles/variables.stylex';
 import Expense from '../../../types/Expense';
+import { authed } from '../../../styles/global.stylex';
 
 const ViewGroup: FC = () => {
     useDocumentTitle('SpendSync - View Group');
@@ -65,7 +66,7 @@ const ViewGroup: FC = () => {
     }
 
     return (
-        <>
+        <div {...stylex.props(isMobile ? authed.mobileGroup : authed.desktopGroup)}>
             <div className="resizable" style={{ backgroundColor: colors.mainBackground, color: colors.primaryText, gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} ref={resizeRef}>
                 <div className="group-info">
                     <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
@@ -77,7 +78,7 @@ const ViewGroup: FC = () => {
             <Expenses groupId={groupId!} onNewExpense={onNewExpense} />
 
             {!isMobile ? <Drawer open={!!outletComponent} onClose={() => { navigate(-1); }}>{outletComponent}</Drawer> : <></>}
-        </>
+        </div>
     );
 };
 

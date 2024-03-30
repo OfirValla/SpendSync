@@ -26,7 +26,7 @@ const Member: FC<MemberProps> = memo(({ id }) => {
     }, [id]);
 
     return (
-        <div style={{ display: 'grid', gridTemplateAreas: '"member-image name" "member-image email"', justifyContent: 'start', gridColumnGap: '10px', paddingBottom: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateAreas: '"name member-image" "email member-image"', justifyContent: 'end', justifyItems: 'end', gridColumnGap: '10px', paddingBottom: '20px' }}>
             <img
                 src={photo ?? ''}
                 alt={name ? name : 'User profile image'}

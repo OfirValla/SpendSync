@@ -73,6 +73,7 @@ const Authed: FC = () => {
         return handleNewInvites();
     }, []);
 
+    
     return (
         <div {...stylex.props(isMobile ? authed.mobile : authed.desktop, global.scrollbar)}>
             <RouterProvider router={authedRouter} />

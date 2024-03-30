@@ -18,7 +18,10 @@ const Profile: FC = () => {
                 <ProfileInfo />
                 <Groups />
             </div>
-            {!isMobile ? <Outlet /> : <></>}
+
+            <div style={{ gridArea: 'other' }}>
+                {!isMobile ? <Outlet /> : <></>}
+            </div>
         </>
     )
 };
