@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { resize as resizeStyles } from '../styles/global.stylex';
 import stylex from '@stylexjs/stylex';
+import { isMobile } from 'react-device-detect';
 
 const BORDER_SIZE = 4;
 
@@ -69,6 +70,7 @@ export const useResizeOnDragProfile = (min: number = 350) => {
     }
     
     useEffect(() => {
+        if (isMobile) return;
         if (!node) return;
 
         enableResize(node)
@@ -128,6 +130,7 @@ export const useResizeOnDragGroup = (min: number = 350) => {
     };
 
     useEffect(() => {
+        if (isMobile) return;
         if (!node) return;
 
         enableResize(node);
