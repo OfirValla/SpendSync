@@ -38,3 +38,29 @@ export const authed = stylex.create({
 
     }
 });
+
+export const resize = stylex.create({
+    container: {
+        position: 'relative',
+        ':not(#__unused__) > :not(:last-child)': {
+            paddingLeft: '8px' 
+        }
+    },
+
+    desktop: {
+        height: '100vh',
+        width: '4px',
+        background: 'white',
+        display: 'block',
+        position: 'absolute',
+        left: 0,
+        cursor: 'ew-resize',
+        zIndex: 10,
+        ':hover': {
+            background: 'blue'
+        }
+    },
+    mobile: {
+
+    }
+});

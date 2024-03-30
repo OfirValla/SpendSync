@@ -1,6 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
+import { resize as resizeStyles } from '../styles/global.stylex';
+import stylex from '@stylexjs/stylex';
 
 const BORDER_SIZE = 4;
+
+const enableResize = (node: HTMLDivElement) => {
+    const lastElementClasses = [...[...node.children!].at(-1)!.classList];
+    const resizeBarClasses = stylex.props(resizeStyles.desktop).className!.split(' ')!;
+
+    // Preventing multiple resize bar elements
+    if (resizeBarClasses.every(c => lastElementClasses.includes(c)))
+        return;
+
+    // Adding the base styles
+    node.classList.add(...stylex.props(resizeStyles.container).className!.split(' ')!)
+
+    // Adding the draggable bar
+    const newElement = document.createElement('span');
+    newElement.classList.add(...resizeBarClasses);
+    
+    node.appendChild(newElement);
+}
 
 export const useResizeOnDragProfile = (min: number = 350) => {
     const [node, setNode] = useState<HTMLDivElement | null>(null);
@@ -50,6 +70,8 @@ export const useResizeOnDragProfile = (min: number = 350) => {
     
     useEffect(() => {
         if (!node) return;
+
+        enableResize(node)
 
         node.addEventListener("mousedown", mouseDown, false);
         document.addEventListener("mouseup", mouseUp, false);
@@ -107,6 +129,8 @@ export const useResizeOnDragGroup = (min: number = 350) => {
 
     useEffect(() => {
         if (!node) return;
+
+        enableResize(node);
 
         node.addEventListener("mousedown", mouseDown, false);
         document.addEventListener("mouseup", mouseUp, false);
