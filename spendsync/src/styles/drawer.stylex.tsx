@@ -1,4 +1,5 @@
 import * as stylex from '@stylexjs/stylex';
+import { colors } from './variables.stylex';
 
 export const overlay = stylex.create({
     base: {
@@ -38,7 +39,7 @@ export const drawer = stylex.create({
         overflowY: 'auto',
         flexDirection: 'column',
 
-        backgroundColor: '#ffffff',
+        backgroundColor: colors.secondaryBackground,
         width: '30vw',
         flexShrink: 0,
 
