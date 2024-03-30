@@ -30,8 +30,7 @@ const useSharedLogic = (isMouseDown: (e: MouseEvent, rect: DOMRect) => boolean, 
         node!.appendChild(newElement);
     }
 
-    const resize = (e: MouseEvent) => 
-        resizeLogic(e, node!);
+    const resize = (e: MouseEvent) => resizeLogic(e, node!);
 
     const onMouseDown = (e: MouseEvent) => {
         if (!isMouseDown(e, node!.getBoundingClientRect()))
@@ -91,7 +90,6 @@ export const useResizeOnDragProfile = (min: number = 350) => {
 
         gridTemplate[2] = `${newWidth}px`;
         gridTemplate[0] = '1fr';
-        console.log(gridTemplate.join(' '))
         node!.parentElement!.style.gridTemplateColumns = gridTemplate.join(' ');
     }
 
