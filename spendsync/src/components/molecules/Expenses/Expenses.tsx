@@ -136,7 +136,7 @@ const Expenses: FC<ExpensesProps> = ({ groupId, onNewExpense }) => {
 
     return (
         <div className="expenses" style={{ gridArea: 'expenses', ...styles, backgroundColor: colors.mainBackground, color:colors.primaryText }}>
-            <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: '10px', justifyContent: 'center' }}>
+            <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: '10px', justifyContent: 'center', padding: 20 }}>
                 {
                     expenses.map(expense => {
                         return <Expense key={expense.id} {...expense} />;

@@ -50,7 +50,7 @@ export const resize = stylex.create({
 
     desktop: {
         height: '100vh',
-        width: 1,
+        width: 2,
         background: colors.mainBorder,
         display: 'block',
         position: 'absolute',
@@ -60,7 +60,7 @@ export const resize = stylex.create({
         transition: 'width .1s ease-in-out',
         ':hover': {
             background: colors.resizeHover,
-            width: 4
+            width: 6
         }
     },
     mobile: {
