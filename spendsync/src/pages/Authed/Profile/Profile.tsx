@@ -14,7 +14,7 @@ const Profile: FC = () => {
 
     return (
         <>
-            <div className="resizable" style={{ backgroundColor: colors.mainBackground, color: colors.primaryText, gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row', right: 0 }} ref={resizeRef}>
+            <div style={{ backgroundColor: colors.mainBackground, color: colors.primaryText, gridArea: 'profile', display: 'grid', gridTemplateRows: '160px 1fr', gridAutoFlow: 'row', right: 0 }} ref={resizeRef}>
                 <ProfileInfo />
                 <Groups />
             </div>
