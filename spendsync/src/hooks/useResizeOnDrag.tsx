@@ -5,32 +5,72 @@ import { isMobile } from 'react-device-detect';
 
 const BORDER_SIZE = 4;
 
-const enableResize = (node: HTMLDivElement) => {
-    const lastElementClasses = [...[...node.children!].at(-1)!.classList];
-    const resizeBarClasses = stylex.props(resizeStyles.desktop).className!.split(' ')!;
-
-    // Preventing multiple resize bar elements
-    if (resizeBarClasses.every(c => lastElementClasses.includes(c)))
-        return;
-
-    // Adding the base styles
-    node.classList.add(...stylex.props(resizeStyles.container).className!.split(' ')!)
-
-    // Adding the draggable bar
-    const newElement = document.createElement('span');
-    newElement.classList.add(...resizeBarClasses);
-    
-    node.appendChild(newElement);
-}
-
-export const useResizeOnDragProfile = (min: number = 350) => {
+const useSharedLogic = (isMouseDown: (e: MouseEvent, rect: DOMRect) => boolean, resizeLogic: (e: MouseEvent, node: HTMLDivElement) => void) => {
     const [node, setNode] = useState<HTMLDivElement | null>(null);
 
     const ref = useCallback((nodeEle: HTMLDivElement) => {
         setNode(nodeEle);
     }, []);
-    
-    const resize = (e: MouseEvent) => {
+
+    const enableResize = () => {
+        const lastElementClasses = [...[...node!.children!].at(-1)!.classList];
+        const resizeBarClasses = stylex.props(resizeStyles.desktop).className!.split(' ')!;
+
+        // Preventing multiple resize bar elements
+        if (resizeBarClasses.every(c => lastElementClasses.includes(c)))
+            return;
+
+        // Adding the base styles
+        node!.classList.add(...stylex.props(resizeStyles.container).className!.split(' ')!);
+
+        // Adding the draggable bar
+        const newElement = document.createElement('span');
+        newElement.classList.add(...resizeBarClasses);
+
+        node!.appendChild(newElement);
+    }
+
+    const resize = (e: MouseEvent) => 
+        resizeLogic(e, node!);
+
+    const onMouseDown = (e: MouseEvent) => {
+        if (!isMouseDown(e, node!.getBoundingClientRect()))
+            return;
+
+        document.addEventListener("mousemove", resize, false);
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'ew-resize';
+    }
+
+    const onMouseUp = () => {
+        document.removeEventListener("mousemove", resize, false);
+        document.body.style.userSelect = 'unset';
+        document.body.style.cursor = 'unset';
+    }
+
+    useEffect(() => {
+        if (isMobile) return;
+        if (!node) return;
+
+        enableResize();
+
+        node.addEventListener("mousedown", onMouseDown, false);
+        document.addEventListener("mouseup", onMouseUp, false);
+
+        return () => {
+            node?.removeEventListener("mousedown", onMouseDown, false);
+            document.removeEventListener("mouseup", onMouseDown, false);
+        };
+
+    }, [node]);
+
+    return {
+        ref,
+    }
+}
+
+export const useResizeOnDragProfile = (min: number = 350) => {
+    const resize = (e: MouseEvent, node: HTMLDivElement) => {
         const minExpensesSize = window.innerWidth / 4;
 
         const newWidth = window.innerWidth - e.x;
@@ -55,47 +95,15 @@ export const useResizeOnDragProfile = (min: number = 350) => {
         node!.parentElement!.style.gridTemplateColumns = gridTemplate.join(' ');
     }
 
-    const mouseDown = (e: MouseEvent) => {
-        if (e.x <= node!.getBoundingClientRect().left + BORDER_SIZE) {
-            document.addEventListener("mousemove", resize, false);
-            document.body.style.userSelect = 'none';
-            document.body.style.cursor = 'ew-resize';
-        }
-    }
-
-    const mouseUp = () => {
-        document.removeEventListener("mousemove", resize, false);
-        document.body.style.userSelect = 'unset';
-        document.body.style.cursor = 'unset';
-    }
+    const isMouseDown = (e: MouseEvent, rect: DOMRect) => e.x <= rect.left + BORDER_SIZE;
     
-    useEffect(() => {
-        if (isMobile) return;
-        if (!node) return;
-
-        enableResize(node)
-
-        node.addEventListener("mousedown", mouseDown, false);
-        document.addEventListener("mouseup", mouseUp, false);
-
-        return () => {
-            node?.removeEventListener("mousedown", mouseDown, false);
-            document.removeEventListener("mouseup", mouseDown, false);
-        }
-
-    }, [node]);
+    const { ref } = useSharedLogic(isMouseDown, resize);
 
     return [ref];
 };
 
 export const useResizeOnDragGroup = (min: number = 350) => {
-    const [node, setNode] = useState<HTMLDivElement | null>(null);
-
-    const ref = useCallback((nodeEle: HTMLDivElement) => {
-        setNode(nodeEle);
-    }, []);
-
-    const resize = (e: MouseEvent) => {
+    const resize = (e: MouseEvent, node: HTMLDivElement) => {
         const minExpensesSize = window.innerWidth / 4;
         const newWidth = node!.getBoundingClientRect().right - e.x;
 
@@ -115,35 +123,9 @@ export const useResizeOnDragGroup = (min: number = 350) => {
         node!.parentElement!.style.gridTemplateColumns = gridTemplate.join(' ');
     };
 
-    const mouseDown = (e: MouseEvent) => {
-        if (node!.getBoundingClientRect().x + BORDER_SIZE >= e.x) {
-            document.addEventListener("mousemove", resize, false);
-            document.body.style.userSelect = 'none';
-            document.body.style.cursor = 'ew-resize';
-        }
-    };
+    const isMouseDown = (e: MouseEvent, rect: DOMRect) => rect.x + BORDER_SIZE >= e.x;
 
-    const mouseUp = () => {
-        document.removeEventListener("mousemove", resize, false);
-        document.body.style.userSelect = 'unset';
-        document.body.style.cursor = 'unset';
-    };
-
-    useEffect(() => {
-        if (isMobile) return;
-        if (!node) return;
-
-        enableResize(node);
-
-        node.addEventListener("mousedown", mouseDown, false);
-        document.addEventListener("mouseup", mouseUp, false);
-
-        return () => {
-            node?.removeEventListener("mousedown", mouseDown, false);
-            document.removeEventListener("mouseup", mouseDown, false);
-        };
-
-    }, [node]);
+    const { ref } = useSharedLogic(isMouseDown, resize);
 
     return [ref];
 };
