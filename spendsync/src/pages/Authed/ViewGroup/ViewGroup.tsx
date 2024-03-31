@@ -43,7 +43,7 @@ const ViewGroup: FC = () => {
             get(ref(db, `groups/${groupId}/managedBy`)).then(updateManagedBy),
             get(ref(db, `groups/${groupId}/owed`)).then(updatedOwed),
             set(ref(db, `users/${user!.uid}/groups/${groupId}/hasUpdate`), false)
-        ]);
+        ]).catch(() => navigate('/'));
 
         const onChildChangedUnsubscribe = onChildChanged(ref(db, `groups/${groupId}`), (snapshot) => {
             if (snapshot.key === 'name') updateName(snapshot);
