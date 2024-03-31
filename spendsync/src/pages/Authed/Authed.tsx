@@ -75,7 +75,7 @@ const Authed: FC = () => {
 
     
     return (
-        <div {...stylex.props(isMobile ? authed.mobile : authed.desktop, global.scrollbar)}>
+        <div {...stylex.props(isMobile ? authed.mobile : authed.desktop)}>
             <RouterProvider router={authedRouter} />
         </div>
     )

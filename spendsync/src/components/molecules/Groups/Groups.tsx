@@ -8,6 +8,8 @@ import { auth, db } from '../../../firebase';
 import Group from '../../atoms/Group';
 import { GroupInitialData } from '../../../types/Group';
 import { isMobile } from 'react-device-detect';
+import stylex from '@stylexjs/stylex';
+import { global } from '../../../styles/global.stylex';
 
 const Groups: FC = () => {
     const [user, ,] = useAuthState(auth);
@@ -148,7 +150,7 @@ const Groups: FC = () => {
     // Disable scrollable when in mobile mode
     const styles: CSSProperties = isMobile ? {} : { overflowY: 'auto', height: 'calc(100vh - 160px)', overflow: 'hidden' }
     return (
-        <div className="groups" style={{ ...styles }}>
+        <div className="groups" style={{ ...styles }} {...stylex.props(global.scrollbar)}>
             {
                 groups.map(group =>
                     <Group key={group.id} groupId={group!.id!} onNotExisting={onNotExists} />

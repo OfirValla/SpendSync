@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 import { auth, signOutUser } from '../../../firebase';
@@ -13,7 +12,6 @@ const Profile: FC = () => {
 
     return (
         <div className="profile" {...stylex.props(profileInfo.base)} >
-            <div>IsMobile: {isMobile.toString()}</div>
             <Avatar id={user?.uid} />
             <b>{user?.displayName ?? user?.email}</b>
             <button onClick={signOutUser}>Sign Out</button>

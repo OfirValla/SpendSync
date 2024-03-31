@@ -6,6 +6,7 @@ import { NavLink } from 'react-router-dom';
 import { auth, db } from '../../../firebase';
 import { GroupPreview } from '../../../types/Group';
 import { colors } from '../../../styles/variables.stylex';
+import Avatar from '../Avatar';
 
 interface GroupProps {
     groupId: string;
@@ -75,6 +76,9 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     return (
         <div style={{ color: colors.primaryText }}>
             <NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {groupInfo?.hasUpdate.toString()} - {JSON.stringify(groupInfo?.owed)} - {JSON.stringify(groupInfo?.members)}
+            <div style={{ display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto' }}>
+                { groupInfo?.members.map(memberId => <Avatar key={memberId} id={memberId} />) }
+            </div>
         </div>
     );
 };

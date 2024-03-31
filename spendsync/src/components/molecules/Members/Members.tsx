@@ -8,6 +8,8 @@ import Avatar from '../../atoms/Avatar';
 import './Members.css';
 import { isMobile } from 'react-device-detect';
 import Member from '../../atoms/Member';
+import stylex from '@stylexjs/stylex';
+import { global } from '../../../styles/global.stylex';
 
 interface MembersProps {
     groupId: string;
@@ -114,7 +116,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
                                            : { display: 'flex', flexDirection: 'column', overflowY: 'auto', height: 'calc(100vh - 160px)' }
 
     return (
-        <div className="members" style={{ ...styles }} >
+        <div className="members" style={{ ...styles }} {...stylex.props(global.scrollbar)}>
             {
                 members.map(member => {
                     return <Component key={member} id={member} />

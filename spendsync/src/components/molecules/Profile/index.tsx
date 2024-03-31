@@ -1,3 +1,3 @@
-import Members from './Profile';
+import Profile from './Profile';
 
-export default Members;
+export default Profile;

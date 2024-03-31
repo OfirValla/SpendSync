@@ -14,13 +14,13 @@ export const global = stylex.create({
         },
 
         '::-webkit-scrollbar-thumb': {
-            backgroundColor: '#d6dee1',
+            backgroundColor: {
+                default: '#d6dee1',
+                ':hover': '#a8bbbf',
+            },
             borderRadius: '20px',
             border: '6px solid transparent',
             backgroundClip: 'content-box',
-            ':hover': {
-                backgroundColor: '#a8bbbf'
-            }
         },
     }
 });
