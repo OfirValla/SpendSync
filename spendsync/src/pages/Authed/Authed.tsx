@@ -8,7 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 import { auth, db } from '../../firebase';
 import { authedRouter } from '../../utils/Routes';
-import { authed, global } from '../../styles/global.stylex';
+import { authed } from '../../styles/global.stylex';
 
 const Authed: FC = () => {
     const [user, ,] = useAuthState(auth);
