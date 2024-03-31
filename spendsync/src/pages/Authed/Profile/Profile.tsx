@@ -1,5 +1,5 @@
-import { FC } from 'react';
-import { Outlet } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
 import { useDocumentTitle } from '../../../hooks/useDocumentTitle';
@@ -11,6 +11,14 @@ import { colors } from '../../../styles/variables.stylex';
 const Profile: FC = () => {
     useDocumentTitle('SpendSync - Profile');
     const [resizeRef] = useResizeOnDragProfile();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+
+        return () => {
+            navigate('/');
+        }
+    }, [])
 
     return (
         <>
