@@ -68,7 +68,7 @@ const ViewGroup: FC = () => {
     return (
         <div {...stylex.props(isMobile ? authed.mobileGroup : authed.desktopGroup)}>
             <div style={{ backgroundColor: colors.mainBackground, color: colors.primaryText, gridArea: 'group-info', display: 'grid', gridTemplateRows: '160px 1fr', overflow: 'hidden' }} ref={resizeRef}>
-                <div className="group-info">
+                <div className="group-info" style={{ borderBottom: '2px solid #222222', height: 160 }}>
                     <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
                     <NavLink to='new-expense'>New Expense</NavLink><span>  </span>
                     <NavLink to='new-user'>New User</NavLink>

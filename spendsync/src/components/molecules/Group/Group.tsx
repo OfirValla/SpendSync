@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { DataSnapshot, Unsubscribe, get, limitToFirst, onChildChanged, query, ref } from 'firebase/database';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { auth, db } from '../../../firebase';
 import { GroupPreview } from '../../../types/Group';
@@ -23,7 +23,8 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     const unsubscribeOnHasUpdateChangedEvent = useRef<Unsubscribe>(() => { });
     const [user, ,] = useAuthState(auth);
     const navigate = useNavigate();
-
+    const params = useParams();
+    
     const onChildChangedCallback = (snapshot: DataSnapshot) => {
         const groupId: string = snapshot.ref.parent!.key!;
         console.groupCollapsed("Expense Changed");
@@ -79,7 +80,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     }, [groupId]);
 
     return (
-        <div onClick={onClick} style={{ color: colors.primaryText }} {...stylex.props(group.container)}>
+        <div onClick={onClick} style={{ color: colors.primaryText }} {...stylex.props(group.container, params.groupId === groupId ? group.active : {})}>
             <b>{groupId}</b> - {groupInfo?.name} - {groupInfo?.hasUpdate.toString()} - {JSON.stringify(groupInfo?.owed)}
             <Members groupId={groupId} previewMode={true} />
         </div>

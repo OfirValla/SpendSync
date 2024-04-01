@@ -3,9 +3,7 @@ import { colors, sizes } from './variables.stylex';
 
 export const profileInfo = stylex.create({
     base: {
-        borderBottomWidth: sizes.borderWidth,
-        borderColor: colors.mainBorder,
-        borderStyle: 'solid',
+        borderBottom: `${sizes.borderWidth} solid ${colors.mainBorder}`,
         height: '160px'
     }
 });

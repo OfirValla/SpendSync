@@ -57,8 +57,8 @@ export const resize = stylex.create({
     container: {
         position: 'relative',
         ':not(#__unused__) > :not(:last-child)': {
-            paddingLeft: '8px' 
-        }
+            paddingLeft: '8px'
+        },
     },
 
     desktop: {
@@ -71,9 +71,10 @@ export const resize = stylex.create({
         cursor: 'ew-resize',
         zIndex: 10,
         transition: 'width .1s ease-in-out',
+       
         ':hover': {
             background: colors.resizeHover,
-            width: 6
+            width: 6,
         }
     },
     mobile: {

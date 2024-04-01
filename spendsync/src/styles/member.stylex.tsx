@@ -33,5 +33,21 @@ export const styles = stylex.create({
         width: '50px',
         backgroundColor: '#cecece',
         border: '2px white solid'
+    },
+    member: {
+        display: 'grid',
+        gridTemplateAreas: '"name member-image" "email member-image"',
+        justifyContent: 'end',
+        justifyItems: 'end',
+        gridColumnGap: '10px',
+        paddingBottom: '20px',
+
+        margin: 5,
+        borderRadius: 5,
+        padding: 5,
+
+        ':hover': {
+            backgroundColor: '#454545'
+        }
     }
 });

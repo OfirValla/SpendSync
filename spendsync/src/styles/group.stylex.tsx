@@ -9,5 +9,9 @@ export const group = stylex.create({
             cursor: 'pointer',
             backgroundColor: '#454545'
         }
+    },
+
+    active: {
+        backgroundColor: '#454545'
     }
 });
