@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
-import { DataSnapshot, Unsubscribe, get, limitToFirst, onChildChanged, query, ref } from 'firebase/database';
+import { DataSnapshot, Unsubscribe, get, onChildChanged, ref } from 'firebase/database';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -64,9 +64,8 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
             get(ref(db, `groups/${groupId}/name`)),
             get(ref(db, `groups/${groupId}/owed/${user!.uid}`)),
             get(ref(db, `users/${user!.uid}/groups/${groupId}/hasUpdate`)),
-            get(query(ref(db, `groups/${groupId}/members`), limitToFirst(5))),
-        ]).then(([nameData, owedData, hasUpdateData, membersData]) => {
-            const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, members: Object.keys(membersData.val()), hasUpdate: hasUpdateData.val() };
+        ]).then(([nameData, owedData, hasUpdateData]) => {
+            const group: GroupPreview = { id: groupId, name: nameData.val(), owed: owedData.val() ?? {}, lastUpdate: -1, hasUpdate: hasUpdateData.val() };
             setGroupInfo(group);
 
             unsubscribeOnChildChangeEvent.current = onChildChanged(ref(db, `groups/${groupId}`), onChildChangedCallback);

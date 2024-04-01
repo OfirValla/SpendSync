@@ -12,7 +12,6 @@ export type GroupInitialData = GroupId & GroupBase;
 export type GroupPreview = GroupInitialData & {
     name: string;
     owed: { [key: string]: number; };
-    members: string[];
 };
 
 export type OwedInformation = { [key in Currency]?: number; };
