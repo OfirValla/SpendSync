@@ -121,11 +121,8 @@ const Members: FC<MembersProps> = ({ groupId, previewMode = false }) => {
     const isCompactMode = previewMode || isMobile;
     const Component = isCompactMode ? Avatar : Member;
 
-    const styles: CSSProperties = isCompactMode ? { display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto' }
-                                                : { display: 'flex', flexDirection: 'column', overflowY: 'auto', height: 'calc(100vh - 160px)' }
-
     return (
-        <div style={{ ...styles }} {...stylex.props(membersStyle.container, global.scrollbar)}>
+        <div {...stylex.props(membersStyle.container, isCompactMode ? membersStyle.compactMode : membersStyle.desktopMode, global.scrollbar)}>
             {
                 members.map(member => {
                     return <Component key={member} id={member} />

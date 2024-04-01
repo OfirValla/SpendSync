@@ -11,6 +11,18 @@ export const members = stylex.create({
         '::-webkit-scrollbar': {
             display: 'none'
         }
+    },
+    compactMode: {
+        display: 'grid',
+        gridAutoFlow: 'column',
+        justifyContent: 'end',
+        overflowX: 'auto'
+    },
+    desktopMode: {
+        display: 'flex',
+        flexDirection: 'column',
+        overflowY: 'auto',
+        height: 'calc(100vh - 160px)'
     }
 });
 

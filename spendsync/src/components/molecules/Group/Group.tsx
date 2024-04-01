@@ -1,13 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { DataSnapshot, Unsubscribe, get, limitToFirst, onChildChanged, query, ref } from 'firebase/database';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { auth, db } from '../../../firebase';
 import { GroupPreview } from '../../../types/Group';
 import { colors } from '../../../styles/variables.stylex';
-import Avatar from '../../atoms/Avatar';
 import Members from '../Members';
+import stylex from '@stylexjs/stylex';
+import { group } from '../../../styles/group.stylex';
 
 interface GroupProps {
     groupId: string;
@@ -21,6 +22,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     const unsubscribeOnChildChangeEvent = useRef<Unsubscribe>(() => { });
     const unsubscribeOnHasUpdateChangedEvent = useRef<Unsubscribe>(() => { });
     const [user, ,] = useAuthState(auth);
+    const navigate = useNavigate();
 
     const onChildChangedCallback = (snapshot: DataSnapshot) => {
         const groupId: string = snapshot.ref.parent!.key!;
@@ -54,6 +56,8 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
         });
     }
 
+    const onClick = () => navigate(`/view/${groupId}`);
+
     useEffect(() => {
         Promise.all([
             get(ref(db, `groups/${groupId}/name`)),
@@ -75,8 +79,8 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     }, [groupId]);
 
     return (
-        <div style={{ color: colors.primaryText }}>
-            <NavLink to={`/view/${groupId}`}><b>{groupId}</b></NavLink> - {groupInfo?.name} - {groupInfo?.hasUpdate.toString()} - {JSON.stringify(groupInfo?.owed)} - {JSON.stringify(groupInfo?.members)}
+        <div onClick={onClick} style={{ color: colors.primaryText }} {...stylex.props(group.container)}>
+            <b>{groupId}</b> - {groupInfo?.name} - {groupInfo?.hasUpdate.toString()} - {JSON.stringify(groupInfo?.owed)}
             <Members groupId={groupId} previewMode={true} />
         </div>
     );
