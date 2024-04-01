@@ -10,12 +10,14 @@ import { isMobile } from 'react-device-detect';
 import Member from '../../atoms/Member';
 import stylex from '@stylexjs/stylex';
 import { global } from '../../../styles/global.stylex';
+import { members as membersStyle } from '../../../styles/member.stylex';
 
 interface MembersProps {
     groupId: string;
+    previewMode: boolean;
 }
 
-const Members: FC<MembersProps> = ({ groupId }) => {
+const Members: FC<MembersProps> = ({ groupId, previewMode = false }) => {
     const [members, setMembers] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNextPage, setHasNextPage] = useState<boolean>(true);
@@ -32,14 +34,15 @@ const Members: FC<MembersProps> = ({ groupId }) => {
         }
         setIsLoading(true);
 
+        const amountToFetch: number = previewMode ? 5 : 10;
+
         let result: DataSnapshot;
         if (members.length !== 0)
-            result = await get(query(ref(db, `groups/${groupId}/members`), orderByKey(), endBefore(members!.at(-1)!), limitToLast(10)));
+            result = await get(query(ref(db, `groups/${groupId}/members`), orderByKey(), endBefore(members!.at(-1)!), limitToLast(amountToFetch)));
         else {
-            result = await get(query(ref(db, `groups/${groupId}/members`), orderByKey(), limitToLast(10)));
+            result = await get(query(ref(db, `groups/${groupId}/members`), orderByKey(), limitToLast(amountToFetch)));
             setFirstItem(Object.keys(result.val() || {}).at(-1));
         }
-
         const data: { [key: string]: boolean; } = result.val();
         if (!data) {
             console.log("No more members");
@@ -47,6 +50,7 @@ const Members: FC<MembersProps> = ({ groupId }) => {
             console.groupEnd();
             return;
         }
+        console.log(amountToFetch, Object.keys(data), hasNextPage)
 
         const newMembers: string[] = (Object.keys(data) || []).reverse();
         setMembers(prev => [...prev, ...newMembers]);
@@ -54,6 +58,8 @@ const Members: FC<MembersProps> = ({ groupId }) => {
         console.log(`Found ${newMembers.length} new members`);
         console.groupEnd();
 
+        if (previewMode)
+            setHasNextPage(false);
         setIsLoading(false);
     };
 
@@ -83,6 +89,8 @@ const Members: FC<MembersProps> = ({ groupId }) => {
     }, [groupId]);
 
     useEffect(() => {
+        if (previewMode) return;
+
         let memberAddedQuery: Query | null = null;
         if ((firstItem === null || firstItem === undefined) && !hasNextPage)
             memberAddedQuery = query(ref(db, `groups/${groupId}/members`));
@@ -110,13 +118,14 @@ const Members: FC<MembersProps> = ({ groupId }) => {
     // If in mobile mode show members using Avatar component
     // If in desktop mode show members using Member component
 
-    const Component = isMobile ? Avatar : Member;
+    const isCompactMode = previewMode || isMobile;
+    const Component = isCompactMode ? Avatar : Member;
 
-    const styles: CSSProperties = isMobile ? { display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto' }
-                                           : { display: 'flex', flexDirection: 'column', overflowY: 'auto', height: 'calc(100vh - 160px)' }
+    const styles: CSSProperties = isCompactMode ? { display: 'grid', gridAutoFlow: 'column', justifyContent: 'start', overflowX: 'auto' }
+                                                : { display: 'flex', flexDirection: 'column', overflowY: 'auto', height: 'calc(100vh - 160px)' }
 
     return (
-        <div className="members" style={{ ...styles }} {...stylex.props(global.scrollbar)}>
+        <div style={{ ...styles }} {...stylex.props(membersStyle.container, global.scrollbar)}>
             {
                 members.map(member => {
                     return <Component key={member} id={member} />

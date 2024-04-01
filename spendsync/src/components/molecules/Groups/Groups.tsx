@@ -5,7 +5,7 @@ import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChild
 
 import { auth, db } from '../../../firebase';
 
-import Group from '../../atoms/Group';
+import Group from '../Group';
 import { GroupInitialData } from '../../../types/Group';
 import { isMobile } from 'react-device-detect';
 import stylex from '@stylexjs/stylex';
