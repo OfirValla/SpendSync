@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { DataSnapshot, Unsubscribe, get, limitToFirst, onChildChanged, query, ref } from 'firebase/database';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { auth, db } from '../../../firebase';
 import { GroupPreview } from '../../../types/Group';

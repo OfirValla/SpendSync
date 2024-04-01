@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { DataSnapshot, Query, endBefore, get, limitToLast, onChildAdded, onChildRemoved, orderByKey, query, ref, startAfter } from 'firebase/database';
 
