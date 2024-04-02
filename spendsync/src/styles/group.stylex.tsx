@@ -13,5 +13,11 @@ export const group = stylex.create({
 
     active: {
         backgroundColor: '#454545'
-    }
+    },
+    inActive: {},
+
+    hasUpdate: {
+        fontWeight: 'bold'
+    },
+    noUpdate: {}
 });

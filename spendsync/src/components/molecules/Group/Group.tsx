@@ -79,7 +79,7 @@ const Group: FC<GroupProps> = ({ groupId, onNotExisting = () => { } }) => {
     }, [groupId]);
 
     return (
-        <div onClick={onClick} style={{ color: colors.primaryText }} {...stylex.props(group.container, params.groupId === groupId ? group.active : {})}>
+        <div onClick={onClick} style={{ color: colors.primaryText }} {...stylex.props(group.container, params.groupId === groupId ? group.active : group.inActive, groupInfo?.hasUpdate ? group.hasUpdate : group.noUpdate)}>
             <b>{groupId}</b> - {groupInfo?.name} - {groupInfo?.hasUpdate.toString()} - {JSON.stringify(groupInfo?.owed)}
             <Members groupId={groupId} previewMode={true} />
         </div>
