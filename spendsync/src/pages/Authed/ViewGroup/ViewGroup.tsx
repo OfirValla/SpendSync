@@ -71,6 +71,7 @@ const ViewGroup: FC = () => {
                 <div className="group-info" style={{ borderBottom: '2px solid #222222', height: 160 }}>
                     <div>Group Information {groupId} - {name} - <Avatar id={managedBy} /> - {JSON.stringify(owed)}</div>
                     <NavLink to='new-expense'>New Expense</NavLink><span>  </span>
+                    <NavLink to='edit'>Edit group</NavLink><span>  </span>
                     <NavLink to='new-user'>New User</NavLink>
                 </div>
                 <Members groupId={groupId!} />

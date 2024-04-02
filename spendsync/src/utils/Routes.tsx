@@ -29,6 +29,10 @@ export const authedRouter = createBrowserRouter(isMobile
                     element: <div>New User</div>
                 },
                 {
+                    path: 'edit',
+                    element: <div>Edit Group</div>
+                },
+                {
                     path: 'new-expense',
                     element: <NewExpense />
                 }
@@ -57,6 +61,10 @@ export const authedRouter = createBrowserRouter(isMobile
                         {
                             path: 'new-user',
                             element: <div>New User</div>
+                        },
+                        {
+                            path: 'edit',
+                            element: <div>Edit Group</div>
                         },
                         {
                             path: 'new-expense',
